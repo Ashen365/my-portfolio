@@ -1,0 +1,20 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer utilities {
+  .neon-glow {
+    box-shadow: 0 0 10px theme('colors.neonGreen'), 0 0 20px theme('colors.neonGreen');
+  }
+  .neon-glow-pink {
+    box-shadow: 0 0 10px theme('colors.neonPink'), 0 0 20px theme('colors.neonPink');
+  }
+  .neon-glow-blue {
+    box-shadow: 0 0 10px theme('colors.neonBlue'), 0 0 20px theme('colors.neonBlue');
+  }
+}
+
+body {
+  @apply bg-background text-white font-sans;
+  scroll-behavior: smooth; /* Smooth scrolling for anchor links */
+}
