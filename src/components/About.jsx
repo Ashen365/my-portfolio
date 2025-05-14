@@ -433,11 +433,11 @@ const About = () => {
                     <span className="text-sm text-slate-400">Years Experience</span>
                   </div>
                   <div className="text-center p-4 border border-slate-800 rounded-lg bg-slate-900/50">
-                    <span className="block text-2xl font-bold text-blue-400">20+</span>
+                    <span className="block text-2xl font-bold text-blue-400">5</span>
                     <span className="text-sm text-slate-400">Projects</span>
                   </div>
                   <div className="text-center p-4 border border-slate-800 rounded-lg bg-slate-900/50">
-                    <span className="block text-2xl font-bold text-cyan-400">15+</span>
+                    <span className="block text-2xl font-bold text-cyan-400">0</span>
                     <span className="text-sm text-slate-400">Happy Clients</span>
                   </div>
                   <div className="text-center p-4 border border-slate-800 rounded-lg bg-slate-900/50">
