@@ -78,6 +78,15 @@ const Services = () => {
   const titleRef = useRef(null);
   const serviceRefs = useRef([]);
   
+  // Function to scroll to Contact section
+  const scrollToContact = () => {
+    const contactSection = document.getElementById('contact');
+    if (contactSection) {
+      // Smooth scroll to the contact section
+      contactSection.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
+  
   // Set up GSAP animations
   useEffect(() => {
     // Main section fade in
@@ -227,9 +236,12 @@ const Services = () => {
           ))}
         </div>
         
-        {/* Call to Action */}
+        {/* Call to Action - With onClick handler to scroll to contact section */}
         <div className="mt-16 text-center">
-          <button className="inline-flex items-center justify-center rounded-md bg-gradient-to-r from-green-500 to-blue-500 px-6 py-3 text-base font-medium text-white shadow-md hover:brightness-110 transition-all duration-300">
+          <button 
+            onClick={scrollToContact}
+            className="inline-flex items-center justify-center rounded-md bg-gradient-to-r from-green-500 to-blue-500 px-6 py-3 text-base font-medium text-white shadow-md hover:brightness-110 transition-all duration-300"
+          >
             Discuss Your Project
             <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 ml-2" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
               <path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"></path>

@@ -661,17 +661,16 @@ const About = () => {
               </div>
               
               {/* CTA for services tab */}
-              <div className="flex justify-center mt-12">
-                <a
-                  href="#contact"
-                  className="inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-green-500 to-blue-500 text-white font-medium rounded-md hover:from-green-600 hover:to-blue-600 transition-all shadow-lg"
-                >
-                  Discuss Your Project
-                  <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                    <path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"></path>
-                  </svg>
-                </a>
-              </div>
+              <div className="mt-8">
+                  <a
+                    href="#contact"
+                    className="inline-flex items-center gap-2 px-5 py-2.5 bg-gradient-to-r from-green-500 to-blue-500 text-white font-medium rounded-lg hover:from-green-600 hover:to-blue-600 transition-all shadow-lg hover:shadow-green-500/25 focus:ring-2 focus:ring-green-500/50 focus:outline-none"
+                  >
+                    Discuss Your Project
+                    <BsArrowRightShort className="text-xl" />
+                  </a>
+                </div>
+
             </div>
           )}
         </div>
