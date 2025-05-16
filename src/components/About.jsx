@@ -509,14 +509,34 @@ const About = () => {
                 <div className="space-y-6">
                   <div className="flex flex-col sm:flex-row sm:items-center gap-4 pb-4 border-b border-slate-800/50">
                     <div className="sm:w-1/4">
-                      <span className="text-sm font-medium text-slate-400">2019 - 2023</span>
+                      <span className="text-sm font-medium text-slate-400">2023 - 2027</span>
                     </div>
                     <div className="sm:w-3/4">
                       <h4 className="text-lg font-medium text-white">BSc in Software Engineering</h4>
-                      <p className="text-slate-400">University of Technology</p>
+                      <p className="text-slate-400">University of Srilanka Institute of Information Technology</p>
                     </div>
                   </div>
                   
+                  <div className="flex flex-col sm:flex-row sm:items-center gap-4">
+                    <div className="sm:w-1/4">
+                      <span className="text-sm font-medium text-slate-400">2023</span>
+                    </div>
+                    <div className="sm:w-3/4">
+                      <h4 className="text-lg font-medium text-white">Certificate Intensive British English Course</h4>
+                      <p className="text-slate-400">Cadd Center Lanka(PVT)Ltd</p>
+                    </div>
+                  </div>
+
+                  <div className="flex flex-col sm:flex-row sm:items-center gap-4">
+                    <div className="sm:w-1/4">
+                      <span className="text-sm font-medium text-slate-400">2023</span>
+                    </div>
+                    <div className="sm:w-3/4">
+                      <h4 className="text-lg font-medium text-white">CODECON 3.0</h4>
+                      <p className="text-slate-400">Inter University Hackathon Organized by IEEE omputer Society Sri lanka Institute Of Information technology </p>
+                    </div>
+                  </div>
+
                   <div className="flex flex-col sm:flex-row sm:items-center gap-4 pb-4 border-b border-slate-800/50">
                     <div className="sm:w-1/4">
                       <span className="text-sm font-medium text-slate-400">2023</span>
@@ -529,13 +549,74 @@ const About = () => {
                   
                   <div className="flex flex-col sm:flex-row sm:items-center gap-4">
                     <div className="sm:w-1/4">
-                      <span className="text-sm font-medium text-slate-400">2022</span>
+                      <span className="text-sm font-medium text-slate-400">2023</span>
                     </div>
                     <div className="sm:w-3/4">
                       <h4 className="text-lg font-medium text-white">UI/UX Design Specialization</h4>
                       <p className="text-slate-400">Google UX Design Certificate</p>
                     </div>
                   </div>
+
+                  <div className="flex flex-col sm:flex-row sm:items-center gap-4">
+                    <div className="sm:w-1/4">
+                      <span className="text-sm font-medium text-slate-400">2022</span>
+                    </div>
+                    <div className="sm:w-3/4">
+                      <h4 className="text-lg font-medium text-white">A/L Examination</h4>
+                      <p className="text-slate-400">Anuruddha Kumara National School Nawalapitiya</p>
+                    </div>
+                  </div>
+                  
+                  <div className="flex flex-col sm:flex-row sm:items-center gap-4">
+                    <div className="sm:w-1/4">
+                      <span className="text-sm font-medium text-slate-400">2021-2022</span>
+                    </div>
+                    <div className="sm:w-3/4">
+                      <h4 className="text-lg font-medium text-white">Diploma In Software Engineering (Dise) Pearson Assured </h4>
+                      <p className="text-slate-400">Esoft Metro Campus</p>
+                    </div>
+                  </div>
+
+                  <div className="flex flex-col sm:flex-row sm:items-center gap-4">
+                    <div className="sm:w-1/4">
+                      <span className="text-sm font-medium text-slate-400">2020-2021</span>
+                    </div>
+                    <div className="sm:w-3/4">
+                      <h4 className="text-lg font-medium text-white">Certificate In Python Development</h4>
+                      <p className="text-slate-400">Narada Accademy</p>
+                    </div>
+                  </div>
+
+                  <div className="flex flex-col sm:flex-row sm:items-center gap-4">
+                    <div className="sm:w-1/4">
+                      <span className="text-sm font-medium text-slate-400">2018</span>
+                    </div>
+                    <div className="sm:w-3/4">
+                      <h4 className="text-lg font-medium text-white">Certificate In Graphic Designing</h4>
+                      <p className="text-slate-400">Esoft Metro Campus</p>
+                    </div>
+                  </div>
+
+                  <div className="flex flex-col sm:flex-row sm:items-center gap-4">
+                    <div className="sm:w-1/4">
+                      <span className="text-sm font-medium text-slate-400">2017</span>
+                    </div>
+                    <div className="sm:w-3/4">
+                      <h4 className="text-lg font-medium text-white">Certificate In Information Technology</h4>
+                      <p className="text-slate-400">Esoft Metro Campus</p>
+                    </div>
+                  </div>
+
+                  <div className="flex flex-col sm:flex-row sm:items-center gap-4">
+                    <div className="sm:w-1/4">
+                      <span className="text-sm font-medium text-slate-400">2017</span>
+                    </div>
+                    <div className="sm:w-3/4">
+                      <h4 className="text-lg font-medium text-white">O/L Examination</h4>
+                      <p className="text-slate-400">Anuruddha Kumara National School Nawalapitiya </p>
+                    </div>
+                  </div>
+
                 </div>
               </div>
             </div>
