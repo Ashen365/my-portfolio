@@ -36,8 +36,8 @@ const services = [
         <line x1="12" y1="18" x2="12.01" y2="18"></line>
       </svg>
     ),
-    title: 'Responsive Design',
-    description: 'Ensuring mobile-first, cross-device compatibility with pixel-perfect layouts and smooth user experience.',
+    title: 'Mobile Application Development',
+    description: 'I design and develop responsive, user-friendly mobile applications tailored to both Android and iOS platforms. From idea to deployment, I focus on clean UI/UX, smooth performance, and scalable architecture — turning your business goals into powerful mobile experiences.',
   },
   {
     icon: (
