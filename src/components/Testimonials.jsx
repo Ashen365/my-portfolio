@@ -1,7 +1,7 @@
 import React, { useRef, useEffect, useState } from 'react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-
+import Diniduliyanage from '../assets/Diniduliyanage.jpg';
 // Register ScrollTrigger plugin
 gsap.registerPlugin(ScrollTrigger);
 
@@ -9,9 +9,9 @@ gsap.registerPlugin(ScrollTrigger);
 const testimonials = [
   {
     text: "Ashen is a highly skilled developer. He transformed our vision into a reality with his great technical expertise and attention to detail. The project was delivered on time and exceeded our expectations.",
-    name: "John Doe",
-    role: "CEO, Tech Corp",
-    img: "/api/placeholder/60/60",
+    name: "Dinidu Liyanage",
+    role: "UnderGraduate , Student",
+    img: Diniduliyanage,
     rating: 5,
     project: "E-commerce Platform",
   },
