@@ -276,7 +276,7 @@ const Contact = () => {
         </svg>
       ),
       title: "Email",
-      content: "ashen365@gmail.com"
+      content: "ashenherath365@gmail.com"
     },
     {
       icon: (
