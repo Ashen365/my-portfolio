@@ -2,6 +2,8 @@ import React, { useRef, useEffect, useState } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import emailjs from '@emailjs/browser'; // Import EmailJS
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
 
 const Contact = () => {
   // Register ScrollTrigger plugin
@@ -22,15 +24,21 @@ const Contact = () => {
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [submitError, setSubmitError] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
+
+  // Calendar state for availability
+  const [selectedDate, setSelectedDate] = useState(null);
+  const [workUpdates, setWorkUpdates] = useState({});
+  const [calendarMessage, setCalendarMessage] = useState("");
   
-  // Create refs for animations
+  // Animation and refs
   const sectionRef = useRef(null);
   const titleRef = useRef(null);
   const formRef = useRef(null);
   const contactInfoRef = useRef(null);
   const socialLinksRef = useRef(null);
   const formElementRef = useRef(null); // Reference to the form element for EmailJS
-  
+  const scheduleSectionRef = useRef(null); // For "Check my availability" scroll
+
   // Handle input changes
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -38,8 +46,6 @@ const Contact = () => {
       ...formData,
       [name]: value
     });
-    
-    // Clear error when user types
     if (errors[name]) {
       setErrors({
         ...errors,
@@ -51,21 +57,13 @@ const Contact = () => {
   // Validate form
   const validateForm = () => {
     const newErrors = {};
-    
-    if (!formData.name.trim()) {
-      newErrors.name = "Name is required";
-    }
-    
+    if (!formData.name.trim()) newErrors.name = "Name is required";
     if (!formData.email.trim()) {
       newErrors.email = "Email is required";
     } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(formData.email)) {
       newErrors.email = "Invalid email address";
     }
-    
-    if (!formData.message.trim()) {
-      newErrors.message = "Message is required";
-    }
-    
+    if (!formData.message.trim()) newErrors.message = "Message is required";
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
   };
@@ -73,73 +71,33 @@ const Contact = () => {
   // Handle form submission
   const handleSubmit = (e) => {
     e.preventDefault();
-    
     if (validateForm()) {
       setIsLoading(true);
       setSubmitError(null);
-      
-      // EmailJS configuration - replace with your actual service ID, template ID, and public key
       const serviceId = 'service_dus19y8';
       const templateId = 'template_nlfl385';
       const publicKey = 'CqG8i8q3aPbG6q3Um';
-      
-      // Send email using EmailJS
       emailjs.sendForm(serviceId, templateId, formElementRef.current, publicKey)
         .then((result) => {
-          console.log('Email sent successfully:', result.text);
-          
-          // Show success message
           setIsSubmitted(true);
-          
-          // Reset form
-          setFormData({
-            name: "",
-            email: "",
-            subject: "",
-            message: ""
-          });
-          
-          // Animate success message
+          setFormData({ name: "", email: "", subject: "", message: "" });
           gsap.fromTo(
             ".success-message",
-            { 
-              opacity: 0,
-              y: -20
-            },
-            {
-              opacity: 1,
-              y: 0,
-              duration: 0.5,
-              ease: "power3.out"
-            }
+            { opacity: 0, y: -20 },
+            { opacity: 1, y: 0, duration: 0.5, ease: "power3.out" }
           );
-          
-          // Hide success message after 5 seconds
           setTimeout(() => {
             gsap.to(".success-message", {
-              opacity: 0,
-              duration: 0.5,
-              onComplete: () => setIsSubmitted(false)
+              opacity: 0, duration: 0.5, onComplete: () => setIsSubmitted(false)
             });
           }, 5000);
         })
         .catch((error) => {
-          console.error('Error sending email:', error.text);
           setSubmitError('Failed to send email. Please try again later.');
-          
-          // Animate error message
           gsap.fromTo(
             ".error-message",
-            { 
-              opacity: 0,
-              y: -20
-            },
-            {
-              opacity: 1,
-              y: 0,
-              duration: 0.5,
-              ease: "power3.out"
-            }
+            { opacity: 0, y: -20 },
+            { opacity: 1, y: 0, duration: 0.5, ease: "power3.out" }
           );
         })
         .finally(() => {
@@ -150,104 +108,35 @@ const Contact = () => {
 
   // Set up animations
   useEffect(() => {
-    // Title animation
     gsap.fromTo(
       titleRef.current,
-      { 
-        opacity: 0, 
-        y: 30 
-      },
-      {
-        opacity: 1,
-        y: 0,
-        duration: 0.8,
-        ease: "power3.out",
-        scrollTrigger: {
-          trigger: sectionRef.current,
-          start: "top 75%",
-        }
-      }
+      { opacity: 0, y: 30 },
+      { opacity: 1, y: 0, duration: 0.8, ease: "power3.out", scrollTrigger: { trigger: sectionRef.current, start: "top 75%" } }
     );
-    
-    // Form animation
     gsap.fromTo(
       formRef.current,
-      { 
-        opacity: 0, 
-        x: -50
-      },
-      {
-        opacity: 1,
-        x: 0,
-        duration: 0.8,
-        ease: "power3.out",
-        scrollTrigger: {
-          trigger: sectionRef.current,
-          start: "top 60%",
-        }
-      }
+      { opacity: 0, x: -50 },
+      { opacity: 1, x: 0, duration: 0.8, ease: "power3.out", scrollTrigger: { trigger: sectionRef.current, start: "top 60%" } }
     );
-    
-    // Contact info animation
     gsap.fromTo(
       contactInfoRef.current,
-      { 
-        opacity: 0, 
-        x: 50
-      },
-      {
-        opacity: 1,
-        x: 0,
-        duration: 0.8,
-        ease: "power3.out",
-        scrollTrigger: {
-          trigger: sectionRef.current,
-          start: "top 60%",
-        }
-      }
+      { opacity: 0, x: 50 },
+      { opacity: 1, x: 0, duration: 0.8, ease: "power3.out", scrollTrigger: { trigger: sectionRef.current, start: "top 60%" } }
     );
-    
-    // Social links animation - staggered
     gsap.fromTo(
       socialLinksRef.current.children,
-      { 
-        opacity: 0, 
-        y: 20
-      },
-      {
-        opacity: 1,
-        y: 0,
-        duration: 0.5,
-        stagger: 0.1,
-        ease: "power2.out",
-        scrollTrigger: {
-          trigger: socialLinksRef.current,
-          start: "top 80%",
-        }
-      }
+      { opacity: 0, y: 20 },
+      { opacity: 1, y: 0, duration: 0.5, stagger: 0.1, ease: "power2.out", scrollTrigger: { trigger: socialLinksRef.current, start: "top 80%" } }
     );
-    
-    // Input field focus animations
     const inputFields = document.querySelectorAll(".input-field");
     inputFields.forEach(field => {
       field.addEventListener("focus", () => {
-        gsap.to(field, {
-          borderColor: "#4ade80",
-          boxShadow: "0 0 0 2px rgba(74, 222, 128, 0.2)",
-          duration: 0.3
-        });
+        gsap.to(field, { borderColor: "#4ade80", boxShadow: "0 0 0 2px rgba(74, 222, 128, 0.2)", duration: 0.3 });
       });
-      
       field.addEventListener("blur", () => {
-        gsap.to(field, {
-          borderColor: field.value ? "#374151" : "#1f2937",
-          boxShadow: "none",
-          duration: 0.3
-        });
+        gsap.to(field, { borderColor: field.value ? "#374151" : "#1f2937", boxShadow: "none", duration: 0.3 });
       });
     });
-    
-    // Cleanup function
     return () => {
       ScrollTrigger.getAll().forEach(t => t.kill());
       inputFields.forEach(field => {
@@ -257,7 +146,36 @@ const Contact = () => {
     };
   }, []);
 
-  // Contact info data
+  // Scroll to calendar section when clicking "Check my availability"
+  useEffect(() => {
+    const handleHashScroll = () => {
+      if (window.location.hash === "#schedule" && scheduleSectionRef.current) {
+        scheduleSectionRef.current.scrollIntoView({ behavior: "smooth", block: "center" });
+      }
+    };
+    window.addEventListener("hashchange", handleHashScroll, false);
+    handleHashScroll();
+    return () => window.removeEventListener("hashchange", handleHashScroll, false);
+  }, []);
+
+  // Handle calendar work updates
+  const handleDateChange = (date) => {
+    setSelectedDate(date);
+    setCalendarMessage("");
+  };
+  const handleWorkUpdateChange = (e) => {
+    setCalendarMessage(e.target.value);
+  };
+  const handleSaveWorkUpdate = () => {
+    if (!selectedDate) return;
+    setWorkUpdates({
+      ...workUpdates,
+      [selectedDate.toDateString()]: calendarMessage
+    });
+    setCalendarMessage("");
+  };
+
+  // Contact info data, social links, etc. (unchanged)
   const contactInfo = [
     {
       icon: (
@@ -290,7 +208,6 @@ const Contact = () => {
     }
   ];
 
-  // Social media links
   const socialLinks = [
     {
       icon: (
@@ -334,236 +251,372 @@ const Contact = () => {
     }
   ];
 
-  return (
-    <section
-      ref={sectionRef}
-      id="contact"
-      className="min-h-screen py-16 px-4 sm:px-6 lg:px-8 bg-slate-950"
-      aria-labelledby="contact-title"
-    >
-      <div className="max-w-6xl mx-auto">
-        {/* Section header */}
-        <div className="flex flex-col space-y-3 mb-12 text-center">
-          <h2
-            ref={titleRef}
-            id="contact-title"
-            className="text-3xl sm:text-4xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-green-400 to-blue-500 inline-block"
-          >
-            Get In Touch
-          </h2>
-          <p className="text-slate-300 text-lg max-w-3xl mx-auto">
-            Have a project in mind or want to collaborate? Feel free to contact me.
-          </p>
-        </div>
+  // --------------------------- BEAUTIFIED CALENDAR CSS ---------------------------
+  // Add this style block to your global css (or use a css-in-js solution)
+  // This is for demo purposes. For production, use a separate css file.
+  const calendarStyle = `
+    .custom-calendar .react-datepicker {
+      background: #1e293b;
+      border-radius: 16px;
+      border: 2px solid #334155;
+      padding: 16px;
+      box-shadow: 0 8px 24px 0 rgba(0,0,0,0.18);
+      color: #fff;
+    }
+    .custom-calendar .react-datepicker__current-month {
+      color: #38bdf8;
+      font-weight: bold;
+      font-size: 1.1rem;
+      margin-bottom: 1rem;
+    }
+    .custom-calendar .react-datepicker__day,
+    .custom-calendar .react-datepicker__day-name {
+      color: #cbd5e1;
+      font-size: 1rem;
+      border-radius: 8px;
+      transition: background 0.2s, color 0.2s;
+      padding: 0.5rem;
+      margin: 0.1rem;
+    }
+    .custom-calendar .react-datepicker__day--selected,
+    .custom-calendar .react-datepicker__day--keyboard-selected {
+      background: linear-gradient(90deg, #22d3ee, #38bdf8);
+      color: #fff;
+      border-radius: 8px;
+      font-weight: bold;
+    }
+    .custom-calendar .react-datepicker__day--today {
+      border: 1px solid #38bdf8;
+      background: #334155;
+      border-radius: 8px;
+      color: #38bdf8;
+    }
+    .custom-calendar .react-datepicker__day--has-update {
+      background: linear-gradient(90deg, #4ade80 60%, #22d3ee 100%);
+      color: #fff;
+      border-radius: 8px;
+      font-weight: bold;
+      box-shadow: 0 0 8px #22d3ee40;
+    }
+    .custom-calendar .react-datepicker__day:hover {
+      background: #64748b;
+      color: #fff;
+    }
+    .custom-calendar .react-datepicker__navigation {
+      top: 16px;
+    }
+    .custom-calendar .react-datepicker__triangle {
+      display: none;
+    }
+    .custom-calendar .react-datepicker__header {
+      background: #1e293b;
+      border-bottom: 1px solid #334155;
+      border-top-left-radius: 16px;
+      border-top-right-radius: 16px;
+    }
+    @media (max-width: 640px) {
+      .custom-calendar .react-datepicker {
+        padding: 8px;
+      }
+    }
+  `;
+  useEffect(() => {
+    let style = document.createElement("style");
+    style.innerHTML = calendarStyle;
+    document.head.appendChild(style);
+    return () => {
+      document.head.removeChild(style);
+    };
+  }, []);
+  // ------------------------- END BEAUTIFIED CALENDAR CSS -------------------------
 
-        {/* Contact grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-12">
-          {/* Contact form */}
-          <div 
-            ref={formRef}
-            className="bg-slate-900/60 backdrop-blur-sm rounded-lg border border-slate-800 p-6 lg:p-8 shadow-lg"
-          >
-            <h3 className="text-xl font-bold mb-6 text-white">Send Me a Message</h3>
-            
-            {/* Success message */}
-            {isSubmitted && (
-              <div className="success-message mb-6 p-4 rounded-lg bg-green-500/20 border border-green-500/50 text-green-400">
-                <div className="flex items-center">
-                  <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor">
-                    <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
-                  </svg>
-                  <span>Message sent successfully! I'll get back to you soon.</span>
-                </div>
-              </div>
-            )}
-            
-            {/* Error message */}
-            {submitError && (
-              <div className="error-message mb-6 p-4 rounded-lg bg-red-500/20 border border-red-500/50 text-red-400">
-                <div className="flex items-center">
-                  <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor">
-                    <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clipRule="evenodd" />
-                  </svg>
-                  <span>{submitError}</span>
-                </div>
-              </div>
-            )}
-            
-            <form ref={formElementRef} onSubmit={handleSubmit} className="space-y-5">
-              <div>
-                <label htmlFor="name" className="block text-sm font-medium text-slate-300 mb-1">
-                  Name
-                </label>
-                <input
-                  type="text"
-                  id="name"
-                  name="name"
-                  value={formData.name}
-                  onChange={handleChange}
-                  className={`input-field w-full px-4 py-2 bg-slate-800/70 border ${
-                    errors.name ? "border-red-500" : "border-slate-700"
-                  } rounded-md focus:outline-none text-white placeholder-slate-500`}
-                  placeholder="Your name"
-                />
-                {errors.name && (
-                  <p className="mt-1 text-xs text-red-500">{errors.name}</p>
-                )}
-              </div>
-              
-              <div>
-                <label htmlFor="email" className="block text-sm font-medium text-slate-300 mb-1">
-                  Email
-                </label>
-                <input
-                  type="email"
-                  id="email"
-                  name="email"
-                  value={formData.email}
-                  onChange={handleChange}
-                  className={`input-field w-full px-4 py-2 bg-slate-800/70 border ${
-                    errors.email ? "border-red-500" : "border-slate-700"
-                  } rounded-md focus:outline-none text-white placeholder-slate-500`}
-                  placeholder="your.email@example.com"
-                />
-                {errors.email && (
-                  <p className="mt-1 text-xs text-red-500">{errors.email}</p>
-                )}
-              </div>
-              
-              <div>
-                <label htmlFor="subject" className="block text-sm font-medium text-slate-300 mb-1">
-                  Subject (Optional)
-                </label>
-                <input
-                  type="text"
-                  id="subject"
-                  name="subject"
-                  value={formData.subject}
-                  onChange={handleChange}
-                  className="input-field w-full px-4 py-2 bg-slate-800/70 border border-slate-700 rounded-md focus:outline-none text-white placeholder-slate-500"
-                  placeholder="What is this regarding?"
-                />
-              </div>
-              
-              <div>
-                <label htmlFor="message" className="block text-sm font-medium text-slate-300 mb-1">
-                  Message
-                </label>
-                <textarea
-                  id="message"
-                  name="message"
-                  value={formData.message}
-                  onChange={handleChange}
-                  rows="5"
-                  className={`input-field w-full px-4 py-2 bg-slate-800/70 border ${
-                    errors.message ? "border-red-500" : "border-slate-700"
-                  } rounded-md focus:outline-none text-white placeholder-slate-500`}
-                  placeholder="Tell me about your project or inquiry..."
-                />
-                {errors.message && (
-                  <p className="mt-1 text-xs text-red-500">{errors.message}</p>
-                )}
-              </div>
-              
-              <button
-                type="submit"
-                disabled={isLoading}
-                className="w-full bg-gradient-to-r from-green-500 to-blue-500 hover:from-green-600 hover:to-blue-600 text-white font-medium py-3 px-6 rounded-md shadow-md hover:shadow-lg transition-all duration-300 flex items-center justify-center"
-              >
-                {isLoading ? (
-                  <>
-                    <svg className="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                      <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
-                      <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-                    </svg>
-                    Sending...
-                  </>
-                ) : (
-                  <>
-                    Send Message
-                    <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 ml-2" viewBox="0 0 20 20" fill="currentColor">
-                      <path d="M10.894 2.553a1 1 0 00-1.788 0l-7 14a1 1 0 001.169 1.409l5-1.429A1 1 0 009 15.571V11a1 1 0 112 0v4.571a1 1 0 00.725.962l5 1.428a1 1 0 001.17-1.408l-7-14z" />
-                    </svg>
-                  </>
-                )}
-              </button>
-            </form>
+  // Custom day class for calendar highlight
+  const dayClassName = (date) => {
+    let classNames = [];
+    if (workUpdates[date.toDateString()]) classNames.push("react-datepicker__day--has-update");
+    return classNames.join(" ");
+  };
+
+  return (
+    <>
+      <section
+        ref={sectionRef}
+        id="contact"
+        className="min-h-screen py-16 px-4 sm:px-6 lg:px-8 bg-slate-950"
+        aria-labelledby="contact-title"
+      >
+        <div className="max-w-6xl mx-auto">
+          {/* Section header */}
+          <div className="flex flex-col space-y-3 mb-12 text-center">
+            <h2
+              ref={titleRef}
+              id="contact-title"
+              className="text-3xl sm:text-4xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-green-400 to-blue-500 inline-block"
+            >
+              Get In Touch
+            </h2>
+            <p className="text-slate-300 text-lg max-w-3xl mx-auto">
+              Have a project in mind or want to collaborate? Feel free to contact me.
+            </p>
           </div>
-          
-          {/* Contact info */}
-          <div 
-            ref={contactInfoRef}
-            className="space-y-8"
-          >
-            {/* Contact cards */}
-            <div className="space-y-4">
-              {contactInfo.map((item, index) => (
-                <div
-                  key={index}
-                  className="bg-slate-900/60 backdrop-blur-sm rounded-lg border border-slate-800 p-4 shadow-md flex items-center transition-all duration-300 hover:border-slate-700 hover:shadow-lg"
-                >
-                  <div className="flex-shrink-0 h-12 w-12 rounded-full bg-slate-800 flex items-center justify-center text-blue-400">
-                    {item.icon}
-                  </div>
-                  <div className="ml-4">
-                    <h4 className="text-sm font-medium text-slate-400">{item.title}</h4>
-                    <p className="text-white font-medium">{item.content}</p>
+
+          {/* Contact grid */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-12">
+            {/* Contact form */}
+            <div 
+              ref={formRef}
+              className="bg-slate-900/60 backdrop-blur-sm rounded-lg border border-slate-800 p-6 lg:p-8 shadow-lg"
+            >
+              <h3 className="text-xl font-bold mb-6 text-white">Send Me a Message</h3>
+              {isSubmitted && (
+                <div className="success-message mb-6 p-4 rounded-lg bg-green-500/20 border border-green-500/50 text-green-400">
+                  <div className="flex items-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor">
+                      <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+                    </svg>
+                    <span>Message sent successfully! I'll get back to you soon.</span>
                   </div>
                 </div>
-              ))}
+              )}
+              {submitError && (
+                <div className="error-message mb-6 p-4 rounded-lg bg-red-500/20 border border-red-500/50 text-red-400">
+                  <div className="flex items-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor">
+                      <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clipRule="evenodd" />
+                    </svg>
+                    <span>{submitError}</span>
+                  </div>
+                </div>
+              )}
+              <form ref={formElementRef} onSubmit={handleSubmit} className="space-y-5">
+                <div>
+                  <label htmlFor="name" className="block text-sm font-medium text-slate-300 mb-1">
+                    Name
+                  </label>
+                  <input
+                    type="text"
+                    id="name"
+                    name="name"
+                    value={formData.name}
+                    onChange={handleChange}
+                    className={`input-field w-full px-4 py-2 bg-slate-800/70 border ${
+                      errors.name ? "border-red-500" : "border-slate-700"
+                    } rounded-md focus:outline-none text-white placeholder-slate-500`}
+                    placeholder="Your name"
+                  />
+                  {errors.name && (
+                    <p className="mt-1 text-xs text-red-500">{errors.name}</p>
+                  )}
+                </div>
+                <div>
+                  <label htmlFor="email" className="block text-sm font-medium text-slate-300 mb-1">
+                    Email
+                  </label>
+                  <input
+                    type="email"
+                    id="email"
+                    name="email"
+                    value={formData.email}
+                    onChange={handleChange}
+                    className={`input-field w-full px-4 py-2 bg-slate-800/70 border ${
+                      errors.email ? "border-red-500" : "border-slate-700"
+                    } rounded-md focus:outline-none text-white placeholder-slate-500`}
+                    placeholder="your.email@example.com"
+                  />
+                  {errors.email && (
+                    <p className="mt-1 text-xs text-red-500">{errors.email}</p>
+                  )}
+                </div>
+                <div>
+                  <label htmlFor="subject" className="block text-sm font-medium text-slate-300 mb-1">
+                    Subject (Optional)
+                  </label>
+                  <input
+                    type="text"
+                    id="subject"
+                    name="subject"
+                    value={formData.subject}
+                    onChange={handleChange}
+                    className="input-field w-full px-4 py-2 bg-slate-800/70 border border-slate-700 rounded-md focus:outline-none text-white placeholder-slate-500"
+                    placeholder="What is this regarding?"
+                  />
+                </div>
+                <div>
+                  <label htmlFor="message" className="block text-sm font-medium text-slate-300 mb-1">
+                    Message
+                  </label>
+                  <textarea
+                    id="message"
+                    name="message"
+                    value={formData.message}
+                    onChange={handleChange}
+                    rows="5"
+                    className={`input-field w-full px-4 py-2 bg-slate-800/70 border ${
+                      errors.message ? "border-red-500" : "border-slate-700"
+                    } rounded-md focus:outline-none text-white placeholder-slate-500`}
+                    placeholder="Tell me about your project or inquiry..."
+                  />
+                  {errors.message && (
+                    <p className="mt-1 text-xs text-red-500">{errors.message}</p>
+                  )}
+                </div>
+                <button
+                  type="submit"
+                  disabled={isLoading}
+                  className="w-full bg-gradient-to-r from-green-500 to-blue-500 hover:from-green-600 hover:to-blue-600 text-white font-medium py-3 px-6 rounded-md shadow-md hover:shadow-lg transition-all duration-300 flex items-center justify-center"
+                >
+                  {isLoading ? (
+                    <>
+                      <svg className="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                        <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                        <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                      </svg>
+                      Sending...
+                    </>
+                  ) : (
+                    <>
+                      Send Message
+                      <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 ml-2" viewBox="0 0 20 20" fill="currentColor">
+                        <path d="M10.894 2.553a1 1 0 00-1.788 0l-7 14a1 1 0 001.169 1.409l5-1.429A1 1 0 009 15.571V11a1 1 0 112 0v4.571a1 1 0 00.725.962l5 1.428a1 1 0 001.17-1.408l-7-14z" />
+                      </svg>
+                    </>
+                  )}
+                </button>
+              </form>
             </div>
-            
-            {/* Social media links */}
-            <div>
-              <h3 className="text-xl font-bold mb-4 text-white">Connect With Me</h3>
-              <div 
-                ref={socialLinksRef}
-                className="flex flex-wrap gap-3"
-              >
-                {socialLinks.map((link, index) => (
-                  <a
+            {/* Contact info */}
+            <div 
+              ref={contactInfoRef}
+              className="space-y-8"
+            >
+              {/* Contact cards */}
+              <div className="space-y-4">
+                {contactInfo.map((item, index) => (
+                  <div
                     key={index}
-                    href={link.href}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    aria-label={link.label}
-                    className="h-10 w-10 rounded-full bg-slate-800 border border-slate-700 flex items-center justify-center text-slate-300 hover:text-white hover:border-blue-500 hover:bg-slate-700 transition-all duration-300"
+                    className="bg-slate-900/60 backdrop-blur-sm rounded-lg border border-slate-800 p-4 shadow-md flex items-center transition-all duration-300 hover:border-slate-700 hover:shadow-lg"
                   >
-                    {link.icon}
-                  </a>
+                    <div className="flex-shrink-0 h-12 w-12 rounded-full bg-slate-800 flex items-center justify-center text-blue-400">
+                      {item.icon}
+                    </div>
+                    <div className="ml-4">
+                      <h4 className="text-sm font-medium text-slate-400">{item.title}</h4>
+                      <p className="text-white font-medium">{item.content}</p>
+                    </div>
+                  </div>
                 ))}
               </div>
-            </div>
-            
-            {/* Availability section with glowing effect */}
-            <div className="bg-slate-900/80 rounded-lg border border-slate-800 p-6 relative overflow-hidden">
-              {/* Gradient orb */}
-              <div className="absolute top-0 right-0 w-40 h-40 bg-blue-500 rounded-full mix-blend-multiply filter blur-3xl opacity-20"></div>
-              <div className="absolute bottom-0 left-0 w-40 h-40 bg-green-500 rounded-full mix-blend-multiply filter blur-3xl opacity-20"></div>
-              
-              <div className="relative z-10">
-                <div className="flex items-center mb-4">
-                  <div className="h-3 w-3 rounded-full bg-green-500 animate-pulse mr-2"></div>
-                  <h4 className="text-white font-bold">Currently Available</h4>
-                </div>
-                <p className="text-slate-300 mb-4">
-                  I'm currently taking on new projects and available for freelance work or full-time opportunities.
-                </p>
-                <a 
-                  href="#schedule" 
-                  className="text-blue-400 hover:text-blue-300 transition-colors inline-flex items-center font-medium"
+              {/* Social media links */}
+              <div>
+                <h3 className="text-xl font-bold mb-4 text-white">Connect With Me</h3>
+                <div 
+                  ref={socialLinksRef}
+                  className="flex flex-wrap gap-3"
                 >
-                  Check my availability
-                  <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 ml-1" viewBox="0 0 20 20" fill="currentColor">
-                    <path fillRule="evenodd" d="M12.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-2.293-2.293a1 1 0 010-1.414z" clipRule="evenodd" />
-                  </svg>
-                </a>
+                  {socialLinks.map((link, index) => (
+                    <a
+                      key={index}
+                      href={link.href}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      aria-label={link.label}
+                      className="h-10 w-10 rounded-full bg-slate-800 border border-slate-700 flex items-center justify-center text-slate-300 hover:text-white hover:border-blue-500 hover:bg-slate-700 transition-all duration-300"
+                    >
+                      {link.icon}
+                    </a>
+                  ))}
+                </div>
+              </div>
+              {/* Availability section with glowing effect */}
+              <div className="bg-slate-900/80 rounded-lg border border-slate-800 p-6 relative overflow-hidden">
+                <div className="absolute top-0 right-0 w-40 h-40 bg-blue-500 rounded-full mix-blend-multiply filter blur-3xl opacity-20"></div>
+                <div className="absolute bottom-0 left-0 w-40 h-40 bg-green-500 rounded-full mix-blend-multiply filter blur-3xl opacity-20"></div>
+                <div className="relative z-10">
+                  <div className="flex items-center mb-4">
+                    <div className="h-3 w-3 rounded-full bg-green-500 animate-pulse mr-2"></div>
+                    <h4 className="text-white font-bold">Currently Available</h4>
+                  </div>
+                  <p className="text-slate-300 mb-4">
+                    I'm currently taking on new projects and available for freelance work or full-time opportunities.
+                  </p>
+                  <a 
+                    href="#schedule" 
+                    className="text-blue-400 hover:text-blue-300 transition-colors inline-flex items-center font-medium"
+                  >
+                    Check my availability
+                    <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 ml-1" viewBox="0 0 20 20" fill="currentColor">
+                      <path fillRule="evenodd" d="M12.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-2.293-2.293a1 1 0 010-1.414z" clipRule="evenodd" />
+                    </svg>
+                  </a>
+                </div>
               </div>
             </div>
           </div>
         </div>
-      </div>
-    </section>
+      </section>
+      {/* Calendar Section - Check Availability */}
+      <section
+        ref={scheduleSectionRef}
+        id="schedule"
+        className="max-w-3xl mx-auto mb-20 mt-10 bg-slate-900/80 rounded-lg border border-slate-800 p-8 shadow-lg"
+        aria-labelledby="schedule-title"
+      >
+        <h2
+          id="schedule-title"
+          className="text-2xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-green-400 to-blue-500 mb-6"
+        >
+          My Calendar & Work Updates
+        </h2>
+        <div className="flex flex-col md:flex-row gap-8">
+          <div className="flex-1 custom-calendar">
+            <label className="block text-slate-300 font-medium mb-2">
+              Select a date to see or update my work status:
+            </label>
+            <DatePicker
+              selected={selectedDate}
+              onChange={handleDateChange}
+              inline
+              calendarClassName="w-full"
+              dayClassName={dayClassName}
+            />
+          </div>
+          <div className="flex-1 flex flex-col">
+            {selectedDate ? (
+              <>
+                <div className="mb-4">
+                  <span className="block text-slate-400 mb-1">
+                    {selectedDate.toDateString()}
+                  </span>
+                  <textarea
+                    className="w-full min-h-[80px] rounded-md p-3 bg-slate-800 text-white border border-slate-700 focus:outline-none focus:border-blue-400 placeholder-slate-400"
+                    placeholder="Add or update your work or availability for this date..."
+                    value={calendarMessage ?? workUpdates[selectedDate.toDateString()] ?? ""}
+                    onChange={handleWorkUpdateChange}
+                  />
+                </div>
+                <button
+                  onClick={handleSaveWorkUpdate}
+                  className="self-start bg-gradient-to-r from-green-400 to-blue-500 text-white font-semibold py-2 px-5 rounded shadow hover:from-green-500 hover:to-blue-600 transition-colors duration-200"
+                >
+                  Save Update
+                </button>
+                {workUpdates[selectedDate.toDateString()] && (
+                  <div className="mt-4 p-3 rounded bg-slate-800 border border-slate-700 text-slate-200">
+                    <strong>Saved:</strong> {workUpdates[selectedDate.toDateString()]}
+                  </div>
+                )}
+              </>
+            ) : (
+              <div className="text-slate-400">Please select a date on the calendar.</div>
+            )}
+          </div>
+        </div>
+        <div className="mt-6 flex items-center gap-2 text-sm text-slate-400">
+          <span className="w-4 h-4 bg-gradient-to-r from-green-400 to-blue-400 rounded-full inline-block"></span>
+          <span>Has update</span>
+        </div>
+      </section>
+    </>
   );
 };
 
