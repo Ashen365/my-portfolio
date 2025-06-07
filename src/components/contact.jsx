@@ -29,6 +29,8 @@ const Contact = () => {
   const [selectedDate, setSelectedDate] = useState(null);
   const [workUpdates, setWorkUpdates] = useState({});
   const [calendarMessage, setCalendarMessage] = useState("");
+  const [selectedTimeSlot, setSelectedTimeSlot] = useState(null);
+  const [showCalendarView, setShowCalendarView] = useState(true);
   
   // Animation and refs
   const sectionRef = useRef(null);
@@ -38,6 +40,7 @@ const Contact = () => {
   const socialLinksRef = useRef(null);
   const formElementRef = useRef(null); // Reference to the form element for EmailJS
   const scheduleSectionRef = useRef(null); // For "Check my availability" scroll
+  const calendarRef = useRef(null); // For calendar animations
 
   // Handle input changes
   const handleChange = (e) => {
@@ -151,6 +154,13 @@ const Contact = () => {
     const handleHashScroll = () => {
       if (window.location.hash === "#schedule" && scheduleSectionRef.current) {
         scheduleSectionRef.current.scrollIntoView({ behavior: "smooth", block: "center" });
+        
+        // Add animation to the calendar section when scrolling to it
+        gsap.fromTo(
+          scheduleSectionRef.current,
+          { opacity: 0.5, y: 20 },
+          { opacity: 1, y: 0, duration: 0.8, ease: "power3.out" }
+        );
       }
     };
     window.addEventListener("hashchange", handleHashScroll, false);
@@ -158,22 +168,79 @@ const Contact = () => {
     return () => window.removeEventListener("hashchange", handleHashScroll, false);
   }, []);
 
+  // Calendar animation on mount
+  useEffect(() => {
+    if (calendarRef.current) {
+      gsap.fromTo(
+        calendarRef.current,
+        { opacity: 0, scale: 0.95 },
+        { opacity: 1, scale: 1, duration: 0.6, ease: "power3.out", delay: 0.2 }
+      );
+    }
+  }, [showCalendarView]);
+
   // Handle calendar work updates
   const handleDateChange = (date) => {
     setSelectedDate(date);
     setCalendarMessage("");
+    
+    // Animate the date selection
+    gsap.fromTo(
+      ".calendar-info-panel",
+      { opacity: 0.7, x: 10 },
+      { opacity: 1, x: 0, duration: 0.3, ease: "power2.out" }
+    );
+    
+    // Reset time slot selection when date changes
+    setSelectedTimeSlot(null);
   };
+  
   const handleWorkUpdateChange = (e) => {
     setCalendarMessage(e.target.value);
   };
+  
   const handleSaveWorkUpdate = () => {
     if (!selectedDate) return;
+    
+    // Create update with time slot if selected
+    const update = selectedTimeSlot 
+      ? `Available at ${selectedTimeSlot}. ${calendarMessage}` 
+      : calendarMessage;
+    
     setWorkUpdates({
       ...workUpdates,
-      [selectedDate.toDateString()]: calendarMessage
+      [selectedDate.toDateString()]: update
     });
+    
+    // Show success animation
+    gsap.fromTo(
+      ".update-success",
+      { opacity: 0, y: -10 },
+      { opacity: 1, y: 0, duration: 0.4, ease: "power2.out" }
+    );
+    
+    setTimeout(() => {
+      gsap.to(".update-success", { opacity: 0, duration: 0.4 });
+    }, 2000);
+    
     setCalendarMessage("");
   };
+
+  // Time slot selection handler
+  const handleTimeSlotSelect = (slot) => {
+    setSelectedTimeSlot(slot === selectedTimeSlot ? null : slot);
+  };
+
+  // Toggle between calendar and list view
+  const toggleCalendarView = () => {
+    setShowCalendarView(!showCalendarView);
+  };
+
+  // Generate time slots for the selected date
+  const timeSlots = [
+    "9:00 AM", "10:00 AM", "11:00 AM", 
+    "1:00 PM", "2:00 PM", "3:00 PM", "4:00 PM"
+  ];
 
   // Contact info data, social links, etc. (unchanged)
   const contactInfo = [
@@ -251,84 +318,328 @@ const Contact = () => {
     }
   ];
 
-  // --------------------------- BEAUTIFIED CALENDAR CSS ---------------------------
-  // Add this style block to your global css (or use a css-in-js solution)
-  // This is for demo purposes. For production, use a separate css file.
-  const calendarStyle = `
-    .custom-calendar .react-datepicker {
-      background: #1e293b;
-      border-radius: 16px;
-      border: 2px solid #334155;
-      padding: 16px;
-      box-shadow: 0 8px 24px 0 rgba(0,0,0,0.18);
-      color: #fff;
+  // Modern Calendar Styles
+  const modernCalendarStyle = `
+    /* Base calendar container */
+    .modern-calendar .react-datepicker {
+      background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+      border: none;
+      border-radius: 24px;
+      font-family: system-ui, -apple-system, sans-serif;
+      padding: 24px;
+      box-shadow: 
+        0 20px 25px -5px rgba(0, 0, 0, 0.2),
+        0 10px 10px -5px rgba(0, 0, 0, 0.1),
+        0 0 0 1px rgba(255, 255, 255, 0.05) inset;
+      overflow: hidden;
+      position: relative;
     }
-    .custom-calendar .react-datepicker__current-month {
-      color: #38bdf8;
-      font-weight: bold;
-      font-size: 1.1rem;
-      margin-bottom: 1rem;
+    
+    /* Glassmorphism effect overlay */
+    .modern-calendar .react-datepicker::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: linear-gradient(
+        45deg,
+        rgba(56, 189, 248, 0.03) 0%,
+        rgba(74, 222, 128, 0.03) 100%
+      );
+      z-index: 0;
+      pointer-events: none;
     }
-    .custom-calendar .react-datepicker__day,
-    .custom-calendar .react-datepicker__day-name {
-      color: #cbd5e1;
-      font-size: 1rem;
-      border-radius: 8px;
-      transition: background 0.2s, color 0.2s;
-      padding: 0.5rem;
-      margin: 0.1rem;
+    
+    /* Month container */
+    .modern-calendar .react-datepicker__month-container {
+      position: relative;
+      z-index: 1;
     }
-    .custom-calendar .react-datepicker__day--selected,
-    .custom-calendar .react-datepicker__day--keyboard-selected {
-      background: linear-gradient(90deg, #22d3ee, #38bdf8);
-      color: #fff;
-      border-radius: 8px;
-      font-weight: bold;
+    
+    /* Current month */
+    .modern-calendar .react-datepicker__current-month {
+      color: white;
+      font-weight: 700;
+      font-size: 1.25rem;
+      margin-bottom: 1.5rem;
+      background: linear-gradient(to right, #38bdf8, #4ade80);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      text-align: center;
     }
-    .custom-calendar .react-datepicker__day--today {
-      border: 1px solid #38bdf8;
-      background: #334155;
-      border-radius: 8px;
-      color: #38bdf8;
+    
+    /* Day names (Mon, Tue, etc.) */
+    .modern-calendar .react-datepicker__day-name {
+      color: #94a3b8;
+      font-size: 0.85rem;
+      font-weight: 500;
+      width: 2.5rem;
+      margin: 0.3rem;
     }
-    .custom-calendar .react-datepicker__day--has-update {
-      background: linear-gradient(90deg, #4ade80 60%, #22d3ee 100%);
-      color: #fff;
-      border-radius: 8px;
-      font-weight: bold;
-      box-shadow: 0 0 8px #22d3ee40;
+    
+    /* Day cells */
+    .modern-calendar .react-datepicker__day {
+      color: #e2e8f0;
+      font-size: 0.95rem;
+      width: 2.5rem;
+      height: 2.5rem;
+      margin: 0.3rem;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 50%;
+      position: relative;
+      transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
     }
-    .custom-calendar .react-datepicker__day:hover {
-      background: #64748b;
-      color: #fff;
+    
+    /* Hover effect */
+    .modern-calendar .react-datepicker__day:hover:not(.react-datepicker__day--selected):not(.react-datepicker__day--disabled) {
+      background: rgba(100, 116, 139, 0.3);
+      color: white;
+      transform: scale(1.05);
     }
-    .custom-calendar .react-datepicker__navigation {
-      top: 16px;
+    
+    /* Selected day */
+    .modern-calendar .react-datepicker__day--selected {
+      background: linear-gradient(135deg, #38bdf8 0%, #4ade80 100%);
+      color: white;
+      font-weight: 600;
+      box-shadow: 0 0 15px rgba(56, 189, 248, 0.4);
+      transform: scale(1.1);
     }
-    .custom-calendar .react-datepicker__triangle {
+    
+    /* Today's date */
+    .modern-calendar .react-datepicker__day--today {
+      border: 2px solid rgba(56, 189, 248, 0.5);
+      background-color: rgba(56, 189, 248, 0.1);
+      font-weight: 600;
+    }
+    
+    /* Days with scheduled updates */
+    .modern-calendar .react-datepicker__day--has-update::after {
+      content: '';
+      position: absolute;
+      bottom: 3px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 6px;
+      height: 6px;
+      background: #4ade80;
+      border-radius: 50%;
+      box-shadow: 0 0 5px rgba(74, 222, 128, 0.5);
+    }
+    
+    /* Navigation buttons */
+    .modern-calendar .react-datepicker__navigation {
+      top: 1.5rem;
+    }
+    
+    .modern-calendar .react-datepicker__navigation-icon::before {
+      border-color: #38bdf8;
+      border-width: 2px 2px 0 0;
+      height: 8px;
+      width: 8px;
+    }
+    
+    /* Header and triangle */
+    .modern-calendar .react-datepicker__header {
+      background: transparent;
+      border-bottom: 1px solid rgba(100, 116, 139, 0.2);
+      padding-top: 0;
+    }
+    
+    .modern-calendar .react-datepicker__triangle {
       display: none;
     }
-    .custom-calendar .react-datepicker__header {
-      background: #1e293b;
-      border-bottom: 1px solid #334155;
-      border-top-left-radius: 16px;
-      border-top-right-radius: 16px;
+    
+    /* Time slot styles */
+    .time-slot {
+      padding: 0.75rem 1rem;
+      background: rgba(30, 41, 59, 0.8);
+      border: 1px solid rgba(71, 85, 105, 0.5);
+      border-radius: 12px;
+      margin-bottom: 0.5rem;
+      color: #e2e8f0;
+      cursor: pointer;
+      transition: all 0.2s;
+      display: flex;
+      align-items: center;
     }
-    @media (max-width: 640px) {
-      .custom-calendar .react-datepicker {
-        padding: 8px;
+    
+    .time-slot:hover {
+      background: rgba(51, 65, 85, 0.9);
+      border-color: rgba(100, 116, 139, 0.8);
+      transform: translateY(-2px);
+    }
+    
+    .time-slot.selected {
+      background: linear-gradient(135deg, rgba(56, 189, 248, 0.2) 0%, rgba(74, 222, 128, 0.2) 100%);
+      border-color: #38bdf8;
+      box-shadow: 0 0 12px rgba(56, 189, 248, 0.3);
+    }
+    
+    .time-slot-indicator {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      margin-right: 0.75rem;
+      background: #475569;
+      transition: all 0.2s;
+      position: relative;
+    }
+    
+    .time-slot.selected .time-slot-indicator {
+      background: #4ade80;
+      box-shadow: 0 0 10px rgba(74, 222, 128, 0.5);
+    }
+    
+    .time-slot.selected .time-slot-indicator::after {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 6px;
+      height: 6px;
+      background: #fff;
+      border-radius: 50%;
+    }
+    
+    /* View toggle button */
+    .view-toggle-button {
+      background: rgba(30, 41, 59, 0.8);
+      border: 1px solid rgba(71, 85, 105, 0.5);
+      color: #e2e8f0;
+      border-radius: 12px;
+      padding: 0.6rem 1rem;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.875rem;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    
+    .view-toggle-button:hover {
+      background: rgba(51, 65, 85, 0.9);
+      border-color: rgba(100, 116, 139, 0.8);
+    }
+    
+    /* Animation for the success message */
+    .update-success {
+      opacity: 0;
+      position: absolute;
+      top: -40px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: linear-gradient(135deg, rgba(74, 222, 128, 0.9) 0%, rgba(56, 189, 248, 0.9) 100%);
+      color: white;
+      padding: 0.5rem 1rem;
+      border-radius: 8px;
+      font-weight: 500;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+      z-index: 10;
+    }
+    
+    /* Calendar info panel animations */
+    .calendar-info-panel {
+      transition: opacity 0.3s, transform 0.3s;
+    }
+    
+    /* Availability indicator */
+    .availability-indicator {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.5rem 0.75rem;
+      background: rgba(56, 189, 248, 0.1);
+      border-radius: 30px;
+      font-size: 0.875rem;
+      margin-bottom: 1rem;
+    }
+    
+    .availability-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: #4ade80;
+      box-shadow: 0 0 8px rgba(74, 222, 128, 0.6);
+    }
+    
+    /* List view styles */
+    .calendar-list-view {
+      max-height: 350px;
+      overflow-y: auto;
+      padding-right: 0.5rem;
+      scrollbar-width: thin;
+      scrollbar-color: rgba(100, 116, 139, 0.5) transparent;
+    }
+    
+    .calendar-list-view::-webkit-scrollbar {
+      width: 4px;
+    }
+    
+    .calendar-list-view::-webkit-scrollbar-track {
+      background: transparent;
+    }
+    
+    .calendar-list-view::-webkit-scrollbar-thumb {
+      background-color: rgba(100, 116, 139, 0.5);
+      border-radius: 20px;
+    }
+    
+    .calendar-list-item {
+      padding: 1rem;
+      border-radius: 12px;
+      margin-bottom: 0.75rem;
+      background: rgba(30, 41, 59, 0.8);
+      border: 1px solid rgba(71, 85, 105, 0.5);
+      transition: all 0.2s;
+    }
+    
+    .calendar-list-item:hover {
+      background: rgba(51, 65, 85, 0.9);
+      transform: translateY(-2px);
+    }
+    
+    .calendar-list-date {
+      font-weight: 600;
+      font-size: 1rem;
+      color: #38bdf8;
+      margin-bottom: 0.5rem;
+    }
+    
+    .calendar-list-content {
+      color: #e2e8f0;
+      font-size: 0.9rem;
+    }
+    
+    /* Responsive adjustments */
+    @media (max-width: 768px) {
+      .modern-calendar .react-datepicker {
+        padding: 16px;
+      }
+      
+      .modern-calendar .react-datepicker__day-name,
+      .modern-calendar .react-datepicker__day {
+        width: 2rem;
+        height: 2rem;
+        margin: 0.2rem;
+        font-size: 0.85rem;
       }
     }
   `;
+  
   useEffect(() => {
     let style = document.createElement("style");
-    style.innerHTML = calendarStyle;
+    style.innerHTML = modernCalendarStyle;
     document.head.appendChild(style);
     return () => {
       document.head.removeChild(style);
     };
   }, []);
-  // ------------------------- END BEAUTIFIED CALENDAR CSS -------------------------
 
   // Custom day class for calendar highlight
   const dayClassName = (date) => {
@@ -554,66 +865,177 @@ const Contact = () => {
           </div>
         </div>
       </section>
-      {/* Calendar Section - Check Availability */}
+      
+      {/* Modern Calendar Section - Check Availability */}
       <section
         ref={scheduleSectionRef}
         id="schedule"
-        className="max-w-3xl mx-auto mb-20 mt-10 bg-slate-900/80 rounded-lg border border-slate-800 p-8 shadow-lg"
+        className="max-w-5xl mx-auto mb-24 mt-10 px-4 sm:px-6"
         aria-labelledby="schedule-title"
       >
-        <h2
-          id="schedule-title"
-          className="text-2xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-green-400 to-blue-500 mb-6"
-        >
-          My Calendar & Work Updates
-        </h2>
-        <div className="flex flex-col md:flex-row gap-8">
-          <div className="flex-1 custom-calendar">
-            <label className="block text-slate-300 font-medium mb-2">
-              Select a date to see or update my work status:
-            </label>
-            <DatePicker
-              selected={selectedDate}
-              onChange={handleDateChange}
-              inline
-              calendarClassName="w-full"
-              dayClassName={dayClassName}
-            />
-          </div>
-          <div className="flex-1 flex flex-col">
-            {selectedDate ? (
-              <>
-                <div className="mb-4">
-                  <span className="block text-slate-400 mb-1">
-                    {selectedDate.toDateString()}
-                  </span>
-                  <textarea
-                    className="w-full min-h-[80px] rounded-md p-3 bg-slate-800 text-white border border-slate-700 focus:outline-none focus:border-blue-400 placeholder-slate-400"
-                    placeholder="Add or update your work or availability for this date..."
-                    value={calendarMessage ?? workUpdates[selectedDate.toDateString()] ?? ""}
-                    onChange={handleWorkUpdateChange}
-                  />
-                </div>
-                <button
-                  onClick={handleSaveWorkUpdate}
-                  className="self-start bg-gradient-to-r from-green-400 to-blue-500 text-white font-semibold py-2 px-5 rounded shadow hover:from-green-500 hover:to-blue-600 transition-colors duration-200"
+        <div className="relative bg-slate-900/80 backdrop-blur-sm rounded-2xl border border-slate-800/80 p-8 lg:p-10 shadow-xl overflow-hidden">
+          {/* Background gradients */}
+          <div className="absolute top-0 right-0 w-64 h-64 bg-blue-500/10 rounded-full filter blur-3xl opacity-30"></div>
+          <div className="absolute bottom-0 left-0 w-64 h-64 bg-green-500/10 rounded-full filter blur-3xl opacity-30"></div>
+          <div className="absolute top-1/2 left-1/3 w-40 h-40 bg-purple-500/10 rounded-full filter blur-3xl opacity-20"></div>
+          
+          {/* Success message animation */}
+          <div className="update-success">Update saved successfully!</div>
+          
+          <div className="relative z-10">
+            <h2
+              id="schedule-title"
+              className="text-3xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-green-400 to-blue-500 mb-8"
+            >
+              My Availability Calendar
+            </h2>
+            
+            <div className="availability-indicator">
+              <span className="availability-dot"></span>
+              <span className="text-slate-200">Currently accepting new projects</span>
+            </div>
+            
+            <div className="flex flex-col lg:flex-row gap-8 lg:gap-12">
+              {/* Calendar view toggle */}
+              <div className="flex justify-between items-center mb-6">
+                <button 
+                  onClick={toggleCalendarView} 
+                  className="view-toggle-button"
                 >
-                  Save Update
+                  {showCalendarView ? (
+                    <>
+                      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                        <line x1="8" y1="6" x2="21" y2="6"></line>
+                        <line x1="8" y1="12" x2="21" y2="12"></line>
+                        <line x1="8" y1="18" x2="21" y2="18"></line>
+                        <line x1="3" y1="6" x2="3.01" y2="6"></line>
+                        <line x1="3" y1="12" x2="3.01" y2="12"></line>
+                        <line x1="3" y1="18" x2="3.01" y2="18"></line>
+                      </svg>
+                      <span>List View</span>
+                    </>
+                  ) : (
+                    <>
+                      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                        <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+                        <line x1="16" y1="2" x2="16" y2="6"></line>
+                        <line x1="8" y1="2" x2="8" y2="6"></line>
+                        <line x1="3" y1="10" x2="21" y2="10"></line>
+                      </svg>
+                      <span>Calendar View</span>
+                    </>
+                  )}
                 </button>
-                {workUpdates[selectedDate.toDateString()] && (
-                  <div className="mt-4 p-3 rounded bg-slate-800 border border-slate-700 text-slate-200">
-                    <strong>Saved:</strong> {workUpdates[selectedDate.toDateString()]}
+              </div>
+              
+              {/* Calendar or List view */}
+              <div className="flex-1">
+                {showCalendarView ? (
+                  <div ref={calendarRef} className="modern-calendar">
+                    <DatePicker
+                      selected={selectedDate}
+                      onChange={handleDateChange}
+                      inline
+                      calendarClassName="w-full"
+                      dayClassName={dayClassName}
+                    />
+                    <div className="mt-4 flex items-center gap-3 text-sm text-slate-400">
+                      <div className="flex items-center gap-1.5">
+                        <span className="w-3 h-3 bg-gradient-to-r from-green-400 to-blue-400 rounded-full inline-block"></span>
+                        <span>Has update</span>
+                      </div>
+                      <div className="flex items-center gap-1.5">
+                        <span className="w-3 h-3 border-2 border-blue-400 rounded-full inline-block"></span>
+                        <span>Today</span>
+                      </div>
+                    </div>
+                  </div>
+                ) : (
+                  <div className="calendar-list-view">
+                    {Object.keys(workUpdates).length > 0 ? (
+                      Object.keys(workUpdates).map((dateString) => (
+                        <div key={dateString} className="calendar-list-item">
+                          <div className="calendar-list-date">{dateString}</div>
+                          <div className="calendar-list-content">{workUpdates[dateString]}</div>
+                        </div>
+                      ))
+                    ) : (
+                      <div className="text-slate-400 text-center py-6">
+                        No availability updates yet.
+                      </div>
+                    )}
                   </div>
                 )}
-              </>
-            ) : (
-              <div className="text-slate-400">Please select a date on the calendar.</div>
-            )}
+              </div>
+              
+              {/* Time slots and update panel */}
+              <div className="flex-1 calendar-info-panel">
+                {selectedDate ? (
+                  <>
+                    <div className="mb-5">
+                      <h3 className="text-xl font-semibold text-white mb-1">
+                        {selectedDate.toDateString()}
+                      </h3>
+                      <p className="text-slate-400 text-sm">
+                        Select a time slot or add availability details
+                      </p>
+                    </div>
+                    
+                    <div className="mb-5">
+                      <h4 className="text-blue-400 font-medium mb-3">Available Time Slots</h4>
+                      <div className="grid grid-cols-2 gap-2 mb-4">
+                        {timeSlots.map((slot) => (
+                          <div
+                            key={slot}
+                            className={`time-slot ${selectedTimeSlot === slot ? 'selected' : ''}`}
+                            onClick={() => handleTimeSlotSelect(slot)}
+                          >
+                            <div className="time-slot-indicator"></div>
+                            <span>{slot}</span>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                    
+                    <div className="mb-4">
+                      <textarea
+                        className="w-full min-h-[100px] rounded-xl p-4 bg-slate-800/70 text-white border border-slate-700 focus:outline-none focus:border-blue-400 focus:ring-1 focus:ring-blue-400 placeholder-slate-400 resize-none"
+                        placeholder="Add details about your availability on this date..."
+                        value={calendarMessage ?? workUpdates[selectedDate.toDateString()] ?? ""}
+                        onChange={handleWorkUpdateChange}
+                      />
+                    </div>
+                    
+                    <button
+                      onClick={handleSaveWorkUpdate}
+                      className="w-full py-3 bg-gradient-to-r from-green-400 to-blue-500 hover:from-green-500 hover:to-blue-600 text-white font-medium rounded-xl shadow transition-all duration-300 flex items-center justify-center"
+                    >
+                      <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor">
+                        <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                      </svg>
+                      Save Availability
+                    </button>
+                    
+                    {workUpdates[selectedDate.toDateString()] && (
+                      <div className="mt-4 p-4 rounded-xl bg-slate-800/60 border border-blue-500/30 text-slate-200">
+                        <div className="text-blue-400 text-sm font-medium mb-1">Current Status:</div>
+                        {workUpdates[selectedDate.toDateString()]}
+                      </div>
+                    )}
+                  </>
+                ) : (
+                  <div className="h-full flex items-center justify-center text-slate-400 p-8">
+                    <div className="text-center">
+                      <svg xmlns="http://www.w3.org/2000/svg" className="h-12 w-12 mx-auto mb-4 text-slate-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                      </svg>
+                      <p>Please select a date on the calendar to view or update availability.</p>
+                    </div>
+                  </div>
+                )}
+              </div>
+            </div>
           </div>
-        </div>
-        <div className="mt-6 flex items-center gap-2 text-sm text-slate-400">
-          <span className="w-4 h-4 bg-gradient-to-r from-green-400 to-blue-400 rounded-full inline-block"></span>
-          <span>Has update</span>
         </div>
       </section>
     </>
