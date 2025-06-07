@@ -80,11 +80,11 @@ npm run lint
 
 ## 📸 Screenshots
 
-*(Add some screenshots or demo gifs here to showcase your site!)*
+
 
 ## 🌐 Live Demo
 
-[**View Live Portfolio**](https://my-portfolio-orpin-three-38.vercel.app/) *(Replace with your actual deployed link)*
+[**View Live Portfolio**](https://my-portfolio-orpin-three-38.vercel.app/) 
 
 ## 📄 License
 
