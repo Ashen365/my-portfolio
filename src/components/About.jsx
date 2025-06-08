@@ -475,13 +475,14 @@ const About = () => {
                       <span className="font-medium text-white">{skill.name}</span>
                       <span className="ml-auto text-slate-400 text-sm">{skill.level}%</span>
                     </div>
-                    <div className="w-full h-2 bg-slate-800 rounded-full overflow-hidden">
-                      <div 
+                    <div className="w-full h-2 bg-slate-800 rounded-full h-2.5">
+                      <div
                         ref={addToProgressBarsRefs}
                         data-level={skill.level}
-                        className={`h-full rounded-full bg-gradient-to-r from-green-400 to-blue-500`}
-                        style={{ width: '0%' }}
-                      ></div>
+                        className={`h-full rounded-full ${skill.color} transition-all duration-500`}
+                        style={{ width: `${skill.level}%` }}
+                      >
+                      </div>
                     </div>
                   </div>
                 ))}
