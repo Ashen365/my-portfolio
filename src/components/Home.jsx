@@ -11,7 +11,7 @@ const Home = () => {
   const btnRef = useRef(null);
 
   useEffect(() => {
-    const roles = ["UI/UX Designer", "Frontend Developer", "Backend Developer"];
+    const roles = ["UI/UX Designer", "Frontend Developer", "Backend Developer", "Full Stack Developer","Web Designer","Graphic Designer","Content Creator"];
 
     const tl = gsap.timeline({ defaults: { ease: "power3.out" } });
 
