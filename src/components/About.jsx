@@ -473,15 +473,16 @@ const About = () => {
                     <div className="flex items-center mb-2">
                       <span className={`mr-2 ${skill.color} text-xl group-hover:scale-125 transition-transform duration-300`}>{skill.icon}</span>
                       <span className="font-medium text-white">{skill.name}</span>
-                      <span className="ml-auto text-slate-400 text-sm">{skill.level}%</span>
+                      <span className="ml-auto text-slate-400 text-sm ">{skill.level}%</span>
                     </div>
-                    <div className="w-full h-2 bg-slate-800 rounded-full overflow-hidden">
-                      <div 
-                        ref={addToProgressBarsRefs}
+                    <div className="w-full h-2 bg-slate-800 rounded-full h-2.5">
+                      <div
+                        //ref={addToProgressBarsRefs}
                         data-level={skill.level}
-                        className={`h-full rounded-full bg-gradient-to-r from-green-400 to-blue-500`}
-                        style={{ width: '0%' }}
-                      ></div>
+                        className={"h-full rounded-full bg-gradient-to-r from-green-400 to-blue-500 transition-all duration-500"}
+                        style={{ width: `${skill.level}%` }}
+                      > 
+                      </div>
                     </div>
                   </div>
                 ))}
