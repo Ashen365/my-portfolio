@@ -477,11 +477,11 @@ const About = () => {
                     </div>
                     <div className="w-full h-2 bg-slate-800 rounded-full h-2.5">
                       <div
-                        ref={addToProgressBarsRefs}
+                        //ref={addToProgressBarsRefs}
                         data-level={skill.level}
                         className={`h-full rounded-full ${skill.color} transition-all duration-500`}
                         style={{ width: `${skill.level}%` }}
-                      >
+                      > 
                       </div>
                     </div>
                   </div>
