@@ -78,18 +78,5 @@ To check and fix code style issues:
 npm run lint
 ```
 
-## 📸 Screenshots
-
-
-
-## 🌐 Live Demo
-
-[**View Live Portfolio**](https://my-portfolio-orpin-three-38.vercel.app/) 
-
-## 📄 License
-
-This project is licensed under the [MIT License](LICENSE).
-
----
 
 Made with ❤️ by [Ashen Shanilka Herath](https://github.com/Ashen365)
