@@ -138,6 +138,31 @@ const Navbar = () => {
                 </Link>
               </div>
             ))}
+            
+            {/* CV Button for Desktop */}
+            <a
+              href="/path-to-your-cv.pdf" 
+              target="_blank"
+              rel="noopener noreferrer"
+              className="ml-2 px-4 py-1.5 text-sm font-medium rounded-md bg-gradient-to-r from-green-400 to-blue-500 text-white hover:opacity-90 transition-all duration-200 flex items-center"
+              aria-label="Download CV"
+            >
+              <span>Get CV</span>
+              <svg 
+                xmlns="http://www.w3.org/2000/svg" 
+                className="h-4 w-4 ml-1" 
+                fill="none" 
+                viewBox="0 0 24 24" 
+                stroke="currentColor"
+              >
+                <path 
+                  strokeLinecap="round" 
+                  strokeLinejoin="round" 
+                  strokeWidth={2} 
+                  d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" 
+                />
+              </svg>
+            </a>
           </div>
           
           {/* Mobile menu button */}
@@ -204,6 +229,31 @@ const Navbar = () => {
               {section}
             </Link>
           ))}
+          
+          {/* CV Button for Mobile */}
+          <a
+            href="/path-to-your-cv.pdf"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="block px-3 py-2 rounded-md text-base font-medium text-white bg-gradient-to-r from-green-400 to-blue-500 hover:opacity-90 transition-all duration-200 flex items-center"
+            aria-label="Download CV"
+          >
+            <span>Get CV</span>
+            <svg 
+              xmlns="http://www.w3.org/2000/svg" 
+              className="h-5 w-5 ml-2" 
+              fill="none" 
+              viewBox="0 0 24 24" 
+              stroke="currentColor"
+            >
+              <path 
+                strokeLinecap="round" 
+                strokeLinejoin="round" 
+                strokeWidth={2} 
+                d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" 
+              />
+            </svg>
+          </a>
         </div>
       </div>
     </nav>
