@@ -10,7 +10,7 @@ const initialTestimonials = [
   {
     text: "Ashen is a highly skilled developer. He transformed our vision into a reality with his great technical expertise and attention to detail. The project was delivered on time and exceeded our expectations.",
     name: "Dinidu Liyanage",
-    role: "UnderGraduate , Student",
+    role: "UnderGraduate Student , SLIIT",
     img: Diniduliyanage,
     rating: 5,
     project: "E-commerce Platform",

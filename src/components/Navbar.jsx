@@ -24,6 +24,10 @@ const Navbar = () => {
   const logoRef = useRef(null);
   const menuItemsRef = useRef([]);
   const mobileMenuRef = useRef(null);
+  const desktopCvBtnRef = useRef(null);
+  const mobileCvBtnRef = useRef(null);
+  const downloadIconDesktopRef = useRef(null);
+  const downloadIconMobileRef = useRef(null);
   
   // Handle scroll event
   useEffect(() => {
@@ -73,6 +77,57 @@ const Navbar = () => {
         delay: 0.3
       }
     );
+
+    // Setup CV button hover animations
+    if (desktopCvBtnRef.current) {
+      // Create a timeline for desktop CV button
+      const tlDesktop = gsap.timeline({ paused: true });
+      tlDesktop
+        .to(desktopCvBtnRef.current, { 
+          scale: 1.05, 
+          boxShadow: "0 10px 25px -5px rgba(59, 130, 246, 0.4)", 
+          duration: 0.3 
+        })
+        .to(downloadIconDesktopRef.current, { 
+          y: 3, 
+          yoyo: true, 
+          repeat: 1, 
+          duration: 0.3 
+        }, 0);
+      
+      // Apply hover events
+      desktopCvBtnRef.current.addEventListener("mouseenter", () => tlDesktop.play());
+      desktopCvBtnRef.current.addEventListener("mouseleave", () => tlDesktop.reverse());
+    }
+    
+    if (mobileCvBtnRef.current) {
+      // Create a timeline for mobile CV button
+      const tlMobile = gsap.timeline({ paused: true });
+      tlMobile
+        .to(mobileCvBtnRef.current, { 
+          scale: 1.02, 
+          boxShadow: "0 10px 25px -5px rgba(59, 130, 246, 0.4)", 
+          duration: 0.3 
+        })
+        .to(downloadIconMobileRef.current, { 
+          y: 3, 
+          yoyo: true, 
+          repeat: 1, 
+          duration: 0.3 
+        }, 0);
+      
+      // Apply hover events
+      mobileCvBtnRef.current.addEventListener("mouseenter", () => tlMobile.play());
+      mobileCvBtnRef.current.addEventListener("mouseleave", () => tlMobile.reverse());
+    }
+    
+    // Add a pulsing animation for the CV buttons
+    gsap.to([desktopCvBtnRef.current, mobileCvBtnRef.current], {
+      boxShadow: "0 0 15px 2px rgba(74, 222, 128, 0.4)",
+      repeat: -1,
+      yoyo: true,
+      duration: 1.5
+    });
   }, []);
   
   // Animation for mobile menu
@@ -143,16 +198,18 @@ const Navbar = () => {
             
             {/* CV Button for Desktop */}
             <a
+              ref={desktopCvBtnRef}
               href={resumePDF}
               target="_blank"
               rel="noopener noreferrer"
-              className="ml-2 px-4 py-1.5 text-sm font-medium rounded-md bg-gradient-to-r from-green-400 to-blue-500 text-white hover:opacity-90 transition-all duration-200 flex items-center"
+              className="ml-2 px-4 py-1.5 text-sm font-medium rounded-md bg-gradient-to-r from-green-400 to-blue-500 text-white transition-all duration-300 flex items-center"
               aria-label="Download CV"
             >
               <span>Get Resum</span>
               <svg 
+                ref={downloadIconDesktopRef}
                 xmlns="http://www.w3.org/2000/svg" 
-                className="h-4 w-4 ml-1" 
+                className="h-4 w-4 ml-1 transition-transform" 
                 fill="none" 
                 viewBox="0 0 24 24" 
                 stroke="currentColor"
@@ -234,16 +291,18 @@ const Navbar = () => {
           
           {/* CV Button for Mobile */}
           <a
+            ref={mobileCvBtnRef}
             href={resumePDF}
             target="_blank"
             rel="noopener noreferrer"
-            className="block px-3 py-2 rounded-md text-base font-medium text-white bg-gradient-to-r from-green-400 to-blue-500 hover:opacity-90 transition-all duration-200 flex items-center"
+            className="block px-3 py-2 rounded-md text-base font-medium text-white bg-gradient-to-r from-green-400 to-blue-500 transition-all duration-300 flex items-center"
             aria-label="Download CV"
           >
             <span>Get Resum</span>
             <svg 
+              ref={downloadIconMobileRef}
               xmlns="http://www.w3.org/2000/svg" 
-              className="h-5 w-5 ml-2" 
+              className="h-5 w-5 ml-2 transition-transform" 
               fill="none" 
               viewBox="0 0 24 24" 
               stroke="currentColor"
