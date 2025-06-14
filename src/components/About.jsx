@@ -7,7 +7,7 @@ import { BsArrowRightShort, BsLightningCharge } from 'react-icons/bs';
 import { HiOutlineDesktopComputer, HiOutlineSparkles } from 'react-icons/hi';
 import { MdOutlineWeb } from 'react-icons/md';
 import profilePhoto from '../assets/profile.jpg';
-import resumePDF from "../assets/Ashen's Resume.pdf";
+import resumePDF from "../assets/Ashen's Resume (2).pdf";
 
 // Register ScrollTrigger plugin
 gsap.registerPlugin(ScrollTrigger);
@@ -638,14 +638,8 @@ const About = () => {
                   {[
                     { name: 'Next.js', icon: <SiNextdotjs /> },
                     { name: 'TypeScript', icon: <SiTypescript /> },
-                    { name: 'Redux', icon: null },
-                    { name: 'GraphQL', icon: null },
                     { name: 'Firebase', icon: null },
-                    { name: 'Webpack', icon: null },
-                    { name: 'Jest', icon: null },
-                    { name: 'CI/CD', icon: null },
-                    { name: 'AWS', icon: null },
-                    { name: 'Docker', icon: null },
+                    { name: 'Tailwind CSS', icon: <SiTailwindcss /> },
                     { name: 'Framer Motion', icon: null },
                     { name: 'Material UI', icon: null },
                     { name: 'Chakra UI', icon: null },

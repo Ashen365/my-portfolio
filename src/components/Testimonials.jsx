@@ -2,10 +2,14 @@ import React, { useRef, useEffect, useState } from 'react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import Diniduliyanage from '../assets/Diniduliyanage.jpg';
+import Lakshitha from '../assets/Lakshitha.jpg';
+import Osanda from '../assets/Osanda.jpg';
+import Thilina from '../assets/Thilina.jpg';
+import Ashan from '../assets/Ashan.jpg';
 // Register ScrollTrigger plugin
 gsap.registerPlugin(ScrollTrigger);
 
-// Initial testimonials data
+// Initial testimonials data - removed project field
 const initialTestimonials = [
   {
     text: "Ashen is a highly skilled developer. He transformed our vision into a reality with his great technical expertise and attention to detail. The project was delivered on time and exceeded our expectations.",
@@ -13,52 +17,46 @@ const initialTestimonials = [
     role: "UnderGraduate Student , SLIIT",
     img: Diniduliyanage,
     rating: 5,
-    project: "E-commerce Platform",
   },
   {
-    text: "Working with Ashen was a pleasure. He delivered top-notch solutions with an eye for detail and a focus on user experience. His communication was clear throughout the process.",
-    name: "Jane Smith",
-    role: "UX Designer, Creative Agency",
-    img: "/api/placeholder/60/60",
-    rating: 5,
-    project: "Portfolio Website",
+    text: "Working with Ashen was a fantastic experience. He brought our vision for EchoLanka to life with a clean, intuitive UI and smooth frontend functionality. His creative input and attention to user experience really helped us connect better with our audience. I highly recommend him for any design or frontend work!",
+    name: "Thilina Ihalagedara",
+    role: "EchoLanka Founder",
+    img: Thilina,
+    rating: 3,
   },
   {
-    text: "Ashen brought innovative ideas to our project that we hadn't even considered. His technical knowledge combined with creative problem-solving made him an invaluable asset.",
-    name: "Robert Johnson",
-    role: "Product Manager, StartUp Inc",
-    img: "/api/placeholder/60/60",
-    rating: 5,
-    project: "Mobile Application",
-  },
-  {
-    text: "I was impressed by Ashen's ability to understand our business needs and translate them into elegant technical solutions. He's more than just a developer - he's a strategic thinker.",
-    name: "Sarah Williams",
-    role: "Marketing Director, Brand Co",
-    img: "/api/placeholder/60/60",
+    text: "Working alongside Ashen on multiple projects was a great experience. He stood out as a dependable and committed team member who naturally stepped into a leadership role. Ashen wasn’t just focused on his own tasks—he made sure the entire group stayed on track. He regularly offered support, clarified responsibilities, and stepped up during challenging moments. His collaborative mindset and steady guidance played a big part in our team's overall success.",
+    name: "Ashan Dilakshana",
+    role: "UnderGraduate Student , SLIIT",
+    img: Ashan,
     rating: 4,
-    project: "Marketing Website",
   },
   {
-    text: "Ashen's approach to problem-solving is both creative and methodical. He not only delivered an excellent product but also provided valuable insights throughout the development process.",
-    name: "Michael Chen",
+    text: "I've had the pleasure of working alongside Ashen Shanilka, and I can confidently say they're a talented and hardworking full-stack developer. From front-end design to back-end logic, they handle every part of the development process with skill and focus. They're always eager to learn, help others, and bring real solutions to the table. Anyone would be lucky to have them on their team!",
+    name: "Lakshitha Karunaweera",
+    role: "UnderGraduate Student , SLIIT",
+    img: Lakshitha,
+    rating: 3,
+  },
+  {
+    text: "Working with Ashen was an excellent experience. His ability to blend creativity with functionality made a significant impact on our e-commerce platform. He consistently met deadlines, communicated effectively, and delivered high-quality results. I would gladly work with him again on future projects.",
+    name: "Thanushka Perera",
     role: "CTO, Future Systems",
     img: "/api/placeholder/60/60",
     rating: 5,
-    project: "SaaS Application",
   },
   {
-    text: "What sets Ashen apart is his attention to detail and commitment to quality. He treats each project as if it were his own, resulting in exceptional outcomes every time.",
-    name: "Emily Rodriguez",
+    text: "I had the opportunity to work with Ashen on several projects, and I can confidently say he was one of the most reliable and dedicated members of our team. From the very beginning, he consistently showed strong leadership qualities—not just by taking initiative, but by genuinely supporting everyone in the group. Whether it was organizing tasks, helping others understand their parts, or stepping in when things got tough, Ashen was always there to ensure the team moved forward.",
+    name: "Osanda Lakshitha",
     role: "Founder, Design Studio",
-    img: "/api/placeholder/60/60",
-    rating: 5,
-    project: "Brand Website",
+    img: Osanda,
+    rating: 4,
   }
 ];
 
 const Testimonials = () => {
-  // State variables
+  // State variables - removed project from formData
   const [activeIndex, setActiveIndex] = useState(0);
   const [testimonials, setTestimonials] = useState(initialTestimonials);
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -67,7 +65,6 @@ const Testimonials = () => {
     role: '',
     company: '',
     email: '',
-    project: '',
     text: '',
     rating: 5,
     img: '/api/placeholder/60/60'
@@ -300,7 +297,6 @@ const Testimonials = () => {
     if (!formData.company.trim()) errors.company = "Company is required";
     if (!formData.email.trim()) errors.email = "Email is required";
     else if (!/\S+@\S+\.\S+/.test(formData.email)) errors.email = "Email is invalid";
-    if (!formData.project.trim()) errors.project = "Project type is required";
     if (!formData.text.trim()) errors.text = "Testimonial text is required";
     else if (formData.text.length < 50) errors.text = "Testimonial should be at least 50 characters";
     
@@ -348,7 +344,6 @@ const Testimonials = () => {
           role: '',
           company: '',
           email: '',
-          project: '',
           text: '',
           rating: 5,
           img: '/api/placeholder/60/60'
@@ -394,13 +389,6 @@ const Testimonials = () => {
                   <div className="rounded-lg overflow-hidden backdrop-blur-sm border border-slate-800 bg-slate-900/60 transition-all duration-300 shadow-lg h-full">
                     {/* Card content */}
                     <div className="p-6">
-                      {/* Project type badge */}
-                      <div className="mb-4">
-                        <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-slate-800 text-green-400 border border-green-500/20">
-                          {testimonial.project}
-                        </span>
-                      </div>
-                      
                       {/* Rating stars */}
                       <div className="flex mb-4">
                         {renderStars(testimonial.rating)}
@@ -460,13 +448,6 @@ const Testimonials = () => {
               <div className="p-6 relative h-full flex flex-col">
                 {/* Background glow effect */}
                 <div className="absolute -inset-px rounded-lg bg-gradient-to-r from-green-500/5 to-blue-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300 -z-10"></div>
-                
-                {/* Project type badge */}
-                <div className="mb-4">
-                  <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-slate-800 text-green-400 border border-green-500/20">
-                    {testimonial.project}
-                  </span>
-                </div>
                 
                 {/* Rating stars */}
                 <div className="flex mb-4">
@@ -596,29 +577,6 @@ const Testimonials = () => {
                       <p className="mt-1 text-xs text-slate-400">Your email won't be displayed publicly</p>
                       {formErrors.email && <p className="mt-1 text-sm text-red-500">{formErrors.email}</p>}
                     </div>
-                  </div>
-
-                  <div>
-                    <label htmlFor="project" className="block text-sm font-medium text-slate-300 mb-1">Project Type*</label>
-                    <select
-                      id="project"
-                      name="project"
-                      value={formData.project}
-                      onChange={handleInputChange}
-                      className={`w-full bg-slate-800 text-white border ${formErrors.project ? 'border-red-500' : 'border-slate-600'} rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent`}
-                    >
-                      <option value="">Select project type</option>
-                      <option value="Web Application">Web Application</option>
-                      <option value="Mobile Application">Mobile Application</option>
-                      <option value="E-commerce Platform">E-commerce Platform</option>
-                      <option value="Portfolio Website">Portfolio Website</option>
-                      <option value="Marketing Website">Marketing Website</option>
-                      <option value="SaaS Application">SaaS Application</option>
-                      <option value="UI/UX Design">UI/UX Design</option>
-                      <option value="Custom Software">Custom Software</option>
-                      <option value="Other">Other</option>
-                    </select>
-                    {formErrors.project && <p className="mt-1 text-sm text-red-500">{formErrors.project}</p>}
                   </div>
 
                   <div>
