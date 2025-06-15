@@ -1,6 +1,7 @@
 import React from 'react';
 import 'aos/dist/aos.css';
 import AOS from 'aos';
+
 import Navbar from './components/Navbar';
 import Home from './components/Home';
 import About from './components/About';

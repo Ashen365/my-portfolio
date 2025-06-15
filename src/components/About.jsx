@@ -47,14 +47,14 @@ const About = () => {
   
   // Skills data
   const skills = [
-    { name: 'React', icon: <FaReact />, color: 'text-cyan-400', level: 95, glow: '#22d3ee', gradient: 'from-green-400 via-cyan-400 to-blue-500' },
-    { name: 'JavaScript', icon: <SiJavascript />, color: 'text-yellow-400', level: 90, glow: '#facc15', gradient: 'from-green-400 via-yellow-400 to-blue-500' },
-    { name: 'Node.js', icon: <FaNodeJs />, color: 'text-green-500', level: 85, glow: '#22c55e', gradient: 'from-green-400 to-blue-500' },
-    { name: 'Express', icon: <SiExpress />, color: 'text-gray-300', level: 80, glow: '#d1d5db', gradient: 'from-green-400 to-blue-500' },
-    { name: 'MongoDB', icon: <SiMongodb />, color: 'text-green-400', level: 85, glow: '#4ade80', gradient: 'from-green-400 to-blue-500' },
-    { name: 'Tailwind CSS', icon: <SiTailwindcss />, color: 'text-sky-400', level: 90, glow: '#38bdf8', gradient: 'from-green-400 via-sky-400 to-blue-500' },
-    { name: 'Git/GitHub', icon: <FaGithub />, color: 'text-white', level: 88, glow: '#ffffff', gradient: 'from-green-400 to-blue-500' },
-    { name: 'UI/UX Design', icon: <SiFigma />, color: 'text-pink-400', level: 75, glow: '#f472b6', gradient: 'from-green-400 via-pink-400 to-blue-500' },
+    { name: 'React', icon: <FaReact />, color: 'text-cyan-400', level: 95, glow: '#22d3ee' },
+    { name: 'JavaScript', icon: <SiJavascript />, color: 'text-yellow-400', level: 90, glow: '#facc15' },
+    { name: 'Node.js', icon: <FaNodeJs />, color: 'text-green-500', level: 85, glow: '#22c55e' },
+    { name: 'Express', icon: <SiExpress />, color: 'text-gray-300', level: 80, glow: '#d1d5db' },
+    { name: 'MongoDB', icon: <SiMongodb />, color: 'text-green-400', level: 85, glow: '#4ade80' },
+    { name: 'Tailwind CSS', icon: <SiTailwindcss />, color: 'text-sky-400', level: 90, glow: '#38bdf8' },
+    { name: 'Git/GitHub', icon: <FaGithub />, color: 'text-white', level: 88, glow: '#ffffff' },
+    { name: 'UI/UX Design', icon: <SiFigma />, color: 'text-pink-400', level: 75, glow: '#f472b6' },
   ];
   
   // Services data
@@ -583,7 +583,7 @@ const About = () => {
             </div>
           )}
           
-          {/* Skills Tab - Enhanced with modern components */}
+          {/* Skills Tab - Updated to match the reference images exactly */}
           {activeTab === 'skills' && (
             <div ref={skillsRef} className="space-y-12">
               {/* Intro with floating elements */}
@@ -594,34 +594,31 @@ const About = () => {
                 </p>
               </div>
               
-              {/* Skills with enhanced visuals */}
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+              {/* Skills with visuals matching reference image */}
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-y-10 gap-x-16">
                 {skills.map((skill, index) => (
-                  <div key={index} className="skill-item group">
-                    <div className="flex items-center mb-3">
-                      <div 
-                        className={`w-10 h-10 rounded-lg flex items-center justify-center ${skill.color} text-2xl bg-slate-800/70 mr-3 transform transition-all duration-500 group-hover:scale-110 group-hover:rotate-3`}
-                        style={{ boxShadow: `0 0 15px ${skill.glow}30` }}
-                      >
-                        {skill.icon}
-                      </div>
-                      <div className="flex-1">
-                        <div className="flex items-center justify-between mb-1">
-                          <span className="font-medium text-white">{skill.name}</span>
-                          <span className="text-slate-400 text-sm font-mono">{skill.level}%</span>
+                  <div key={index} className="skill-item">
+                    <div className="flex items-center justify-between mb-2">
+                      <div className="flex items-center">
+                        <div 
+                          className={`w-8 h-8 ${skill.color} mr-3 flex items-center justify-center`}
+                        >
+                          {skill.icon}
                         </div>
-                        <div className="h-2 bg-slate-800/70 rounded-full overflow-hidden">
-                          <div
-                            ref={addToProgressBarsRefs}
-                            data-level={skill.level}
-                            className={`h-full rounded-full bg-gradient-to-r ${skill.gradient} transition-all duration-1000 relative`}
-                            style={{ width: `${skill.level}%` }}
-                          >
-                            <div className="absolute inset-0 bg-grid-pattern opacity-30"></div>
-                            <div className="absolute top-0 right-0 bottom-0 w-8 bg-gradient-to-l from-white/20 to-transparent animate-shimmer"></div>
-                          </div>
-                        </div>
+                        <span className="font-medium text-white">{skill.name}</span>
                       </div>
+                      <span className="text-slate-400 text-sm font-mono">{skill.level}%</span>
+                    </div>
+                    <div className="h-1.5 bg-slate-800/80 rounded-full overflow-hidden">
+                      <div
+                        ref={addToProgressBarsRefs}
+                        data-level={skill.level}
+                        className="h-full rounded-full transition-all duration-1000"
+                        style={{ 
+                          width: `${skill.level}%`,
+                          background: 'linear-gradient(to right, #7EEDC7, #73B3E6)'
+                        }}
+                      ></div>
                     </div>
                   </div>
                 ))}
