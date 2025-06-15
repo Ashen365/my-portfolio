@@ -583,7 +583,7 @@ const About = () => {
             </div>
           )}
           
-          {/* Skills Tab - Updated to match the reference images exactly */}
+          {/* Skills Tab - FIXED to match the screenshot exactly */}
           {activeTab === 'skills' && (
             <div ref={skillsRef} className="space-y-12">
               {/* Intro with floating elements */}
@@ -609,7 +609,7 @@ const About = () => {
                       </div>
                       <span className="text-slate-400 text-sm font-mono">{skill.level}%</span>
                     </div>
-                    <div className="h-1.5 bg-slate-800/80 rounded-full overflow-hidden">
+                    <div className="h-1 bg-zinc-800 rounded-full overflow-hidden">
                       <div
                         ref={addToProgressBarsRefs}
                         data-level={skill.level}
