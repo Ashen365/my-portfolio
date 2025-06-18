@@ -9,11 +9,6 @@ export default {
       fontFamily: {
         'poppins': ['Poppins', 'sans-serif'],
       },
-      boxShadow: {
-        neon: '0 0 10px #6A0DAD, 0 0 20px #6A0DAD',
-        neonPink: '0 0 10px #FF007F, 0 0 20px #FF007F',
-        neonBlue: '0 0 10px #00FFFF, 0 0 20px #00FFFF',
-      },
       animation: {
         blob: "blob 7s infinite",
         blink: "blink 1s step-end infinite", 
