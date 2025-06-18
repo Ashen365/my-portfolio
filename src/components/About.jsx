@@ -117,10 +117,7 @@ const About = () => {
       gsap.killTweensOf(paragraphsRef.current);
       gsap.killTweensOf(progressBarsRef.current);
       
-      // Reset progress bars to initial state when switching tabs
-      if (progressBarsRef.current.length > 0) {
-        gsap.set(progressBarsRef.current, { width: 0 });
-      }
+      // No longer reset progress bars to zero - allow them to maintain their width
     };
 
     resetAnimations();
@@ -233,18 +230,21 @@ const About = () => {
         }
       );
       
-      // Progress bars animation with delay
-      gsap.fromTo(
-        progressBarsRef.current,
-        { width: 0 },
-        { 
-          width: el => `${el.dataset.level}%`,
-          duration: 1.2,
-          stagger: 0.1,
-          ease: "power2.inOut",
-          delay: 0.3
-        }
-      );
+      // Progress bars animation - only animate ones that aren't already at their correct width
+      if (progressBarsRef.current.length > 0) {
+        progressBarsRef.current.forEach(bar => {
+          gsap.fromTo(
+            bar,
+            { width: "0%" },
+            { 
+              width: `${bar.dataset.level}%`,
+              duration: 1.2,
+              ease: "power2.inOut",
+              delay: 0.3
+            }
+          );
+        });
+      }
       
       // Skill tags animation
       gsap.fromTo(
@@ -609,14 +609,14 @@ const About = () => {
                       </div>
                       <span className="text-slate-400 text-sm font-mono">{skill.level}%</span>
                     </div>
-                    <div className="h-1 bg-zinc-800 rounded-full overflow-hidden">
+                    <div className="h-2 bg-slate-800/70 rounded-full overflow-hidden">
                       <div
                         ref={addToProgressBarsRefs}
                         data-level={skill.level}
                         className="h-full rounded-full transition-all duration-1000"
                         style={{ 
                           width: `${skill.level}%`,
-                          background: 'linear-gradient(to right, #7EEDC7, #73B3E6)'
+                          background: `linear-gradient(to right, ${skill.glow}, #73B3E6)`
                         }}
                       ></div>
                     </div>
