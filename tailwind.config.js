@@ -6,6 +6,9 @@ export default {
       colors: {
         background: '#0f172a', // This is slate-950, matching your About component
       },
+      fontFamily: {
+        'poppins': ['Poppins', 'sans-serif'],
+      },
       boxShadow: {
         neon: '0 0 10px #6A0DAD, 0 0 20px #6A0DAD',
         neonPink: '0 0 10px #FF007F, 0 0 20px #FF007F',
