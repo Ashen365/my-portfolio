@@ -44,7 +44,7 @@ const projects = [
     description: 'A travel booking platform for couples exploring Sri Lanka, offering hotel booking, activity planning, and package customization, built with the MERN stack.',
     link: 'https://www.behance.net/ashenshanilka',
     githubLink: 'https://github.com/Ashen365/ceylon-escape', // Add GitHub link
-    category: 'Full Stack',
+    category: 'Frontend',
   },
   {
     title: 'Factory Pro',
