@@ -7,7 +7,7 @@ import { BsArrowRightShort, BsLightningCharge } from 'react-icons/bs';
 import { HiOutlineDesktopComputer, HiOutlineSparkles } from 'react-icons/hi';
 import { MdOutlineWeb } from 'react-icons/md';
 import profilePhoto from '../assets/profile.jpg';
-import resumePDF from "../assets/Ashen's Resume (2).pdf";
+import resumePDF from "../assets/Ashen's shanilkaCV.pdf";
 
 // Register ScrollTrigger plugin
 gsap.registerPlugin(ScrollTrigger);

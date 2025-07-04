@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from "react";
 import { Link } from "react-scroll";
 import { gsap } from "gsap";
 // Import the CV file
-import resumePDF from "../assets/Ashen's Resume (2).pdf";
+import resumePDF from "../assets/Ashen's shanilkaCV.pdf";
 
 const NAV_LINKS = [
   "home",
