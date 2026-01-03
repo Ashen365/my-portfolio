@@ -1,18 +1,18 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-scroll";
-import { gsap } from "gsap";
-// Import the CV file
+import { motion, AnimatePresence } from "framer-motion";
+import { Home, User, Zap, Rocket, Award, BookOpen, MessageCircle, Mail, FileText, Menu, X } from 'lucide-react';
 import resumePDF from "../assets/Ashen's shanilkaCV.pdf";
 
 const NAV_LINKS = [
-  "home",
-  "about",
-  "services",
-  "projects",
-  "skills",
-  "blog",
-  "testimonials",
-  "contact",
+  { id: "home", label: "Home", icon: Home },
+  { id: "about", label: "About", icon: User },
+  { id: "services", label: "Services", icon: Zap },
+  { id: "projects", label: "Projects", icon: Rocket },
+  { id: "skills", label: "Skills", icon: Award },
+  { id: "blog", label: "Blog", icon: BookOpen },
+  { id: "testimonials", label: "Testimonials", icon: MessageCircle },
+  { id: "contact", label: "Contact", icon: Mail },
 ];
 
 const Navbar = () => {
@@ -20,33 +20,16 @@ const Navbar = () => {
   const [activeSection, setActiveSection] = useState("home");
   const [scrolled, setScrolled] = useState(false);
   
-  const navbarRef = useRef(null);
-  const logoRef = useRef(null);
-  const menuItemsRef = useRef([]);
-  const mobileMenuRef = useRef(null);
-  const desktopCvBtnRef = useRef(null);
-  const mobileCvBtnRef = useRef(null);
-  const downloadIconDesktopRef = useRef(null);
-  const downloadIconMobileRef = useRef(null);
-  
-  // Handle scroll event
   useEffect(() => {
     const handleScroll = () => {
-      const scrollPosition = window.scrollY;
-      if (scrollPosition > 10) {
-        setScrolled(true);
-      } else {
-        setScrolled(false);
-      }
+      setScrolled(window.scrollY > 10);
       
-      // Determine active section based on scroll position
-      // This is a simplified approach - you might want to improve this
-      NAV_LINKS.forEach((section) => {
-        const element = document.getElementById(section);
+      NAV_LINKS.forEach((link) => {
+        const element = document.getElementById(link.id);
         if (element) {
           const rect = element.getBoundingClientRect();
           if (rect.top <= 100 && rect.bottom >= 100) {
-            setActiveSection(section);
+            setActiveSection(link.id);
           }
         }
       });
@@ -56,268 +39,185 @@ const Navbar = () => {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
   
-  // GSAP Animations
-  useEffect(() => {
-    // Initial animation for navbar elements
-    gsap.fromTo(
-      logoRef.current,
-      { y: -50, opacity: 0 },
-      { y: 0, opacity: 1, duration: 0.6, ease: "power3.out" }
-    );
-    
-    gsap.fromTo(
-      menuItemsRef.current,
-      { y: -30, opacity: 0 },
-      { 
-        y: 0, 
-        opacity: 1, 
-        duration: 0.4, 
-        stagger: 0.1, 
-        ease: "power2.out",
-        delay: 0.3
-      }
-    );
-
-    // Setup CV button hover animations
-    if (desktopCvBtnRef.current) {
-      // Create a timeline for desktop CV button
-      const tlDesktop = gsap.timeline({ paused: true });
-      tlDesktop
-        .to(desktopCvBtnRef.current, { 
-          scale: 1.05, 
-          boxShadow: "0 10px 25px -5px rgba(59, 130, 246, 0.4)", 
-          duration: 0.3 
-        })
-        .to(downloadIconDesktopRef.current, { 
-          y: 3, 
-          yoyo: true, 
-          repeat: 1, 
-          duration: 0.3 
-        }, 0);
-      
-      // Apply hover events
-      desktopCvBtnRef.current.addEventListener("mouseenter", () => tlDesktop.play());
-      desktopCvBtnRef.current.addEventListener("mouseleave", () => tlDesktop.reverse());
-    }
-    
-    if (mobileCvBtnRef.current) {
-      // Create a timeline for mobile CV button
-      const tlMobile = gsap.timeline({ paused: true });
-      tlMobile
-        .to(mobileCvBtnRef.current, { 
-          scale: 1.02, 
-          boxShadow: "0 10px 25px -5px rgba(59, 130, 246, 0.4)", 
-          duration: 0.3 
-        })
-        .to(downloadIconMobileRef.current, { 
-          y: 3, 
-          yoyo: true, 
-          repeat: 1, 
-          duration: 0.3 
-        }, 0);
-      
-      // Apply hover events
-      mobileCvBtnRef.current.addEventListener("mouseenter", () => tlMobile.play());
-      mobileCvBtnRef.current.addEventListener("mouseleave", () => tlMobile.reverse());
-    }
-    
-    // Add a pulsing animation for the CV buttons
-    gsap.to([desktopCvBtnRef.current, mobileCvBtnRef.current], {
-      boxShadow: "0 0 15px 2px rgba(74, 222, 128, 0.4)",
-      repeat: -1,
-      yoyo: true,
-      duration: 1.5
-    });
-  }, []);
-  
-  // Animation for mobile menu
-  useEffect(() => {
-    if (mobileMenuRef.current) {
-      if (isOpen) {
-        gsap.fromTo(
-          mobileMenuRef.current,
-          { opacity: 0, y: -20 },
-          { opacity: 1, y: 0, duration: 0.3, ease: "power2.out" }
-        );
-      } else {
-        gsap.to(mobileMenuRef.current, {
-          opacity: 0,
-          y: -20,
-          duration: 0.2,
-          ease: "power2.in"
-        });
-      }
-    }
-  }, [isOpen]);
-  
   const toggleMenu = () => setIsOpen(!isOpen);
 
   return (
-    <nav 
-      ref={navbarRef}
+    <motion.nav 
       className={`fixed w-full z-50 transition-all duration-300 ${
         scrolled 
-          ? "bg-slate-900/90 backdrop-blur-md shadow-lg" 
+          ? "bg-slate-950/80 backdrop-blur-xl border-b border-white/10 shadow-2xl" 
           : "bg-transparent"
       }`}
+      initial={{ y: -100 }}
+      animate={{ y: 0 }}
+      transition={{ duration: 0.6, ease: "easeOut" }}
     >
-      <div className="container mx-auto px-4 md:px-6">
-        <div className="flex h-16 items-center justify-between">
-          <div className="flex items-center" ref={logoRef}>
-            <h1 className="text-xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-green-400 to-blue-500">
-              Ashen Shanilka Herath
+      <div className="max-w-7xl mx-auto px-4 md:px-6">
+        <div className="flex h-20 items-center justify-between">
+          {/* Logo */}
+          <motion.div 
+            className="flex items-center"
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+          >
+            <h1 className="text-xl md:text-2xl font-black bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400 bg-clip-text text-transparent whitespace-nowrap">
+              Ashen Herath
             </h1>
-          </div>
+          </motion.div>
           
           {/* Desktop Navigation */}
-          <div className="hidden md:flex space-x-1">
-            {NAV_LINKS.map((section, index) => (
-              <div 
-                key={section} 
-                ref={(el) => (menuItemsRef.current[index] = el)}
+          <div className="hidden lg:flex items-center gap-2 ml-24">
+            {NAV_LINKS.map((link, index) => (
+              <motion.div
+                key={link.id}
+                initial={{ opacity: 0, y: -20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: index * 0.1, duration: 0.4 }}
               >
                 <Link
-                  to={section}
+                  to={link.id}
                   smooth={true}
                   duration={500}
-                  className={`relative px-3 py-2 text-sm font-medium capitalize rounded-md cursor-pointer transition-all duration-200 ease-in-out ${
-                    activeSection === section
-                      ? "text-white"
-                      : "text-slate-400 hover:text-white"
-                  }`}
-                  onClick={() => setActiveSection(section)}
-                  aria-label={`Navigate to ${section} section`}
+                  className="relative group cursor-pointer"
+                  onClick={() => setActiveSection(link.id)}
                 >
-                  {section}
-                  {activeSection === section && (
-                    <span className="absolute bottom-0 left-0 w-full h-[2px] bg-gradient-to-r from-green-400 to-blue-500 rounded-full" />
+                  <motion.div
+                    className={`px-4 py-2 rounded-xl transition-all duration-300 ${
+                      activeSection === link.id
+                        ? "bg-white/10 backdrop-blur-md text-white"
+                        : "text-slate-400 hover:text-white hover:bg-white/5"
+                    }`}
+                    whileHover={{ scale: 1.05 }}
+                    whileTap={{ scale: 0.95 }}
+                  >
+                    <span className="flex items-center gap-2 text-sm font-medium">
+                      <link.icon className="w-4 h-4" />
+                      <span className="hidden xl:inline">{link.label}</span>
+                    </span>
+                  </motion.div>
+                  
+                  {activeSection === link.id && (
+                    <motion.div
+                      className="absolute bottom-0 left-0 right-0 h-0.5 bg-gradient-to-r from-blue-400 to-purple-400 rounded-full"
+                      layoutId="activeSection"
+                      transition={{ type: "spring", stiffness: 380, damping: 30 }}
+                    />
                   )}
                 </Link>
-              </div>
+              </motion.div>
             ))}
             
-            {/* CV Button for Desktop */}
-            <a
-              ref={desktopCvBtnRef}
+            {/* CV Button */}
+            <motion.a
               href={resumePDF}
               target="_blank"
               rel="noopener noreferrer"
-              className="ml-2 px-4 py-1.5 text-sm font-medium rounded-md bg-gradient-to-r from-green-400 to-blue-500 text-white transition-all duration-300 flex items-center"
-              aria-label="Download CV"
+              className="ml-16 px-6 py-2.5 rounded-xl bg-gradient-to-r from-blue-500 to-purple-500 text-white font-bold shadow-lg flex items-center gap-2"
+              whileHover={{ scale: 1.05, boxShadow: "0 0 25px rgba(139, 92, 246, 0.5)" }}
+              whileTap={{ scale: 0.95 }}
+              initial={{ opacity: 0, x: 20 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ delay: 0.8 }}
             >
-              <span>Get Resum</span>
-              <svg 
-                ref={downloadIconDesktopRef}
-                xmlns="http://www.w3.org/2000/svg" 
-                className="h-4 w-4 ml-1 transition-transform" 
-                fill="none" 
-                viewBox="0 0 24 24" 
-                stroke="currentColor"
+              <span>Resume</span>
+              <motion.span
+                animate={{ y: [0, -3, 0] }}
+                transition={{ duration: 1.5, repeat: Infinity }}
               >
-                <path 
-                  strokeLinecap="round" 
-                  strokeLinejoin="round" 
-                  strokeWidth={2} 
-                  d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" 
-                />
-              </svg>
-            </a>
+                <FileText className="w-5 h-5" />
+              </motion.span>
+            </motion.a>
           </div>
           
-          {/* Mobile menu button */}
-          <button
-            className="md:hidden inline-flex items-center justify-center p-2 rounded-md text-slate-400 hover:text-white hover:bg-slate-800/60 focus:outline-none"
+          {/* Mobile Menu Button */}
+          <motion.button
+            className="lg:hidden relative p-2 rounded-xl bg-white/5 backdrop-blur-md border border-white/10 text-white"
             onClick={toggleMenu}
-            aria-label={isOpen ? "Close menu" : "Open menu"}
+            whileTap={{ scale: 0.9 }}
           >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-              className={`${isOpen ? "hidden" : "block"} h-6 w-6`}
+            <motion.div
+              animate={isOpen ? "open" : "closed"}
+              variants={{
+                open: { rotate: 180 },
+                closed: { rotate: 0 }
+              }}
+              transition={{ duration: 0.3 }}
             >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
-                d="M4 6h16M4 12h16M4 18h16"
-              />
-            </svg>
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-              className={`${isOpen ? "block" : "hidden"} h-6 w-6`}
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
-                d="M6 18L18 6M6 6l12 12"
-              />
-            </svg>
-          </button>
+              {isOpen ? (
+                <span className="text-2xl">✕</span>
+              ) : (
+                <span className="text-2xl">☰</span>
+              )}
+            </motion.div>
+          </motion.button>
         </div>
       </div>
       
-      {/* Mobile menu */}
-      <div
-        ref={mobileMenuRef}
-        className={`md:hidden ${isOpen ? "block" : "hidden"}`}
-      >
-        <div className="px-2 pt-2 pb-3 space-y-1 bg-slate-900/95 backdrop-blur-md border-t border-slate-800">
-          {NAV_LINKS.map((section) => (
-            <Link
-              key={section}
-              to={section}
-              smooth={true}
-              duration={500}
-              className={`block px-3 py-2 rounded-md text-base font-medium capitalize ${
-                activeSection === section
-                  ? "bg-slate-800 text-white" 
-                  : "text-slate-300 hover:bg-slate-800/70 hover:text-white"
-              }`}
-              onClick={() => {
-                setActiveSection(section);
-                setIsOpen(false);
-              }}
-              aria-label={`Navigate to ${section} section`}
-            >
-              {section}
-            </Link>
-          ))}
-          
-          {/* CV Button for Mobile */}
-          <a
-            ref={mobileCvBtnRef}
-            href={resumePDF}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="block px-3 py-2 rounded-md text-base font-medium text-white bg-gradient-to-r from-green-400 to-blue-500 transition-all duration-300 flex items-center"
-            aria-label="Download CV"
+      {/* Mobile Menu */}
+      <AnimatePresence>
+        {isOpen && (
+          <motion.div
+            className="lg:hidden"
+            initial={{ opacity: 0, height: 0 }}
+            animate={{ opacity: 1, height: "auto" }}
+            exit={{ opacity: 0, height: 0 }}
+            transition={{ duration: 0.3 }}
           >
-            <span>Get Resum</span>
-            <svg 
-              ref={downloadIconMobileRef}
-              xmlns="http://www.w3.org/2000/svg" 
-              className="h-5 w-5 ml-2 transition-transform" 
-              fill="none" 
-              viewBox="0 0 24 24" 
-              stroke="currentColor"
-            >
-              <path 
-                strokeLinecap="round" 
-                strokeLinejoin="round" 
-                strokeWidth={2} 
-                d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" 
-              />
-            </svg>
-          </a>
-        </div>
-      </div>
-    </nav>
+            <div className="bg-slate-950/95 backdrop-blur-xl border-t border-white/10 px-4 py-6 space-y-2">
+              {NAV_LINKS.map((link, index) => (
+                <motion.div
+                  key={link.id}
+                  initial={{ opacity: 0, x: -20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ delay: index * 0.05 }}
+                >
+                  <Link
+                    to={link.id}
+                    smooth={true}
+                    duration={500}
+                    onClick={() => {
+                      setActiveSection(link.id);
+                      setIsOpen(false);
+                    }}
+                  >
+                    <motion.div
+                      className={`px-4 py-3 rounded-xl transition-all cursor-pointer ${
+                        activeSection === link.id
+                          ? "bg-gradient-to-r from-blue-500/20 to-purple-500/20 border border-blue-500/50 text-white"
+                          : "bg-white/5 text-slate-400 hover:text-white hover:bg-white/10"
+                      }`}
+                      whileTap={{ scale: 0.95 }}
+                    >
+                      <span className="flex items-center gap-3">
+                        <link.icon className="w-6 h-6" />
+                        <span className="font-medium">{link.label}</span>
+                      </span>
+                    </motion.div>
+                  </Link>
+                </motion.div>
+              ))}
+              
+              {/* Mobile CV Button */}
+              <motion.a
+                href={resumePDF}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="block px-4 py-3 rounded-xl bg-gradient-to-r from-blue-500 to-purple-500 text-white font-bold text-center mt-4"
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.4 }}
+                whileTap={{ scale: 0.95 }}
+              >
+                <span className="flex items-center justify-center gap-2">
+                  <span>Download Resume</span>
+                  <FileText className="w-5 h-5" />
+                </span>
+              </motion.a>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </motion.nav>
   );
 };
 

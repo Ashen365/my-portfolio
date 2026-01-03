@@ -1,253 +1,189 @@
-import React, { useRef, useEffect } from 'react';
-import { gsap } from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
-
-// Register GSAP plugins
-gsap.registerPlugin(ScrollTrigger);
-
-// Additional services for a more comprehensive list
-const services = [
-  {
-    icon: (
-      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-        <polyline points="16 18 22 12 16 6"></polyline>
-        <polyline points="8 6 2 12 8 18"></polyline>
-      </svg>
-    ),
-    title: 'Frontend Development',
-    description: 'Building responsive, interactive websites using React.js and Tailwind CSS with modern best practices.',
-  },
-  {
-    icon: (
-      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-        <path d="M12 19l7-7 3 3-7 7-3-3z"></path>
-        <path d="M18 13l-1.5-7.5L2 2l3.5 14.5L13 18l5-5z"></path>
-        <path d="M2 2l7.586 7.586"></path>
-        <circle cx="11" cy="11" r="2"></circle>
-      </svg>
-    ),
-    title: 'UI/UX Design',
-    description: 'Designing modern, clean, and user-friendly interfaces with Figma and Adobe XD.',
-  },
-  {
-    icon: (
-      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-        <rect x="5" y="2" width="14" height="20" rx="2" ry="2"></rect>
-        <line x1="12" y1="18" x2="12.01" y2="18"></line>
-      </svg>
-    ),
-    title: 'Mobile Application Development',
-    description: 'I design and develop responsive, user-friendly mobile applications tailored to both Android and iOS platforms. From idea to deployment, I focus on clean UI/UX, smooth performance, and scalable architecture — turning your business goals into powerful mobile experiences.',
-  },
-  {
-    icon: (
-      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-        <polyline points="4 17 10 11 4 5"></polyline>
-        <line x1="12" y1="19" x2="20" y2="19"></line>
-      </svg>
-    ),
-    title: 'Full-Stack Development',
-    description: 'Creating end-to-end solutions with Node.js, Express, MongoDB, and modern JavaScript frameworks.',
-  },
-  {
-    icon: (
-      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-        <rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect>
-        <line x1="8" y1="21" x2="16" y2="21"></line>
-        <line x1="12" y1="17" x2="12" y2="21"></line>
-      </svg>
-    ),
-    title: 'Web Performance',
-    description: 'Optimizing website speed, accessibility, and SEO to ensure the best user experience.',
-  },
-  {
-    icon: (
-      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-        <path d="M12 20h9"></path>
-        <path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"></path>
-      </svg>
-    ),
-    title: 'Custom Web Solutions',
-    description: 'Developing tailored web applications that solve specific business problems and enhance productivity.',
-  },
-];
+import React from 'react';
+import { motion } from 'framer-motion';
 
 const Services = () => {
-  // Refs for GSAP animations
-  const sectionRef = useRef(null);
-  const titleRef = useRef(null);
-  const serviceRefs = useRef([]);
-  
-  // Function to scroll to Contact section
-  const scrollToContact = () => {
-    const contactSection = document.getElementById('contact');
-    if (contactSection) {
-      // Smooth scroll to the contact section
-      contactSection.scrollIntoView({ behavior: 'smooth' });
-    }
-  };
-  
-  // Set up GSAP animations
-  useEffect(() => {
-    // Main section fade in
-    gsap.fromTo(
-      titleRef.current,
-      { 
-        y: 50, 
-        opacity: 0 
-      },
-      {
-        y: 0,
-        opacity: 1,
-        duration: 0.8,
-        ease: 'power3.out',
-        scrollTrigger: {
-          trigger: sectionRef.current,
-          start: 'top 80%',
-        }
-      }
-    );
-    
-    // Staggered animation for service cards
-    gsap.fromTo(
-      serviceRefs.current,
-      { 
-        y: 70, 
-        opacity: 0,
-        scale: 0.9
-      },
-      {
-        y: 0,
-        opacity: 1,
-        scale: 1,
-        duration: 1,
-        stagger: 0.15,
-        ease: 'back.out(1.2)',
-        scrollTrigger: {
-          trigger: sectionRef.current,
-          start: 'top 60%',
-        }
-      }
-    );
-    
-    // Hover animations for service cards
-    serviceRefs.current.forEach(card => {
-      // Store original scale
-      const originalScale = gsap.getProperty(card, "scale");
-      
-      // Create hover animations
-      card.addEventListener('mouseenter', () => {
-        gsap.to(card, {
-          scale: 1.03,
-          y: -8,
-          duration: 0.4,
-          ease: 'power2.out',
-          boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.25)'
-        });
-        
-        // Animate the icon inside the card
-        const icon = card.querySelector('.service-icon');
-        gsap.to(icon, {
-          rotate: 15,
-          scale: 1.1,
-          color: '#4ade80',
-          duration: 0.4
-        });
-      });
-      
-      card.addEventListener('mouseleave', () => {
-        gsap.to(card, {
-          scale: originalScale,
-          y: 0,
-          duration: 0.4,
-          ease: 'power2.out',
-          boxShadow: '0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)'
-        });
-        
-        // Reset the icon animation
-        const icon = card.querySelector('.service-icon');
-        gsap.to(icon, {
-          rotate: 0,
-          scale: 1,
-          color: 'currentColor',
-          duration: 0.4
-        });
-      });
-    });
-    
-    // Clean up ScrollTrigger instances when component unmounts
-    return () => {
-      ScrollTrigger.getAll().forEach(trigger => trigger.kill());
-    };
-  }, []);
+  const services = [
+    {
+      emoji: '💻',
+      title: 'Frontend Development',
+      description: 'Building responsive, interactive websites using React.js, Next.js, and Tailwind CSS with modern best practices.',
+      features: ['React/Next.js', 'Responsive Design', 'Performance Optimization', 'SEO Friendly'],
+      color: 'from-blue-500 to-cyan-500',
+    },
+    {
+      emoji: '🎨',
+      title: 'UI/UX Design',
+      description: 'Designing modern, clean, and user-friendly interfaces with Figma and Adobe XD that users love.',
+      features: ['Wireframing', 'Prototyping', 'User Research', 'Visual Design'],
+      color: 'from-purple-500 to-pink-500',
+    },
+    {
+      emoji: '📱',
+      title: 'Mobile Development',
+      description: 'Creating responsive mobile applications tailored for both Android and iOS platforms.',
+      features: ['Cross-platform', 'Native Performance', 'Clean UI/UX', 'App Store Ready'],
+      color: 'from-green-500 to-emerald-500',
+    },
+    {
+      emoji: '⚙️',
+      title: 'Backend Development',
+      description: 'Building robust server-side applications with Node.js, Express, and databases like MongoDB.',
+      features: ['RESTful APIs', 'Database Design', 'Authentication', 'Cloud Integration'],
+      color: 'from-orange-500 to-red-500',
+    },
+    {
+      emoji: '🚀',
+      title: 'Full-Stack Solutions',
+      description: 'End-to-end development from concept to deployment with scalable architecture.',
+      features: ['Full MERN Stack', 'DevOps', 'CI/CD', 'Cloud Deployment'],
+      color: 'from-indigo-500 to-purple-500',
+    },
+    {
+      emoji: '✨',
+      title: 'Animation & Effects',
+      description: 'Adding life to your projects with smooth animations using Framer Motion and GSAP.',
+      features: ['Micro-interactions', 'Page Transitions', 'Scroll Effects', '3D Elements'],
+      color: 'from-yellow-500 to-orange-500',
+    },
+  ];
 
   return (
-    <section
-      ref={sectionRef}
-      id="services"
-      className="py-20 px-4 sm:px-6 lg:px-8 bg-gradient-to-b from-slate-950 to-slate-900"
-    >
-      <div className="max-w-6xl mx-auto">
+    <section id="services" className="min-h-screen relative bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950 py-20 px-6">
+      {/* Background Blobs */}
+      {[...Array(2)].map((_, i) => (
+        <motion.div
+          key={i}
+          className="absolute w-96 h-96 rounded-full filter blur-3xl opacity-10"
+          style={{
+            background: i === 0 ? '#3b82f6' : '#ec4899',
+            left: `${i * 70}%`,
+            top: `${i * 50}%`,
+          }}
+          animate={{
+            x: [0, 50, 0],
+            y: [0, -50, 0],
+            scale: [1, 1.2, 1],
+          }}
+          transition={{ duration: 15, repeat: Infinity, ease: "easeInOut" }}
+        />
+      ))}
+
+      <div className="relative z-10 max-w-7xl mx-auto">
         {/* Section Header */}
-        <div className="text-center mb-16" ref={titleRef}>
-          <h2 className="text-3xl sm:text-4xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-green-400 to-blue-500 inline-block mb-4">
-            My Services
+        <motion.div
+          className="text-center mb-16"
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6 }}
+        >
+          <motion.span
+            className="inline-block text-5xl mb-4"
+            animate={{ y: [0, -10, 0] }}
+            transition={{ duration: 2, repeat: Infinity }}
+          >
+            🛠️
+          </motion.span>
+          <h2 className="text-5xl md:text-7xl font-black text-white mb-4">
+            My <span className="bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent">Services</span>
           </h2>
-          <p className="text-slate-300 max-w-2xl mx-auto text-lg">
-            Professional solutions to help bring your ideas to life with modern web technologies
+          <p className="text-xl text-slate-400 max-w-2xl mx-auto">
+            Comprehensive solutions to bring your digital vision to life
           </p>
-        </div>
-        
+        </motion.div>
+
         {/* Services Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
-          {services.map((service, idx) => (
-            <div
-              key={service.title}
-              ref={el => (serviceRefs.current[idx] = el)}
-              className="relative bg-slate-900/60 backdrop-blur-sm border border-slate-800 rounded-lg p-6 shadow-md transition-all duration-300 hover:border-slate-700 flex flex-col"
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {services.map((service, index) => (
+            <motion.div
+              key={index}
+              className="group relative bg-white/5 backdrop-blur-md border border-white/10 rounded-3xl p-8 overflow-hidden"
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6, delay: index * 0.1 }}
+              whileHover={{ y: -10, scale: 1.02 }}
             >
-              {/* Service Icon */}
-              <div className="service-icon h-12 w-12 flex items-center justify-center text-blue-400 mb-5 transition-all duration-300">
-                {service.icon}
+              {/* Gradient Overlay on Hover */}
+              <motion.div
+                className={`absolute inset-0 bg-gradient-to-br ${service.color} opacity-0 group-hover:opacity-10 transition-opacity`}
+              />
+
+              <div className="relative">
+                {/* Icon */}
+                <motion.div
+                  className="text-6xl mb-4"
+                  whileHover={{ scale: 1.2, rotate: 10 }}
+                  transition={{ type: "spring", stiffness: 300 }}
+                >
+                  {service.emoji}
+                </motion.div>
+
+                {/* Title */}
+                <h3 className={`text-2xl font-bold mb-3 bg-gradient-to-r ${service.color} bg-clip-text text-transparent`}>
+                  {service.title}
+                </h3>
+
+                {/* Description */}
+                <p className="text-slate-400 mb-6 leading-relaxed">
+                  {service.description}
+                </p>
+
+                {/* Features */}
+                <div className="space-y-2">
+                  {service.features.map((feature, i) => (
+                    <motion.div
+                      key={i}
+                      className="flex items-center gap-2 text-sm"
+                      initial={{ opacity: 0, x: -10 }}
+                      whileInView={{ opacity: 1, x: 0 }}
+                      viewport={{ once: true }}
+                      transition={{ delay: index * 0.1 + i * 0.05 }}
+                    >
+                      <div className={`w-1.5 h-1.5 rounded-full bg-gradient-to-r ${service.color}`}></div>
+                      <span className="text-slate-300">{feature}</span>
+                    </motion.div>
+                  ))}
+                </div>
+
+                {/* Hover Arrow */}
+                <motion.div
+                  className="absolute bottom-6 right-6 opacity-0 group-hover:opacity-100 transition-opacity"
+                  animate={{ x: [0, 5, 0] }}
+                  transition={{ duration: 1.5, repeat: Infinity }}
+                >
+                  <div className={`w-10 h-10 rounded-full bg-gradient-to-r ${service.color} flex items-center justify-center text-white text-xl`}>
+                    →
+                  </div>
+                </motion.div>
               </div>
-              
-              {/* Service Title */}
-              <h3 className="text-xl font-semibold text-white mb-3">
-                {service.title}
-              </h3>
-              
-              {/* Service Description */}
-              <p className="text-slate-300 text-sm">
-                {service.description}
-              </p>
-              
-              {/* Decorative element */}
-              <div className="absolute top-0 right-0 h-20 w-20 bg-gradient-to-br from-green-500/10 to-blue-500/10 rounded-bl-3xl rounded-tr-lg -z-10"></div>
-              
-              {/* Interactive indicator */}
-              <div className="mt-auto pt-5 flex items-center text-sm font-medium text-blue-400">
-                <span className="mr-2">Learn more</span>
-                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                  <path d="M5 12h14"></path>
-                  <path d="m12 5 7 7-7 7"></path>
-                </svg>
-              </div>
-            </div>
+            </motion.div>
           ))}
         </div>
-        
-        {/* Call to Action - With onClick handler to scroll to contact section */}
-        <div className="mt-16 text-center">
-          <button 
-            onClick={scrollToContact}
-            className="inline-flex items-center justify-center rounded-md bg-gradient-to-r from-green-500 to-blue-500 px-6 py-3 text-base font-medium text-white shadow-md hover:brightness-110 transition-all duration-300"
+
+        {/* Bottom CTA */}
+        <motion.div
+          className="mt-16 text-center"
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6, delay: 0.6 }}
+        >
+          <motion.a
+            href="#contact"
+            className="inline-flex items-center gap-2 px-8 py-4 bg-gradient-to-r from-blue-500 to-purple-500 text-white font-bold rounded-full text-lg"
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
           >
-            Discuss Your Project
-            <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 ml-2" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-              <path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"></path>
-            </svg>
-          </button>
-        </div>
+            <span>Let's Work Together</span>
+            <motion.span
+              animate={{ x: [0, 5, 0] }}
+              transition={{ duration: 1.5, repeat: Infinity }}
+            >
+              →
+            </motion.span>
+          </motion.a>
+        </motion.div>
       </div>
     </section>
   );

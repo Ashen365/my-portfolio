@@ -1,195 +1,165 @@
-import React, { useRef, useEffect, useState } from 'react';
+import React from 'react';
+import { motion } from 'framer-motion';
 import { FaReact, FaHtml5, FaCss3Alt, FaNodeJs, FaGithub, FaFigma } from 'react-icons/fa';
-import { SiTailwindcss, SiJavascript, SiMongodb } from 'react-icons/si';
-import { gsap } from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
-
-// Register ScrollTrigger plugin
-gsap.registerPlugin(ScrollTrigger);
-
-const skills = [
-  { 
-    name: 'React', 
-    icon: <FaReact />, 
-    color: 'text-cyan-400',
-    category: 'frontend',
-    description: 'Component-based UI library'
-  },
-  { 
-    name: 'JavaScript', 
-    icon: <SiJavascript />, 
-    color: 'text-yellow-400',
-    category: 'frontend',
-    description: 'Programming language'
-  },
-  { 
-    name: 'Tailwind CSS', 
-    icon: <SiTailwindcss />, 
-    color: 'text-sky-400',
-    category: 'frontend',
-    description: 'Utility-first CSS framework'
-  },
-  { 
-    name: 'HTML5', 
-    icon: <FaHtml5 />, 
-    color: 'text-orange-500',
-    category: 'frontend',
-    description: 'Markup language'
-  },
-  { 
-    name: 'CSS3', 
-    icon: <FaCss3Alt />, 
-    color: 'text-blue-500',
-    category: 'frontend',
-    description: 'Styling language'
-  },
-  { 
-    name: 'Node.js', 
-    icon: <FaNodeJs />, 
-    color: 'text-green-500',
-    category: 'backend',
-    description: 'JavaScript runtime'
-  },
-  { 
-    name: 'MongoDB', 
-    icon: <SiMongodb />, 
-    color: 'text-green-400',
-    category: 'backend',
-    description: 'NoSQL database'
-  },
-  { 
-    name: 'GitHub', 
-    icon: <FaGithub />, 
-    color: 'text-gray-300',
-    category: 'tools',
-    description: 'Version control'
-  },
-  { 
-    name: 'Figma', 
-    icon: <FaFigma />, 
-    color: 'text-pink-500',
-    category: 'tools',
-    description: 'Design tool'
-  },
-];
+import { SiTailwindcss, SiJavascript, SiMongodb, SiTypescript, SiNextdotjs, SiExpress } from 'react-icons/si';
 
 const Skills = () => {
-  const sectionRef = useRef(null);
-  const cardRefs = useRef([]);
-  const [activeTab, setActiveTab] = useState('all');
-
-  // Set up refs for animation
-  useEffect(() => {
-    cardRefs.current = cardRefs.current.slice(0, skills.length);
-  }, []);
-
-  useEffect(() => {
-    // Main section animation
-    gsap.fromTo(
-      sectionRef.current, 
-      { opacity: 0, y: 50 }, 
-      {
-        opacity: 1,
-        y: 0,
-        duration: 0.8,
-        ease: "power3.out"
-      }
-    );
-
-    // Card animations with ScrollTrigger
-    cardRefs.current.forEach((card, index) => {
-      gsap.fromTo(
-        card,
-        { opacity: 0, y: 30, scale: 0.9 },
-        {
-          opacity: 1,
-          y: 0,
-          scale: 1,
-          duration: 0.6,
-          delay: index * 0.1,
-          ease: "back.out(1.2)",
-          scrollTrigger: {
-            trigger: card,
-            start: "top bottom-=100",
-            toggleActions: "play none none none"
-          }
-        }
-      );
-    });
-
-    return () => {
-      // Clean up ScrollTriggers
-      ScrollTrigger.getAll().forEach(t => t.kill());
-    };
-  }, []);
+  const skillCategories = [
+    {
+      title: 'Frontend',
+      emoji: '🎨',
+      color: 'from-blue-500 to-cyan-500',
+      skills: [
+        { name: 'React', icon: <FaReact />, level: 95, color: '#61DAFB' },
+        { name: 'Next.js', icon: <SiNextdotjs />, level: 90, color: '#000000' },
+        { name: 'TypeScript', icon: <SiTypescript />, level: 85, color: '#3178C6' },
+        { name: 'JavaScript', icon: <SiJavascript />, level: 95, color: '#F7DF1E' },
+        { name: 'Tailwind CSS', icon: <SiTailwindcss />, level: 95, color: '#06B6D4' },
+        { name: 'HTML5', icon: <FaHtml5 />, level: 98, color: '#E34F26' },
+        { name: 'CSS3', icon: <FaCss3Alt />, level: 95, color: '#1572B6' },
+      ],
+    },
+    {
+      title: 'Backend',
+      emoji: '⚙️',
+      color: 'from-green-500 to-emerald-500',
+      skills: [
+        { name: 'Node.js', icon: <FaNodeJs />, level: 90, color: '#339933' },
+        { name: 'Express', icon: <SiExpress />, level: 88, color: '#000000' },
+        { name: 'MongoDB', icon: <SiMongodb />, level: 85, color: '#47A248' },
+      ],
+    },
+    {
+      title: 'Tools & Design',
+      emoji: '🛠️',
+      color: 'from-purple-500 to-pink-500',
+      skills: [
+        { name: 'Figma', icon: <FaFigma />, level: 92, color: '#F24E1E' },
+        { name: 'GitHub', icon: <FaGithub />, level: 90, color: '#181717' },
+      ],
+    },
+  ];
 
   return (
-    <section
-      ref={sectionRef}
-      id="skills"
-      className="min-h-screen flex flex-col items-center justify-center bg-gradient-to-b from-slate-950 to-slate-900 px-4 sm:px-6 relative overflow-hidden"
-    >
-      <div className="max-w-6xl mx-auto">
-        <div className="text-center mb-12 space-y-2">
-          <h2 className="text-4xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-cyan-400 to-emerald-400">
-            Technology Skills
+    <section id="skills" className="min-h-screen relative bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950 py-20 px-6">
+      {/* Background Blobs */}
+      <motion.div
+        className="absolute w-96 h-96 rounded-full filter blur-3xl opacity-10 bg-purple-500"
+        style={{ right: '10%', top: '20%' }}
+        animate={{ x: [0, 50, 0], y: [0, -50, 0], scale: [1, 1.2, 1] }}
+        transition={{ duration: 15, repeat: Infinity, ease: "easeInOut" }}
+      />
+
+      <div className="relative z-10 max-w-7xl mx-auto">
+        {/* Section Header */}
+        <motion.div
+          className="text-center mb-16"
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6 }}
+        >
+          <motion.span
+            className="inline-block text-5xl mb-4"
+            animate={{ rotate: [0, 360] }}
+            transition={{ duration: 3, repeat: Infinity, ease: "linear" }}
+          >
+            💪
+          </motion.span>
+          <h2 className="text-5xl md:text-7xl font-black text-white mb-4">
+            My <span className="bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent">Skills</span>
           </h2>
-          <p className="text-lg text-zinc-400">
-            Tools & Technologies I'm Proficient With
+          <p className="text-xl text-slate-400 max-w-2xl mx-auto">
+            Technologies I work with to bring ideas to life
           </p>
-        </div>
+        </motion.div>
 
-        {/* Custom tabs implementation */}
-        <div className="w-full mb-12">
-          <div className="flex justify-center mb-8">
-            <div className="inline-flex bg-zinc-800/50 rounded-lg p-1">
-              {['all', 'frontend', 'backend', 'tools'].map((tab) => (
-                <button
-                  key={tab}
-                  onClick={() => setActiveTab(tab)}
-                  className={`px-4 py-2 text-sm font-medium rounded-md transition-all ${
-                    activeTab === tab
-                      ? 'bg-zinc-700 text-white'
-                      : 'text-zinc-400 hover:text-white'
-                  }`}
-                >
-                  {tab.charAt(0).toUpperCase() + tab.slice(1)}
-                </button>
-              ))}
-            </div>
-          </div>
+        {/* Skills Grid */}
+        <div className="space-y-12">
+          {skillCategories.map((category, categoryIndex) => (
+            <motion.div
+              key={categoryIndex}
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6, delay: categoryIndex * 0.2 }}
+            >
+              <div className="flex items-center gap-3 mb-6">
+                <span className="text-4xl">{category.emoji}</span>
+                <h3 className={`text-3xl font-bold bg-gradient-to-r ${category.color} bg-clip-text text-transparent`}>
+                  {category.title}
+                </h3>
+              </div>
 
-          <div className="mt-0">
-            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6">
-              {skills
-                .filter(skill => activeTab === 'all' || skill.category === activeTab)
-                .map((skill, index) => (
-                  <div 
-                    key={skill.name}
-                    ref={el => cardRefs.current[index] = el}
-                    className="overflow-hidden rounded-xl border border-zinc-800 shadow-lg hover:shadow-xl transition-all duration-300 bg-zinc-800/30 backdrop-blur-sm hover:scale-105"
+              <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+                {category.skills.map((skill, skillIndex) => (
+                  <motion.div
+                    key={skillIndex}
+                    className="group relative bg-white/5 backdrop-blur-md border border-white/10 rounded-2xl p-6 overflow-hidden"
+                    initial={{ opacity: 0, scale: 0.8 }}
+                    whileInView={{ opacity: 1, scale: 1 }}
+                    viewport={{ once: true }}
+                    transition={{ delay: skillIndex * 0.1 }}
+                    whileHover={{ y: -10, scale: 1.05 }}
                   >
-                    <div className="p-6 flex flex-col items-center text-center space-y-3">
-                      <div className={`text-4xl ${skill.color}`}>{skill.icon}</div>
-                      <div>
-                        <h3 className="font-medium text-white">{skill.name}</h3>
-                        <p className="text-xs text-zinc-400 mt-1">{skill.description}</p>
+                    {/* Glow Effect */}
+                    <motion.div
+                      className="absolute inset-0 opacity-0 group-hover:opacity-20 transition-opacity"
+                      style={{ background: `radial-gradient(circle at center, ${skill.color}, transparent)` }}
+                    />
+
+                    <div className="relative">
+                      <div className="flex items-center justify-between mb-4">
+                        <div className="flex items-center gap-3">
+                          <motion.div
+                            className="text-4xl"
+                            style={{ color: skill.color }}
+                            whileHover={{ rotate: 360, scale: 1.2 }}
+                            transition={{ duration: 0.6 }}
+                          >
+                            {skill.icon}
+                          </motion.div>
+                          <span className="text-xl font-bold text-white">{skill.name}</span>
+                        </div>
+                        <span className="text-2xl font-bold bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent">
+                          {skill.level}%
+                        </span>
                       </div>
-                      <span className={`text-xs px-2 py-1 rounded-full ${skill.color} bg-zinc-900/50 border border-current/20`}>
-                        {skill.category}
-                      </span>
+
+                      {/* Progress Bar */}
+                      <div className="w-full h-2 bg-white/10 rounded-full overflow-hidden">
+                        <motion.div
+                          className="h-full rounded-full"
+                          style={{ background: `linear-gradient(to right, ${skill.color}, ${skill.color}90)` }}
+                          initial={{ width: 0 }}
+                          whileInView={{ width: `${skill.level}%` }}
+                          viewport={{ once: true }}
+                          transition={{ duration: 1, delay: skillIndex * 0.1, ease: "easeOut" }}
+                        />
+                      </div>
                     </div>
-                  </div>
+                  </motion.div>
                 ))}
-            </div>
-          </div>
+              </div>
+            </motion.div>
+          ))}
         </div>
 
-        <div className="mt-16 text-center">
-          <p className="text-zinc-400 text-sm">
-            Continuously expanding my tech stack to stay at the forefront of web development
-          </p>
-        </div>
+        {/* Bottom CTA */}
+        <motion.div
+          className="mt-16 text-center"
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6, delay: 0.6 }}
+        >
+          <div className="inline-block bg-white/5 backdrop-blur-md border border-white/10 rounded-full px-8 py-4">
+            <p className="text-slate-300">
+              <span className="text-2xl mr-2">🚀</span>
+              Always learning and exploring new technologies
+            </p>
+          </div>
+        </motion.div>
       </div>
     </section>
   );

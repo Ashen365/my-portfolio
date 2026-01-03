@@ -1,246 +1,201 @@
-import React, { useRef, useEffect } from "react";
-import { gsap } from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
+import React from 'react';
+import { motion } from 'framer-motion';
 
 const Blog = () => {
-  gsap.registerPlugin(ScrollTrigger);
-
-  const sectionRef = useRef(null);
-  const titleRef = useRef(null);
-  const blogCardsRef = useRef([]);
-
-  const addToCardsRef = (el) => {
-    if (el && !blogCardsRef.current.includes(el)) {
-      blogCardsRef.current.push(el);
-    }
-  };
-
-  useEffect(() => {
-    gsap.fromTo(
-      titleRef.current,
-      { opacity: 0, y: 30 },
-      {
-        opacity: 1,
-        y: 0,
-        duration: 0.8,
-        ease: "power3.out",
-        scrollTrigger: {
-          trigger: sectionRef.current,
-          start: "top 75%",
-        },
-      }
-    );
-
-    gsap.fromTo(
-      blogCardsRef.current,
-      { opacity: 0, y: 40, scale: 0.95 },
-      {
-        opacity: 1,
-        y: 0,
-        scale: 1,
-        duration: 0.7,
-        stagger: 0.15,
-        ease: "power2.out",
-        scrollTrigger: {
-          trigger: sectionRef.current,
-          start: "top 70%",
-        },
-      }
-    );
-
-    blogCardsRef.current.forEach((card) => {
-      card.addEventListener("mouseenter", () => {
-        gsap.to(card, {
-          y: -5,
-          scale: 1.02,
-          duration: 0.3,
-          ease: "power2.out",
-          boxShadow:
-            "0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)",
-        });
-      });
-
-      card.addEventListener("mouseleave", () => {
-        gsap.to(card, {
-          y: 0,
-          scale: 1,
-          duration: 0.3,
-          ease: "power2.out",
-          boxShadow:
-            "0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)",
-        });
-      });
-    });
-
-    return () => {
-      ScrollTrigger.getAll().forEach((t) => t.kill());
-    };
-  }, []);
-
-  const blogPosts = [
+  const posts = [
     {
-      id: 1,
-      title: "Building Modern Web Applications with React",
-      excerpt:
-        "Learn how to construct responsive and interactive web applications using React.js and modern design principles for an optimal user experience.",
-      date: "May 10, 2025",
-      readTime: "7 min read",
-      tags: ["React", "Web Development"],
-      link: "https://ashen-designs.blogspot.com/2025/06/building-modern-web-applications-with.html",
+      title: 'Getting Started with React Hooks',
+      excerpt: 'Learn how to use React Hooks to manage state and side effects in your functional components.',
+      date: 'Dec 15, 2023',
+      readTime: '5 min read',
+      category: 'React',
+      emoji: '⚛️',
+      color: 'from-cyan-500 to-blue-500',
+      image: 'https://images.unsplash.com/photo-1633356122544-f134324a6cee?w=800&h=600&fit=crop',
     },
     {
-      id: 2,
-      title: "The Power of Tailwind CSS for Rapid UI Development",
-      excerpt:
-        "Discover how Tailwind CSS can dramatically speed up your front-end development workflow and create beautiful, consistent interfaces with minimal effort.",
-      date: "April 28, 2025",
-      readTime: "5 min read",
-      tags: ["Tailwind", "CSS", "UI Design"],
-      link: "https://ashen-designs.blogspot.com/2025/06/the-power-of-tailwind-css-for-rapid-ui.html",
+      title: 'Mastering Tailwind CSS',
+      excerpt: 'Discover tips and tricks to build beautiful, responsive interfaces with Tailwind CSS utility classes.',
+      date: 'Dec 10, 2023',
+      readTime: '7 min read',
+      category: 'CSS',
+      emoji: '🎨',
+      color: 'from-purple-500 to-pink-500',
+      image: 'https://images.unsplash.com/photo-1507721999472-8ed4421c4af2?w=800&h=600&fit=crop',
     },
     {
-      id: 3,
-      title: "Creating Stunning Animations with GSAP",
-      excerpt:
-        "Explore how to implement eye-catching animations that enhance user engagement using the GSAP animation library in your web projects.",
-      date: "April 15, 2025",
-      readTime: "8 min read",
-      tags: ["GSAP", "Animation", "JavaScript"],
-      link: "https://ashen-designs.blogspot.com/2025/06/blogger-name-gsap-glow.html",
+      title: 'Modern JavaScript ES2023',
+      excerpt: 'Explore the latest features in JavaScript ES2023 and how they improve your development workflow.',
+      date: 'Dec 5, 2023',
+      readTime: '6 min read',
+      category: 'JavaScript',
+      emoji: '⚡',
+      color: 'from-yellow-500 to-orange-500',
+      image: 'https://images.unsplash.com/photo-1579468118864-1b9ea3c0db4a?w=800&h=600&fit=crop',
     },
     {
-      id: 4,
-      title: "Optimizing Web Performance for Better User Experience",
-      excerpt:
-        "Learn essential techniques for improving web performance, reducing load times, and creating smoother interactions for your users.",
-      date: "April 3, 2025",
-      readTime: "6 min read",
-      tags: ["Performance", "Web Development"],
-      link: "https://ashen-designs.blogspot.com/2025/06/perfboost.html",
+      title: 'Building RESTful APIs with Node.js',
+      excerpt: 'A comprehensive guide to creating scalable and secure RESTful APIs using Node.js and Express.',
+      date: 'Nov 28, 2023',
+      readTime: '10 min read',
+      category: 'Backend',
+      emoji: '🚀',
+      color: 'from-green-500 to-emerald-500',
+      image: 'https://images.unsplash.com/photo-1558494949-ef010cbdcc31?w=800&h=600&fit=crop',
     },
     {
-      id: 5,
-      title: "Mastering Responsive Design for All Devices",
-      excerpt:
-        "A comprehensive guide to creating truly responsive websites that look and function perfectly across desktops, tablets, and mobile devices.",
-      date: "March 22, 2025",
-      readTime: "9 min read",
-      tags: ["Responsive Design", "CSS"],
-      link: "https://ashen-designs.blogspot.com/2025/06/mastering-responsive-design-for-all.html",
+      title: 'UI/UX Design Principles',
+      excerpt: 'Essential design principles every developer should know to create better user experiences.',
+      date: 'Nov 20, 2023',
+      readTime: '8 min read',
+      category: 'Design',
+      emoji: '✨',
+      color: 'from-indigo-500 to-purple-500',
+      image: 'https://images.unsplash.com/photo-1561070791-2526d30994b5?w=800&h=600&fit=crop',
     },
     {
-      id: 6,
-      title: "The Future of UI/UX Design Trends",
-      excerpt:
-        "An exploration of emerging design trends that will shape the future of user interfaces and experiences in the coming years.",
-      date: "March 10, 2025",
-      readTime: "5 min read",
-      tags: ["UI/UX", "Design Trends"],
-      link: "https://ashen-designs.blogspot.com/2025/06/the-future-of-uiux-design-trends.html",
+      title: 'Web Performance Optimization',
+      excerpt: 'Learn techniques to optimize your web applications for speed and better user experience.',
+      date: 'Nov 15, 2023',
+      readTime: '9 min read',
+      category: 'Performance',
+      emoji: '⚡',
+      color: 'from-red-500 to-orange-500',
+      image: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=800&h=600&fit=crop',
     },
   ];
 
   return (
-    <section
-      ref={sectionRef}
-      id="blog"
-      className="py-20 px-4 sm:px-6 lg:px-8 bg-gradient-to-b from-slate-950 to-slate-900"
-    >
-      <div className="max-w-6xl mx-auto">
-        <div className="text-center mb-16" ref={titleRef}>
-          <h2 className="text-3xl sm:text-4xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-green-400 to-blue-500 inline-block mb-4">
-            Latest Articles
+    <section id="blog" className="min-h-screen relative bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950 py-20 px-6">
+      {/* Background Blobs */}
+      <motion.div
+        className="absolute w-96 h-96 rounded-full filter blur-3xl opacity-10 bg-purple-500"
+        style={{ right: '10%', top: '40%' }}
+        animate={{ x: [0, 50, 0], y: [0, -50, 0], scale: [1, 1.2, 1] }}
+        transition={{ duration: 15, repeat: Infinity, ease: "easeInOut" }}
+      />
+
+      <div className="relative z-10 max-w-7xl mx-auto">
+        {/* Section Header */}
+        <motion.div
+          className="text-center mb-16"
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6 }}
+        >
+          <motion.span
+            className="inline-block text-5xl mb-4"
+            animate={{ rotate: [0, 10, -10, 0] }}
+            transition={{ duration: 2, repeat: Infinity }}
+          >
+            📝
+          </motion.span>
+          <h2 className="text-5xl md:text-7xl font-black text-white mb-4">
+            Latest <span className="bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent">Blog Posts</span>
           </h2>
-          <p className="text-slate-300 max-w-2xl mx-auto text-lg">
-            Thoughts, tutorials, and insights on web development, design, and modern technologies
+          <p className="text-xl text-slate-400 max-w-2xl mx-auto">
+            Thoughts, tutorials, and insights on web development
           </p>
-        </div>
+        </motion.div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
-          {blogPosts.map((post) => (
-            <div
-              key={post.id}
-              ref={addToCardsRef}
-              className="relative bg-slate-900/60 backdrop-blur-sm border border-slate-800 rounded-lg p-6 shadow-md transition-all duration-300 hover:border-slate-700 flex flex-col"
+        {/* Blog Grid */}
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {posts.map((post, index) => (
+            <motion.article
+              key={index}
+              className="group relative bg-white/5 backdrop-blur-md border border-white/10 rounded-3xl overflow-hidden"
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6, delay: index * 0.1 }}
+              whileHover={{ y: -10, scale: 1.02 }}
             >
-              <div className="flex flex-wrap gap-2 mb-3">
-                {post.tags.map((tag) => (
-                  <span
-                    key={tag}
-                    className="inline-flex items-center rounded-full bg-slate-800/80 px-2.5 py-0.5 text-xs font-medium text-slate-300"
-                  >
-                    {tag}
+              {/* Blog Image */}
+              <div className="relative h-48 overflow-hidden">
+                <motion.img
+                  src={post.image}
+                  alt={post.title}
+                  className="w-full h-full object-cover"
+                  whileHover={{ scale: 1.1 }}
+                  transition={{ duration: 0.6 }}
+                />
+                <motion.div
+                  className={`absolute inset-0 bg-gradient-to-br ${post.color} mix-blend-multiply`}
+                  initial={{ opacity: 0.3 }}
+                  whileHover={{ opacity: 0.6 }}
+                  transition={{ duration: 0.3 }}
+                />
+                
+                {/* Category Badge on Image */}
+                <div className="absolute top-3 left-3">
+                  <span className={`px-4 py-1.5 rounded-full text-sm font-semibold bg-gradient-to-r ${post.color} text-white backdrop-blur-sm`}>
+                    {post.category}
                   </span>
-                ))}
-              </div>
-
-              <h3 className="text-xl font-semibold text-white mb-2 hover:text-blue-400 transition-colors">
-                {post.title}
-              </h3>
-
-              <div className="flex items-center text-sm text-slate-400 mb-4">
-                <span>{post.date}</span>
-                <span className="mx-2">•</span>
-                <span>{post.readTime}</span>
-              </div>
-
-              <p className="text-slate-300 text-sm mb-5 line-clamp-3">
-                {post.excerpt}
-              </p>
-
-              <div className="absolute top-0 right-0 h-20 w-20 bg-gradient-to-br from-green-500/10 to-blue-500/10 rounded-bl-3xl rounded-tr-lg -z-10"></div>
-
-              {post.link && (
-                <a
-                  href={post.link}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="mt-auto pt-4 flex items-center text-sm font-medium text-blue-400 hover:underline"
+                </div>
+                
+                {/* Emoji on Image */}
+                <motion.div
+                  className="absolute top-3 right-3 text-4xl"
+                  whileHover={{ scale: 1.2, rotate: 10 }}
                 >
-                  <span className="mr-2">Read article</span>
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="16"
-                    height="16"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="2"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  >
-                    <path d="M5 12h14"></path>
-                    <path d="m12 5 7 7-7 7"></path>
-                  </svg>
-                </a>
-              )}
-            </div>
+                  {post.emoji}
+                </motion.div>
+              </div>
+
+              <div className="relative p-8">
+                {/* Gradient Background */}
+                <motion.div
+                  className={`absolute inset-0 bg-gradient-to-br ${post.color} opacity-0 group-hover:opacity-10 transition-opacity`}
+                />
+
+                {/* Title */}
+                <h3 className="text-2xl font-bold text-white mb-3 group-hover:text-transparent group-hover:bg-gradient-to-r group-hover:from-blue-400 group-hover:to-purple-400 group-hover:bg-clip-text transition-all">
+                  {post.title}
+                </h3>
+
+                {/* Excerpt */}
+                <p className="text-slate-400 leading-relaxed mb-6">
+                  {post.excerpt}
+                </p>
+
+                {/* Meta */}
+                <div className="flex items-center justify-between text-sm text-slate-500">
+                  <span>📅 {post.date}</span>
+                  <span>⏱️ {post.readTime}</span>
+                </div>
+
+                {/* Read More Arrow */}
+                <motion.div
+                  className="absolute bottom-6 right-6 opacity-0 group-hover:opacity-100 transition-opacity"
+                  animate={{ x: [0, 5, 0] }}
+                  transition={{ duration: 1.5, repeat: Infinity }}
+                >
+                  <div className={`w-10 h-10 rounded-full bg-gradient-to-r ${post.color} flex items-center justify-center text-white text-xl`}>
+                    →
+                  </div>
+                </motion.div>
+              </div>
+            </motion.article>
           ))}
         </div>
 
-        <div className="mt-16 text-center">
-          <a
-            href="https://ashen-designs.blogspot.com/"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex items-center justify-center rounded-md bg-gradient-to-r from-green-500 to-blue-500 px-6 py-3 text-base font-medium text-white shadow-md hover:brightness-110 transition-all duration-300"
+        {/* Bottom CTA */}
+        <motion.div
+          className="mt-16 text-center"
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6, delay: 0.6 }}
+        >
+          <motion.button
+            className="px-8 py-4 bg-gradient-to-r from-blue-500 to-purple-500 text-white font-bold rounded-full text-lg"
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
           >
-            View All Articles
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              className="h-5 w-5 ml-2"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            >
-              <path d="M5 12h14"></path>
-              <path d="m12 5 7 7-7 7"></path>
-            </svg>
-          </a>
-        </div>
+            View All Posts →
+          </motion.button>
+        </motion.div>
       </div>
     </section>
   );
