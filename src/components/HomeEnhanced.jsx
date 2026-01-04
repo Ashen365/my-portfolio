@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { motion, useScroll, useTransform } from 'framer-motion';
 import { gsap } from 'gsap';
-import { Palette, Code, Sparkles } from 'lucide-react';
+import { Palette, Code, ClipboardList } from 'lucide-react';
 import ParticleBackground from './ParticleBackground';
 import useTextScramble from '../hooks/useTextScramble';
 
@@ -18,18 +18,23 @@ const Home = () => {
       "UI/UX Designer", 
       "Backend Developer", 
       "Full Stack Developer",
-      "React Developer",
       "Web Developer",
       "Software Engineer"
     ];
     let currentIndex = 0;
+    
+    // Initial scramble
+    scramble(roles[0]);
+    
     const interval = setInterval(() => {
       currentIndex = (currentIndex + 1) % roles.length;
-      setCurrentRole(roles[currentIndex]);
-      scramble(roles[currentIndex]);
-    }, 3000);
+      const newRole = roles[currentIndex];
+      setCurrentRole(newRole);
+      scramble(newRole);
+    }, 6000);
+    
     return () => clearInterval(interval);
-  }, [scramble]);
+  }, []);
 
   return (
     <section id="home" className="min-h-screen relative overflow-hidden bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950 flex items-center justify-center">
@@ -136,7 +141,7 @@ const Home = () => {
           {[
             { icon: Palette, title: "UI/UX Design", color: "from-pink-500 to-rose-500" },
             { icon: Code, title: "Development", color: "from-blue-500 to-cyan-500" },
-            { icon: Sparkles, title: "Animation", color: "from-purple-500 to-indigo-500" },
+            { icon: ClipboardList, title: "Project Development Planning", color: "from-purple-500 to-indigo-500" },
           ].map((skill, i) => (
             <motion.div
               key={i}

@@ -39,11 +39,11 @@ const Services = () => {
       color: 'from-indigo-500 to-purple-500',
     },
     {
-      emoji: '✨',
-      title: 'Animation & Effects',
-      description: 'Adding life to your projects with smooth animations using Framer Motion and GSAP.',
-      features: ['Micro-interactions', 'Page Transitions', 'Scroll Effects', '3D Elements'],
-      color: 'from-yellow-500 to-orange-500',
+      emoji: '📋',
+      title: 'Project Development Planing',
+      description: 'Strategic planning and roadmap creation to ensure successful project execution from concept to completion.',
+      features: ['Project Roadmap', 'Timeline Planning', 'Technical Strategy', 'Requirements Analysis'],
+      color: 'from-teal-500 to-blue-500',
     },
   ];
 

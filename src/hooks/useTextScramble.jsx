@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 
-const useTextScramble = (text, speed = 50) => {
+const useTextScramble = (text, speed = 80) => {
   const [displayText, setDisplayText] = useState(text);
   const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789@#$%^&*';
 
@@ -23,7 +23,7 @@ const useTextScramble = (text, speed = 50) => {
         clearInterval(interval);
       }
 
-      iteration += 1 / 3;
+      iteration += 1 / 2;
     }, speed);
 
     return () => clearInterval(interval);
