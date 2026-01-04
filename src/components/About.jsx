@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Rocket, Star, Smile, Coffee, BookOpen, Dumbbell, Briefcase, Monitor, Palette, Sparkles } from 'lucide-react';
+import { Rocket, Award, Users, CheckCircle, BookOpen, Dumbbell, Briefcase, Monitor, Palette, Sparkles } from 'lucide-react';
 import photo1 from '../assets/photo1.jpg.jpeg';
 import photo2 from '../assets/photo2.jpg.jpeg';
 import photo3 from '../assets/photo3.jpg.jpeg';
@@ -28,10 +28,10 @@ const About = () => {
   }, [photos.length]);
 
   const stats = [
-    { label: 'Projects Completed', value: '50+', icon: Rocket },
-    { label: 'Years Experience', value: '3+', icon: Star },
-    { label: 'Happy Clients', value: '30+', icon: Smile },
-    { label: 'Cup of Coffee', value: '500+', icon: Coffee },
+    { label: 'Projects Completed', value: '10+', icon: Rocket },
+    { label: 'Years Experience', value: '3+', icon: Award },
+    { label: 'Happy Clients', value: '10+', icon: Users },
+    { label: 'Available for Work', value: 'Yes', icon: CheckCircle },
   ];
 
   const tabs = [
