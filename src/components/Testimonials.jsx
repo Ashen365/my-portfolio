@@ -3,7 +3,6 @@ import { motion } from 'framer-motion';
 import AshanImage from '../assets/Ashan.jpg';
 import DilankaImage from '../assets/Dilanka.jpg';
 import DiniduImage from '../assets/Diniduliyanage.jpg';
-import DinithiImage from '../assets/Dinithi.png';
 import LahiruImage from '../assets/Lahiru.jpeg';
 import LakshithaImage from '../assets/Lakshitha.jpg';
 import OsandaImage from '../assets/Osanda.jpg';
@@ -23,7 +22,7 @@ const Testimonials = () => {
     },
     {
       name: 'Dinidu Liyanage',
-      role: 'Ceylyna Tea(pvt) Ltd',
+      role: 'Celyna Tea(pvt) Ltd',
       image: DiniduImage,
       text: 'Ashen created an exceptional e-commerce platform for our tea business. The website perfectly showcases our products and has significantly increased our online sales. Highly professional work!',
       rating: 4,
@@ -34,13 +33,6 @@ const Testimonials = () => {
       image: AshanImage,
       text: 'As a fellow developer, I\'m impressed by Ashen\'s technical skills. His code is well-structured, scalable, and follows best practices. Great collaboration experience!',
       rating: 5,
-    },
-    {
-      name: 'Dinithi Perera',
-      role: 'Project Manager',
-      image: DinithiImage,
-      text: 'Ashen was a dream to work with from a PM perspective. He met all deadlines, communicated clearly, and delivered quality work. The project was completed smoothly and on time!',
-      rating: 4,
     },
     {
       name: 'Thilina Ihalagedara',
