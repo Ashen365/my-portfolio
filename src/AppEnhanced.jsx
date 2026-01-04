@@ -30,23 +30,27 @@ AOS.init({
 function App() {
   return (
     <ThemeProvider>
-      <div className="bg-background text-white relative">
+      <div className="bg-background text-white relative overflow-x-hidden">
         {/* Loading Screen */}
         <LoadingScreen />
         
         {/* Scroll Progress Bar */}
         <ScrollProgressBar />
         
-        {/* Mouse Spotlight Effect */}
-        <MouseSpotlight />
+        {/* Mouse Spotlight Effect - Desktop Only */}
+        <div className="hidden lg:block">
+          <MouseSpotlight />
+        </div>
         
-        {/* Custom Cursor */}
-        <CustomCursor />
+        {/* Custom Cursor - Desktop Only */}
+        <div className="hidden lg:block">
+          <CustomCursor />
+        </div>
         
-        {/* Floating Action Button */}
+        {/* Floating Action Button - Responsive */}
         <FloatingActionButton />
         
-        {/* Music Toggle */}
+        {/* Music Toggle - Responsive */}
         <MusicToggle />
         
 

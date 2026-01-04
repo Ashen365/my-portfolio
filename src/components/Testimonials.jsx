@@ -8,7 +8,6 @@ import LakshithaImage from '../assets/Lakshitha.jpg';
 import OsandaImage from '../assets/Osanda.jpg';
 import ParamiImage from '../assets/Paramee.jpg';
 import SathiraImage from '../assets/sathira.jpg';
-import SiwminiImage from '../assets/Siwmini.jpeg';
 import ThilinaImage from '../assets/Thilina.jpg';
 import ManashaImage from '../assets/Manasha.jpeg';
 const Testimonials = () => {
@@ -56,13 +55,6 @@ const Testimonials = () => {
       rating: 5,
     },
     {
-      name: 'Siwmini Herath',
-      role: 'UX Designer',
-      image: SiwminiImage,
-      text: 'Ashen brings both technical skill and design sensibility to every project. His work is always pixel-perfect and user-friendly. A true professional!',
-      rating: 4,
-    },
-    {
       name: 'Lakshitha Karunaweera',
       role: 'Business Owner',
       image: LakshithaImage,
@@ -98,8 +90,8 @@ const Testimonials = () => {
   const row3 = allTestimonials.slice(8, 12);
 
   const TestimonialCard = ({ testimonial }) => (
-    <div className="flex-shrink-0 w-[400px] mx-3">
-      <div className="group relative bg-white/5 backdrop-blur-md border border-white/10 rounded-3xl p-8 overflow-hidden h-full">
+    <div className="flex-shrink-0 w-[280px] sm:w-[320px] md:w-[360px] lg:w-[400px] mx-2 sm:mx-3">
+      <div className="group relative bg-white/5 backdrop-blur-md border border-white/10 rounded-2xl sm:rounded-3xl p-4 sm:p-6 md:p-8 overflow-hidden h-full">
         {/* Gradient Overlay */}
         <div className="absolute inset-0 bg-gradient-to-br from-blue-500/10 to-purple-500/10 opacity-0 group-hover:opacity-100 transition-opacity" />
 
@@ -110,27 +102,27 @@ const Testimonials = () => {
           </div>
 
           {/* Profile */}
-          <div className="flex items-center gap-4 mb-6">
+          <div className="flex items-center gap-3 sm:gap-4 mb-4 sm:mb-6">
             <img
               src={testimonial.image}
               alt={testimonial.name}
-              className="w-16 h-16 rounded-full border-2 border-white/20"
+              className="w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16 rounded-full border-2 border-white/20"
             />
             <div>
-              <h4 className="text-lg font-bold text-white">{testimonial.name}</h4>
-              <p className="text-sm text-slate-400">{testimonial.role}</p>
+              <h4 className="text-base sm:text-lg font-bold text-white">{testimonial.name}</h4>
+              <p className="text-xs sm:text-sm text-slate-400">{testimonial.role}</p>
             </div>
           </div>
 
           {/* Rating */}
-          <div className="flex gap-1 mb-4">
+          <div className="flex gap-1 mb-3 sm:mb-4">
             {[...Array(testimonial.rating)].map((_, i) => (
-              <span key={i} className="text-yellow-400 text-xl">⭐</span>
+              <span key={i} className="text-yellow-400 text-base sm:text-lg md:text-xl">⭐</span>
             ))}
           </div>
 
           {/* Quote */}
-          <p className="text-slate-300 leading-relaxed italic">
+          <p className="text-slate-300 leading-relaxed italic text-sm sm:text-base">
             "{testimonial.text}"
           </p>
         </div>
@@ -139,7 +131,7 @@ const Testimonials = () => {
   );
 
   return (
-    <section id="testimonials" className="min-h-screen relative bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950 py-20 px-6 overflow-hidden">
+    <section id="testimonials" className="min-h-screen relative bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950 py-12 sm:py-16 md:py-20 px-4 sm:px-6 overflow-hidden">
       {/* Background Blobs */}
       <motion.div
         className="absolute w-96 h-96 rounded-full filter blur-3xl opacity-10 bg-blue-500"
@@ -148,42 +140,42 @@ const Testimonials = () => {
         transition={{ duration: 15, repeat: Infinity, ease: "easeInOut" }}
       />
 
-      <div className="relative z-10 max-w-full mx-auto">
+      <div className="relative z-10 max-w-full mx-auto overflow-hidden">
         {/* Section Header */}
         <motion.div
-          className="text-center mb-16"
+          className="text-center mb-8 sm:mb-12 md:mb-16"
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
         >
           <motion.span
-            className="inline-block text-5xl mb-4"
+            className="inline-block text-3xl sm:text-4xl md:text-5xl mb-3 sm:mb-4"
             animate={{ scale: [1, 1.2, 1] }}
             transition={{ duration: 2, repeat: Infinity }}
           >
             💬
           </motion.span>
-          <h2 className="text-5xl md:text-7xl font-black text-white mb-4">
+          <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-7xl font-black text-white mb-3 sm:mb-4 px-4">
             Client <span className="bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent">Testimonials</span>
           </h2>
-          <p className="text-xl text-slate-400 max-w-2xl mx-auto">
+          <p className="text-base sm:text-lg md:text-xl text-slate-400 max-w-2xl mx-auto px-4">
             What my clients say about working with me
           </p>
         </motion.div>
 
         {/* Scrolling Testimonials - Row 1 (Left to Right) */}
-        <div className="mb-8 overflow-hidden">
+        <div className="mb-4 sm:mb-6 md:mb-8 overflow-hidden -mx-4 sm:-mx-6">
           <motion.div
             className="flex"
             animate={{
-              x: [0, -1600],
+              x: [0, -1200],
             }}
             transition={{
               x: {
                 repeat: Infinity,
                 repeatType: "loop",
-                duration: 30,
+                duration: 25,
                 ease: "linear",
               },
             }}
@@ -196,17 +188,17 @@ const Testimonials = () => {
         </div>
 
         {/* Scrolling Testimonials - Row 2 (Right to Left) */}
-        <div className="mb-8 overflow-hidden">
+        <div className="mb-4 sm:mb-6 md:mb-8 overflow-hidden -mx-4 sm:-mx-6">
           <motion.div
             className="flex"
             animate={{
-              x: [-1600, 0],
+              x: [-1200, 0],
             }}
             transition={{
               x: {
                 repeat: Infinity,
                 repeatType: "loop",
-                duration: 30,
+                duration: 25,
                 ease: "linear",
               },
             }}
@@ -219,17 +211,17 @@ const Testimonials = () => {
         </div>
 
         {/* Scrolling Testimonials - Row 3 (Left to Right) */}
-        <div className="mb-8 overflow-hidden">
+        <div className="mb-4 sm:mb-6 md:mb-8 overflow-hidden -mx-4 sm:-mx-6">
           <motion.div
             className="flex"
             animate={{
-              x: [0, -1600],
+              x: [0, -1200],
             }}
             transition={{
               x: {
                 repeat: Infinity,
                 repeatType: "loop",
-                duration: 30,
+                duration: 25,
                 ease: "linear",
               },
             }}
@@ -243,15 +235,15 @@ const Testimonials = () => {
 
         {/* Bottom CTA */}
         <motion.div
-          className="mt-16 text-center"
+          className="mt-8 sm:mt-12 md:mt-16 text-center px-4"
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6, delay: 0.6 }}
         >
-          <div className="inline-block bg-white/5 backdrop-blur-md border border-white/10 rounded-full px-8 py-4">
-            <p className="text-slate-300">
-              <span className="text-2xl mr-2">🤝</span>
+          <div className="inline-block bg-white/5 backdrop-blur-md border border-white/10 rounded-full px-4 sm:px-6 md:px-8 py-3 sm:py-4">
+            <p className="text-slate-300 text-sm sm:text-base">
+              <span className="text-xl sm:text-2xl mr-2">🤝</span>
               Want to work together? Let's create something amazing!
             </p>
           </div>

@@ -153,24 +153,24 @@ const Projects = () => {
     <section 
       id="projects" 
       ref={sectionRef}
-      className="py-16 sm:py-24 px-4 sm:px-6 lg:px-8 bg-slate-950"
+      className="py-12 sm:py-16 md:py-20 lg:py-24 px-4 sm:px-6 lg:px-8 bg-slate-950"
     >
       <div className="max-w-7xl mx-auto">
-        <div ref={headingRef} className="text-center mb-12">
-          <h2 className="text-3xl sm:text-4xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-green-400 inline-block mb-4">
+        <div ref={headingRef} className="text-center mb-8 sm:mb-10 md:mb-12">
+          <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-green-400 inline-block mb-3 sm:mb-4 px-4">
             My Projects
           </h2>
-          <p className="text-base sm:text-lg text-slate-300 max-w-2xl mx-auto">
+          <p className="text-sm sm:text-base md:text-lg text-slate-300 max-w-2xl mx-auto px-4">
             A showcase of my recent work across various technologies and platforms
           </p>
           
           {/* Category Filter - inspired by shadcn/ui tabs */}
-          <div className="flex flex-wrap justify-center gap-2 mt-8">
+          <div className="flex flex-wrap justify-center gap-2 mt-6 sm:mt-8 px-4">
             {['All', 'Frontend', 'Backend', 'Full Stack'].map((category) => (
               <button
                 key={category}
                 onClick={() => setFilter(category)}
-                className={`px-4 py-2 rounded-md text-sm font-medium transition-all duration-200 ${
+                className={`px-3 sm:px-4 md:px-5 py-1.5 sm:py-2 rounded-md text-xs sm:text-sm md:text-base font-medium transition-all duration-200 ${
                   filter === category
                     ? 'bg-slate-800 text-white shadow-md'
                     : 'text-slate-400 hover:text-white hover:bg-slate-800/50'
@@ -182,7 +182,7 @@ const Projects = () => {
           </div>
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mt-8">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5 md:gap-6 mt-6 sm:mt-8">
           {filteredProjects.map((project, index) => (
             <div
               key={project.title}
@@ -192,38 +192,39 @@ const Projects = () => {
               onMouseLeave={() => setHoveredIndex(null)}
             >
               {/* Card inspired by shadcn/ui card component */}
-              <div className="h-full rounded-lg border border-slate-800 bg-slate-900/60 p-6 shadow-md backdrop-blur-sm transition-all duration-300 hover:border-slate-700 hover:shadow-lg">
+              <div className="h-full rounded-lg border border-slate-800 bg-slate-900/60 p-4 sm:p-5 md:p-6 shadow-md backdrop-blur-sm transition-all duration-300 hover:border-slate-700 hover:shadow-lg">
                 {/* Project category badge */}
-                <div className="mb-4">
-                  <span className="inline-flex items-center rounded-full bg-slate-800/80 px-2.5 py-0.5 text-xs font-medium text-slate-300">
+                <div className="mb-3 sm:mb-4">
+                  <span className="inline-flex items-center rounded-full bg-slate-800/80 px-2 sm:px-2.5 py-0.5 text-xs font-medium text-slate-300">
                     {project.category}
                   </span>
                 </div>
                 
-                <h3 className="text-lg sm:text-xl font-semibold text-white group-hover:text-blue-400 transition-colors duration-300 mb-2">
+                <h3 className="text-base sm:text-lg md:text-xl font-semibold text-white group-hover:text-blue-400 transition-colors duration-300 mb-2">
                   {project.title}
                 </h3>
                 
-                <p className="text-sm font-medium text-slate-400 mb-2">
+                <p className="text-xs sm:text-sm font-medium text-slate-400 mb-2">
                   {project.technology}
                 </p>
                 
-                <p className="text-sm text-slate-300 mb-6 line-clamp-3">
+                <p className="text-xs sm:text-sm text-slate-300 mb-4 sm:mb-6 line-clamp-3">
                   {project.description}
                 </p>
                 
-                <div className="mt-auto flex gap-3 flex-wrap">
+                <div className="mt-auto flex gap-2 sm:gap-3 flex-wrap">
                   {/* Behance/Demo Link */}
                   <a
                     href={project.link}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="inline-flex items-center text-sm font-medium text-blue-400 hover:text-blue-300 transition-colors"
+                    className="inline-flex items-center text-xs sm:text-sm font-medium text-blue-400 hover:text-blue-300 transition-colors"
                   > 
-                    View on Behance
+                    <span className="hidden sm:inline">View on Behance</span>
+                    <span className="sm:hidden">Behance</span>
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
-                    className="ml-1 h-4 w-4"
+                    className="ml-1 h-3 w-3 sm:h-4 sm:w-4"
                     fill="none"
                     viewBox="0 0 24 24"
                     stroke="currentColor"
@@ -243,11 +244,11 @@ const Projects = () => {
                       href={project.githubLink}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="inline-flex items-center text-sm font-medium text-green-400 hover:text-green-300 transition-colors"
+                      className="inline-flex items-center text-xs sm:text-sm font-medium text-green-400 hover:text-green-300 transition-colors"
                     >
                       <svg 
                         xmlns="http://www.w3.org/2000/svg" 
-                        className="mr-1 h-4 w-4" 
+                        className="mr-1 h-3 w-3 sm:h-4 sm:w-4" 
                         viewBox="0 0 24 24"
                         fill="currentColor"
                       >
@@ -269,8 +270,8 @@ const Projects = () => {
         
         {/* Show this if no projects match the filter */}
         {filteredProjects.length === 0 && (
-          <div className="text-center py-12">
-            <p className="text-slate-400">No projects found in this category.</p>
+          <div className="text-center py-8 sm:py-10 md:py-12">
+            <p className="text-slate-400 text-sm sm:text-base">No projects found in this category.</p>
           </div>
         )}
       </div>

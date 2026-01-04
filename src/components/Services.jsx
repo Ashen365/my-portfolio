@@ -48,7 +48,7 @@ const Services = () => {
   ];
 
   return (
-    <section id="services" className="min-h-screen relative bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950 py-20 px-6">
+    <section id="services" className="min-h-screen relative bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950 py-12 sm:py-16 md:py-20 px-4 sm:px-6">
       {/* Background Blobs */}
       {[...Array(2)].map((_, i) => (
         <motion.div
@@ -71,33 +71,33 @@ const Services = () => {
       <div className="relative z-10 max-w-7xl mx-auto">
         {/* Section Header */}
         <motion.div
-          className="text-center mb-16"
+          className="text-center mb-8 sm:mb-12 md:mb-16"
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
         >
           <motion.span
-            className="inline-block text-5xl mb-4"
+            className="inline-block text-3xl sm:text-4xl md:text-5xl mb-3 sm:mb-4"
             animate={{ y: [0, -10, 0] }}
             transition={{ duration: 2, repeat: Infinity }}
           >
             🛠️
           </motion.span>
-          <h2 className="text-5xl md:text-7xl font-black text-white mb-4">
+          <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-7xl font-black text-white mb-3 sm:mb-4 px-4">
             My <span className="bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent">Services</span>
           </h2>
-          <p className="text-xl text-slate-400 max-w-2xl mx-auto">
+          <p className="text-base sm:text-lg md:text-xl text-slate-400 max-w-2xl mx-auto px-4">
             Comprehensive solutions to bring your digital vision to life
           </p>
         </motion.div>
 
         {/* Services Grid */}
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5 md:gap-6">
           {services.map((service, index) => (
             <motion.div
               key={index}
-              className="group relative bg-white/5 backdrop-blur-md border border-white/10 rounded-3xl p-8 overflow-hidden"
+              className="group relative bg-white/5 backdrop-blur-md border border-white/10 rounded-2xl sm:rounded-3xl p-6 sm:p-7 md:p-8 overflow-hidden"
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
@@ -112,7 +112,7 @@ const Services = () => {
               <div className="relative">
                 {/* Icon */}
                 <motion.div
-                  className="text-6xl mb-4"
+                  className="text-4xl sm:text-5xl md:text-6xl mb-3 sm:mb-4"
                   whileHover={{ scale: 1.2, rotate: 10 }}
                   transition={{ type: "spring", stiffness: 300 }}
                 >
@@ -120,12 +120,12 @@ const Services = () => {
                 </motion.div>
 
                 {/* Title */}
-                <h3 className={`text-2xl font-bold mb-3 bg-gradient-to-r ${service.color} bg-clip-text text-transparent`}>
+                <h3 className={`text-xl sm:text-2xl font-bold mb-2 sm:mb-3 bg-gradient-to-r ${service.color} bg-clip-text text-transparent`}>
                   {service.title}
                 </h3>
 
                 {/* Description */}
-                <p className="text-slate-400 mb-6 leading-relaxed">
+                <p className="text-slate-400 mb-4 sm:mb-6 leading-relaxed text-sm sm:text-base">
                   {service.description}
                 </p>
 
@@ -134,7 +134,7 @@ const Services = () => {
                   {service.features.map((feature, i) => (
                     <motion.div
                       key={i}
-                      className="flex items-center gap-2 text-sm"
+                      className="flex items-center gap-2 text-xs sm:text-sm"
                       initial={{ opacity: 0, x: -10 }}
                       whileInView={{ opacity: 1, x: 0 }}
                       viewport={{ once: true }}
@@ -148,11 +148,11 @@ const Services = () => {
 
                 {/* Hover Arrow */}
                 <motion.div
-                  className="absolute bottom-6 right-6 opacity-0 group-hover:opacity-100 transition-opacity"
+                  className="absolute bottom-4 sm:bottom-6 right-4 sm:right-6 opacity-0 group-hover:opacity-100 transition-opacity"
                   animate={{ x: [0, 5, 0] }}
                   transition={{ duration: 1.5, repeat: Infinity }}
                 >
-                  <div className={`w-10 h-10 rounded-full bg-gradient-to-r ${service.color} flex items-center justify-center text-white text-xl`}>
+                  <div className={`w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-gradient-to-r ${service.color} flex items-center justify-center text-white text-lg sm:text-xl`}>
                     →
                   </div>
                 </motion.div>
@@ -163,7 +163,7 @@ const Services = () => {
 
         {/* Bottom CTA */}
         <motion.div
-          className="mt-16 text-center"
+          className="mt-8 sm:mt-12 md:mt-16 text-center px-4"
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
@@ -171,7 +171,7 @@ const Services = () => {
         >
           <motion.a
             href="#contact"
-            className="inline-flex items-center gap-2 px-8 py-4 bg-gradient-to-r from-blue-500 to-purple-500 text-white font-bold rounded-full text-lg"
+            className="inline-flex items-center gap-2 px-6 sm:px-8 py-3 sm:py-4 bg-gradient-to-r from-blue-500 to-purple-500 text-white font-bold rounded-full text-base sm:text-lg"
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
           >

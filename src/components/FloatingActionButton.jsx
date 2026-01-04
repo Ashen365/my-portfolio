@@ -13,11 +13,11 @@ const FloatingActionButton = () => {
   ];
 
   return (
-    <div className="fixed bottom-8 right-8 z-50">
+    <div className="fixed bottom-4 right-4 md:bottom-8 md:right-8 z-50">
       <AnimatePresence>
         {isOpen && (
           <motion.div
-            className="absolute bottom-20 right-0 flex flex-col gap-3"
+            className="absolute bottom-16 md:bottom-20 right-0 flex flex-col gap-2 md:gap-3"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: 20 }}
@@ -28,7 +28,7 @@ const FloatingActionButton = () => {
                 href={action.href}
                 target="_blank"
                 rel="noopener noreferrer"
-                className={`group flex items-center gap-3 px-4 py-3 rounded-full bg-gradient-to-r ${action.color} text-white shadow-lg hover:shadow-xl transition-shadow`}
+                className={`group flex items-center gap-2 md:gap-3 px-3 md:px-4 py-2 md:py-3 rounded-full bg-gradient-to-r ${action.color} text-white shadow-lg hover:shadow-xl transition-shadow`}
                 initial={{ opacity: 0, x: 20 }}
                 animate={{ opacity: 1, x: 0 }}
                 exit={{ opacity: 0, x: 20 }}
@@ -36,8 +36,8 @@ const FloatingActionButton = () => {
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
               >
-                <action.icon className="w-5 h-5" />
-                <span className="text-sm font-medium whitespace-nowrap">{action.label}</span>
+                <action.icon className="w-4 h-4 md:w-5 md:h-5" />
+                <span className="text-xs md:text-sm font-medium whitespace-nowrap">{action.label}</span>
               </motion.a>
             ))}
           </motion.div>
@@ -46,7 +46,7 @@ const FloatingActionButton = () => {
 
       <motion.button
         onClick={() => setIsOpen(!isOpen)}
-        className="relative w-16 h-16 rounded-full bg-gradient-to-r from-blue-500 to-purple-500 text-white shadow-2xl flex items-center justify-center"
+        className="relative w-12 h-12 md:w-16 md:h-16 rounded-full bg-gradient-to-r from-blue-500 to-purple-500 text-white shadow-2xl flex items-center justify-center"
         whileHover={{ scale: 1.1 }}
         whileTap={{ scale: 0.9 }}
         animate={{
@@ -72,7 +72,7 @@ const FloatingActionButton = () => {
               animate={{ rotate: 0, opacity: 1 }}
               exit={{ rotate: 90, opacity: 0 }}
             >
-              <X className="w-6 h-6" />
+              <X className="w-5 h-5 md:w-6 md:h-6" />
             </motion.div>
           ) : (
             <motion.div
@@ -81,7 +81,7 @@ const FloatingActionButton = () => {
               animate={{ rotate: 0, opacity: 1 }}
               exit={{ rotate: -90, opacity: 0 }}
             >
-              <MessageCircle className="w-6 h-6" />
+              <MessageCircle className="w-5 h-5 md:w-6 md:h-6" />
             </motion.div>
           )}
         </AnimatePresence>

@@ -54,7 +54,7 @@ const About = () => {
   ];
 
   return (
-    <section id="about" className="min-h-screen relative bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950 py-20 px-6">
+    <section id="about" className="min-h-screen relative bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950 py-12 sm:py-16 md:py-20 px-4 sm:px-6">
       {/* Background Blobs */}
       {[...Array(2)].map((_, i) => (
         <motion.div
@@ -77,30 +77,30 @@ const About = () => {
       <div className="relative z-10 max-w-7xl mx-auto">
         {/* Section Header */}
         <motion.div
-          className="text-center mb-16"
+          className="text-center mb-8 sm:mb-12 md:mb-16"
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
         >
           <motion.span
-            className="inline-block text-5xl mb-4"
+            className="inline-block text-3xl sm:text-4xl md:text-5xl mb-3 sm:mb-4"
             animate={{ rotate: [0, 10, -10, 0] }}
             transition={{ duration: 2, repeat: Infinity }}
           >
             👋
           </motion.span>
-          <h2 className="text-5xl md:text-7xl font-black text-white mb-4">
+          <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-7xl font-black text-white mb-3 sm:mb-4 px-4">
             About <span className="bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent">Me</span>
           </h2>
-          <p className="text-xl text-slate-400 max-w-2xl mx-auto">
+          <p className="text-base sm:text-lg md:text-xl text-slate-400 max-w-2xl mx-auto px-4">
             Crafting digital experiences with passion and precision
           </p>
         </motion.div>
 
         {/* Profile Card */}
         <motion.div
-          className="grid md:grid-cols-2 gap-8 mb-16"
+          className="grid md:grid-cols-2 gap-6 sm:gap-8 mb-8 sm:mb-12 md:mb-16"
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
@@ -111,9 +111,9 @@ const About = () => {
             className="relative group"
             whileHover={{ scale: 1.02 }}
           >
-            <div className="absolute inset-0 bg-gradient-to-r from-blue-500 to-purple-500 rounded-3xl blur-2xl opacity-20 group-hover:opacity-30 transition-opacity"></div>
-            <div className="relative bg-white/5 backdrop-blur-md border border-white/10 rounded-3xl p-2 overflow-hidden">
-              <div className="relative w-full h-[500px] rounded-2xl overflow-hidden">
+            <div className="absolute inset-0 bg-gradient-to-r from-blue-500 to-purple-500 rounded-2xl sm:rounded-3xl blur-xl sm:blur-2xl opacity-20 group-hover:opacity-30 transition-opacity"></div>
+            <div className="relative bg-white/5 backdrop-blur-md border border-white/10 rounded-2xl sm:rounded-3xl p-1 sm:p-2 overflow-hidden">
+              <div className="relative w-full h-[300px] sm:h-[400px] md:h-[500px] rounded-xl sm:rounded-2xl overflow-hidden">
                 <AnimatePresence mode="wait">
                   <motion.img
                     key={currentPhotoIndex}
@@ -129,14 +129,14 @@ const About = () => {
               </div>
               
               {/* Slide Indicators */}
-              <div className="absolute bottom-6 left-1/2 -translate-x-1/2 flex gap-2 z-10">
+              <div className="absolute bottom-4 sm:bottom-6 left-1/2 -translate-x-1/2 flex gap-1.5 sm:gap-2 z-10">
                 {photos.map((_, index) => (
                   <motion.button
                     key={index}
                     onClick={() => setCurrentPhotoIndex(index)}
-                    className={`w-2 h-2 rounded-full transition-all ${
+                    className={`w-1.5 sm:w-2 h-1.5 sm:h-2 rounded-full transition-all ${
                       index === currentPhotoIndex 
-                        ? 'bg-white w-8' 
+                        ? 'bg-white w-6 sm:w-8' 
                         : 'bg-white/40 hover:bg-white/60'
                     }`}
                     whileHover={{ scale: 1.2 }}
@@ -148,40 +148,40 @@ const About = () => {
               {/* Navigation Arrows */}
               <button
                 onClick={() => setCurrentPhotoIndex((prev) => (prev - 1 + photos.length) % photos.length)}
-                className="absolute left-4 top-1/2 -translate-y-1/2 bg-white/10 hover:bg-white/20 backdrop-blur-md border border-white/20 rounded-full p-3 transition-all z-10 opacity-0 group-hover:opacity-100"
+                className="absolute left-2 sm:left-4 top-1/2 -translate-y-1/2 bg-white/10 hover:bg-white/20 backdrop-blur-md border border-white/20 rounded-full p-2 sm:p-3 transition-all z-10 opacity-0 group-hover:opacity-100"
               >
-                <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <svg className="w-4 h-4 sm:w-6 sm:h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
                 </svg>
               </button>
               <button
                 onClick={() => setCurrentPhotoIndex((prev) => (prev + 1) % photos.length)}
-                className="absolute right-4 top-1/2 -translate-y-1/2 bg-white/10 hover:bg-white/20 backdrop-blur-md border border-white/20 rounded-full p-3 transition-all z-10 opacity-0 group-hover:opacity-100"
+                className="absolute right-2 sm:right-4 top-1/2 -translate-y-1/2 bg-white/10 hover:bg-white/20 backdrop-blur-md border border-white/20 rounded-full p-2 sm:p-3 transition-all z-10 opacity-0 group-hover:opacity-100"
               >
-                <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <svg className="w-4 h-4 sm:w-6 sm:h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
                 </svg>
               </button>
               
               {/* Photo Counter */}
-              <div className="absolute top-4 right-4 bg-black/50 backdrop-blur-md px-3 py-1 rounded-full text-white text-sm font-medium z-10">
+              <div className="absolute top-3 sm:top-4 right-3 sm:right-4 bg-black/50 backdrop-blur-md px-2 sm:px-3 py-1 rounded-full text-white text-xs sm:text-sm font-medium z-10">
                 {currentPhotoIndex + 1} / {photos.length}
               </div>
               <motion.div
-                className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end justify-center pb-8"
+                className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end justify-center pb-6 sm:pb-8"
               >
-                <span className="text-white font-bold text-2xl">✨ That's me!</span>
+                <span className="text-white font-bold text-lg sm:text-2xl">✨ That's me!</span>
               </motion.div>
             </div>
           </motion.div>
 
           {/* Info */}
-          <div className="flex flex-col justify-center space-y-6">
-            <div className="bg-white/5 backdrop-blur-md border border-white/10 rounded-3xl p-8">
-              <h3 className="text-3xl font-bold text-white mb-4">
+          <div className="flex flex-col justify-center space-y-4 sm:space-y-6">
+            <div className="bg-white/5 backdrop-blur-md border border-white/10 rounded-2xl sm:rounded-3xl p-6 sm:p-8">
+              <h3 className="text-2xl sm:text-3xl font-bold text-white mb-3 sm:mb-4">
                 Hi, I'm <span className="bg-gradient-to-r from-green-400 to-emerald-400 bg-clip-text text-transparent">Ashen Herath</span>
               </h3>
-              <p className="text-slate-300 leading-relaxed mb-6">
+              <p className="text-slate-300 leading-relaxed mb-4 sm:mb-6 text-sm sm:text-base">
                 I'm a passionate Full Stack Developer and UI/UX Designer with a love for creating beautiful, 
                 functional digital experiences. I specialize in turning ideas into reality through clean code 
                 and thoughtful design.
@@ -189,7 +189,7 @@ const About = () => {
               <motion.a
                 href={resumePDF}
                 download
-                className="inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-blue-500 to-purple-500 text-white font-bold rounded-full"
+                className="inline-flex items-center gap-2 px-5 sm:px-6 py-2.5 sm:py-3 bg-gradient-to-r from-blue-500 to-purple-500 text-white font-bold rounded-full text-sm sm:text-base"
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
               >
@@ -204,22 +204,22 @@ const About = () => {
             </div>
 
             {/* Stats Grid */}
-            <div className="grid grid-cols-2 gap-4">
+            <div className="grid grid-cols-2 gap-3 sm:gap-4">
               {stats.map((stat, i) => (
                 <motion.div
                   key={i}
-                  className="bg-white/5 backdrop-blur-md border border-white/10 rounded-2xl p-6 text-center"
+                  className="bg-white/5 backdrop-blur-md border border-white/10 rounded-xl sm:rounded-2xl p-4 sm:p-6 text-center"
                   initial={{ opacity: 0, scale: 0.8 }}
                   whileInView={{ opacity: 1, scale: 1 }}
                   viewport={{ once: true }}
                   transition={{ delay: i * 0.1 }}
                   whileHover={{ y: -5 }}
                 >
-                  <stat.icon className="w-10 h-10 text-blue-400 mb-2" />
-                  <div className="text-3xl font-bold bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent mb-1">
+                  <stat.icon className="w-8 h-8 sm:w-10 sm:h-10 text-blue-400 mb-2 mx-auto" />
+                  <div className="text-2xl sm:text-3xl font-bold bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent mb-1">
                     {stat.value}
                   </div>
-                  <div className="text-sm text-slate-400">{stat.label}</div>
+                  <div className="text-xs sm:text-sm text-slate-400">{stat.label}</div>
                 </motion.div>
               ))}
             </div>
@@ -234,12 +234,12 @@ const About = () => {
           transition={{ duration: 0.6, delay: 0.4 }}
         >
           {/* Tab Buttons */}
-          <div className="flex justify-center gap-4 mb-8 flex-wrap">
+          <div className="flex justify-center gap-2 sm:gap-3 md:gap-4 mb-6 sm:mb-8 flex-wrap px-4">
             {tabs.map((tab) => (
               <motion.button
                 key={tab.id}
                 onClick={() => setActiveTab(tab.id)}
-                className={`px-8 py-4 rounded-full font-bold text-lg transition-all ${
+                className={`px-4 sm:px-6 md:px-8 py-2.5 sm:py-3 md:py-4 rounded-full font-bold text-sm sm:text-base md:text-lg transition-all inline-flex items-center ${
                   activeTab === tab.id
                     ? 'bg-gradient-to-r from-blue-500 to-purple-500 text-white'
                     : 'bg-white/5 text-slate-400 hover:bg-white/10'
@@ -247,7 +247,7 @@ const About = () => {
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
               >
-                <tab.icon className="w-5 h-5 mr-2" />
+                <tab.icon className="w-4 h-4 sm:w-5 sm:h-5 mr-1 sm:mr-2" />
                 {tab.label}
               </motion.button>
             ))}
@@ -259,21 +259,21 @@ const About = () => {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.4 }}
-            className="bg-white/5 backdrop-blur-md border border-white/10 rounded-3xl p-8 md:p-12"
+            className="bg-white/5 backdrop-blur-md border border-white/10 rounded-2xl sm:rounded-3xl p-6 sm:p-8 md:p-12"
           >
             {activeTab === 'story' && (
-              <div className="space-y-6 text-slate-300 leading-relaxed">
-                <p className="text-lg">
+              <div className="space-y-4 sm:space-y-6 text-slate-300 leading-relaxed">
+                <p className="text-sm sm:text-base md:text-lg">
                   🎨 From a young age, I've been fascinated by how technology can solve real-world problems 
                   and create meaningful experiences. My journey into web development started with a simple 
                   curiosity about how websites work, which quickly evolved into a deep passion.
                 </p>
-                <p className="text-lg">
+                <p className="text-sm sm:text-base md:text-lg">
                   💡 I believe that great design is not just about aesthetics—it's about creating intuitive, 
                   accessible experiences that users love. Every project I work on is an opportunity to blend 
                   creativity with functionality.
                 </p>
-                <p className="text-lg">
+                <p className="text-sm sm:text-base md:text-lg">
                   🚀 When I'm not coding, you'll find me exploring new design trends, contributing to open-source 
                   projects, or sharing knowledge with the developer community. I'm always learning, always growing, 
                   and always excited about the next challenge.
@@ -282,24 +282,24 @@ const About = () => {
             )}
 
             {activeTab === 'skills' && (
-              <div className="grid md:grid-cols-2 gap-6">
+              <div className="grid sm:grid-cols-2 gap-4 sm:gap-6">
                 {skills.map((skillGroup, i) => (
                   <motion.div
                     key={i}
-                    className="bg-white/5 border border-white/10 rounded-2xl p-6"
+                    className="bg-white/5 border border-white/10 rounded-xl sm:rounded-2xl p-4 sm:p-6"
                     initial={{ opacity: 0, x: i % 2 === 0 ? -20 : 20 }}
                     animate={{ opacity: 1, x: 0 }}
                     transition={{ delay: i * 0.1 }}
                     whileHover={{ y: -5 }}
                   >
-                    <h4 className={`text-2xl font-bold mb-4 bg-gradient-to-r ${skillGroup.color} bg-clip-text text-transparent`}>
+                    <h4 className={`text-xl sm:text-2xl font-bold mb-3 sm:mb-4 bg-gradient-to-r ${skillGroup.color} bg-clip-text text-transparent`}>
                       {skillGroup.category}
                     </h4>
                     <div className="flex flex-wrap gap-2">
                       {skillGroup.items.map((skill, j) => (
                         <span
                           key={j}
-                          className="px-4 py-2 bg-white/5 border border-white/10 rounded-full text-sm text-slate-300"
+                          className="px-3 sm:px-4 py-1.5 sm:py-2 bg-white/5 border border-white/10 rounded-full text-xs sm:text-sm text-slate-300"
                         >
                           {skill}
                         </span>
@@ -311,21 +311,21 @@ const About = () => {
             )}
 
             {activeTab === 'experience' && (
-              <div className="space-y-6">
+              <div className="space-y-4 sm:space-y-6">
                 {experiences.map((exp, i) => (
                   <motion.div
                     key={i}
-                    className="flex items-start gap-6 bg-white/5 border border-white/10 rounded-2xl p-6"
+                    className="flex items-start gap-3 sm:gap-6 bg-white/5 border border-white/10 rounded-xl sm:rounded-2xl p-4 sm:p-6"
                     initial={{ opacity: 0, x: -20 }}
                     animate={{ opacity: 1, x: 0 }}
                     transition={{ delay: i * 0.1 }}
                     whileHover={{ x: 10 }}
                   >
-                    <exp.icon className="w-12 h-12 text-blue-400" />
+                    <exp.icon className="w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12 text-blue-400 flex-shrink-0" />
                     <div className="flex-1">
-                      <div className="text-sm text-blue-400 font-semibold mb-1">{exp.year}</div>
-                      <h4 className="text-2xl font-bold text-white mb-1">{exp.role}</h4>
-                      <p className="text-slate-400">{exp.company}</p>
+                      <div className="text-xs sm:text-sm text-blue-400 font-semibold mb-1">{exp.year}</div>
+                      <h4 className="text-lg sm:text-xl md:text-2xl font-bold text-white mb-1">{exp.role}</h4>
+                      <p className="text-sm sm:text-base text-slate-400">{exp.company}</p>
                     </div>
                   </motion.div>
                 ))}

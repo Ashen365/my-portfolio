@@ -43,7 +43,7 @@ const MusicToggle = () => {
   return (
     <motion.button
       onClick={toggleMusic}
-      className="fixed bottom-8 left-8 z-50 w-14 h-14 rounded-full bg-gradient-to-r from-purple-500 to-pink-500 text-white shadow-2xl flex items-center justify-center"
+      className="fixed bottom-4 left-4 md:bottom-8 md:left-8 z-50 w-12 h-12 md:w-14 md:h-14 rounded-full bg-gradient-to-r from-purple-500 to-pink-500 text-white shadow-2xl flex items-center justify-center"
       whileHover={{ scale: 1.1 }}
       whileTap={{ scale: 0.9 }}
       initial={{ opacity: 0, scale: 0 }}
@@ -72,7 +72,7 @@ const MusicToggle = () => {
             animate={{ rotate: 0, opacity: 1 }}
             exit={{ rotate: 180, opacity: 0 }}
           >
-            <Volume2 className="w-6 h-6" />
+            <Volume2 className="w-5 h-5 md:w-6 md:h-6" />
           </motion.div>
         ) : (
           <motion.div
@@ -81,7 +81,7 @@ const MusicToggle = () => {
             animate={{ rotate: 0, opacity: 1 }}
             exit={{ rotate: -180, opacity: 0 }}
           >
-            <VolumeX className="w-6 h-6" />
+            <VolumeX className="w-5 h-5 md:w-6 md:h-6" />
           </motion.div>
         )}
       </AnimatePresence>

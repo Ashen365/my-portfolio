@@ -2,6 +2,8 @@
 #root {
   margin: 0 auto;
   text-align: center;
+  overflow-x: hidden;
+  max-width: 100vw;
 }
 
 .typing::after {

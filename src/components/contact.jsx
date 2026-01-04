@@ -128,7 +128,7 @@ const Contact = () => {
   ];
 
   return (
-    <section id="contact" className="min-h-screen relative bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950 py-20 px-6 overflow-hidden">
+    <section id="contact" className="min-h-screen relative bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950 py-12 sm:py-16 md:py-20 px-4 sm:px-6 overflow-hidden">
       {/* Animated Background Blobs */}
       <motion.div
         className="absolute w-96 h-96 rounded-full filter blur-3xl opacity-10 bg-blue-500"
@@ -146,32 +146,32 @@ const Contact = () => {
       <div className="relative z-10 max-w-7xl mx-auto">
         {/* Section Header */}
         <motion.div
-          className="text-center mb-16"
+          className="text-center mb-8 sm:mb-12 md:mb-16"
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
         >
           <motion.span
-            className="inline-block text-6xl mb-4"
+            className="inline-block text-4xl sm:text-5xl md:text-6xl mb-3 sm:mb-4"
             animate={{ scale: [1, 1.2, 1], rotate: [0, 10, -10, 0] }}
             transition={{ duration: 3, repeat: Infinity }}
           >
             📬
           </motion.span>
-          <h2 className="text-5xl md:text-7xl font-black text-white mb-4">
+          <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-7xl font-black text-white mb-3 sm:mb-4 px-4">
             Get In <span className="bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent">Touch</span>
           </h2>
-          <p className="text-xl text-slate-400 max-w-2xl mx-auto">
+          <p className="text-base sm:text-lg md:text-xl text-slate-400 max-w-2xl mx-auto px-4">
             Have a project in mind? Let's create something amazing together
           </p>
         </motion.div>
 
         {/* Contact Grid */}
-        <div className="grid lg:grid-cols-2 gap-8 mb-12">
+        <div className="grid lg:grid-cols-2 gap-6 sm:gap-8 mb-8 sm:mb-10 md:mb-12">
           {/* Contact Form */}
           <motion.div
-            className="group relative bg-white/5 backdrop-blur-md border border-white/10 rounded-3xl p-8 overflow-hidden"
+            className="group relative bg-white/5 backdrop-blur-md border border-white/10 rounded-2xl sm:rounded-3xl p-6 sm:p-8 overflow-hidden"
             initial={{ opacity: 0, x: -50 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
@@ -182,21 +182,21 @@ const Contact = () => {
             <div className="absolute inset-0 bg-gradient-to-br from-blue-500/10 to-purple-500/10 opacity-0 group-hover:opacity-100 transition-opacity" />
 
             <div className="relative">
-              <div className="flex items-center gap-3 mb-6">
-                <span className="text-4xl">✍️</span>
-                <h3 className="text-2xl font-bold text-white">Send a Message</h3>
+              <div className="flex items-center gap-2 sm:gap-3 mb-4 sm:mb-6">
+                <span className="text-3xl sm:text-4xl">✍️</span>
+                <h3 className="text-xl sm:text-2xl font-bold text-white">Send a Message</h3>
               </div>
 
               {/* Success Message */}
               {isSubmitted && (
                 <motion.div
-                  className="mb-6 p-4 rounded-2xl bg-green-500/20 border border-green-500/50"
+                  className="mb-4 sm:mb-6 p-3 sm:p-4 rounded-xl sm:rounded-2xl bg-green-500/20 border border-green-500/50"
                   initial={{ opacity: 0, y: -10 }}
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0 }}
                 >
-                  <div className="flex items-center text-green-400">
-                    <span className="text-2xl mr-2">✅</span>
+                  <div className="flex items-start text-green-400 text-sm sm:text-base">
+                    <span className="text-xl sm:text-2xl mr-2 flex-shrink-0">✅</span>
                     <span>Message sent successfully! I'll get back to you soon.</span>
                   </div>
                 </motion.div>
@@ -205,21 +205,21 @@ const Contact = () => {
               {/* Error Message */}
               {submitError && (
                 <motion.div
-                  className="mb-6 p-4 rounded-2xl bg-red-500/20 border border-red-500/50"
+                  className="mb-4 sm:mb-6 p-3 sm:p-4 rounded-xl sm:rounded-2xl bg-red-500/20 border border-red-500/50"
                   initial={{ opacity: 0, y: -10 }}
                   animate={{ opacity: 1, y: 0 }}
                 >
-                  <div className="flex items-center text-red-400">
-                    <span className="text-2xl mr-2">❌</span>
+                  <div className="flex items-start text-red-400 text-sm sm:text-base">
+                    <span className="text-xl sm:text-2xl mr-2 flex-shrink-0">❌</span>
                     <span>{submitError}</span>
                   </div>
                 </motion.div>
               )}
 
-              <form ref={formElementRef} onSubmit={handleSubmit} className="space-y-5">
+              <form ref={formElementRef} onSubmit={handleSubmit} className="space-y-4 sm:space-y-5">
                 {/* Name Field */}
                 <div>
-                  <label htmlFor="name" className="block text-sm font-medium text-slate-300 mb-2">
+                  <label htmlFor="name" className="block text-xs sm:text-sm font-medium text-slate-300 mb-1.5 sm:mb-2">
                     Name
                   </label>
                   <input
@@ -228,9 +228,9 @@ const Contact = () => {
                     name="name"
                     value={formData.name}
                     onChange={handleChange}
-                    className={`w-full px-4 py-3 bg-white/5 border ${
+                    className={`w-full px-3 sm:px-4 py-2.5 sm:py-3 bg-white/5 border ${
                       errors.name ? "border-red-500" : "border-white/10"
-                    } rounded-xl focus:outline-none focus:border-blue-400 text-white placeholder-slate-500 transition-all`}
+                    } rounded-lg sm:rounded-xl focus:outline-none focus:border-blue-400 text-white placeholder-slate-500 transition-all text-sm sm:text-base`}
                     placeholder="Your name"
                   />
                   {errors.name && (
@@ -240,7 +240,7 @@ const Contact = () => {
 
                 {/* Email Field */}
                 <div>
-                  <label htmlFor="email" className="block text-sm font-medium text-slate-300 mb-2">
+                  <label htmlFor="email" className="block text-xs sm:text-sm font-medium text-slate-300 mb-1.5 sm:mb-2">
                     Email
                   </label>
                   <input
@@ -249,9 +249,9 @@ const Contact = () => {
                     name="email"
                     value={formData.email}
                     onChange={handleChange}
-                    className={`w-full px-4 py-3 bg-white/5 border ${
+                    className={`w-full px-3 sm:px-4 py-2.5 sm:py-3 bg-white/5 border ${
                       errors.email ? "border-red-500" : "border-white/10"
-                    } rounded-xl focus:outline-none focus:border-blue-400 text-white placeholder-slate-500 transition-all`}
+                    } rounded-lg sm:rounded-xl focus:outline-none focus:border-blue-400 text-white placeholder-slate-500 transition-all text-sm sm:text-base`}
                     placeholder="your.email@example.com"
                   />
                   {errors.email && (
@@ -261,7 +261,7 @@ const Contact = () => {
 
                 {/* Subject Field */}
                 <div>
-                  <label htmlFor="subject" className="block text-sm font-medium text-slate-300 mb-2">
+                  <label htmlFor="subject" className="block text-xs sm:text-sm font-medium text-slate-300 mb-1.5 sm:mb-2">
                     Subject (Optional)
                   </label>
                   <input
@@ -270,14 +270,14 @@ const Contact = () => {
                     name="subject"
                     value={formData.subject}
                     onChange={handleChange}
-                    className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl focus:outline-none focus:border-blue-400 text-white placeholder-slate-500 transition-all"
+                    className="w-full px-3 sm:px-4 py-2.5 sm:py-3 bg-white/5 border border-white/10 rounded-lg sm:rounded-xl focus:outline-none focus:border-blue-400 text-white placeholder-slate-500 transition-all text-sm sm:text-base"
                     placeholder="What is this regarding?"
                   />
                 </div>
 
                 {/* Message Field */}
                 <div>
-                  <label htmlFor="message" className="block text-sm font-medium text-slate-300 mb-2">
+                  <label htmlFor="message" className="block text-xs sm:text-sm font-medium text-slate-300 mb-1.5 sm:mb-2">
                     Message
                   </label>
                   <textarea
@@ -286,9 +286,9 @@ const Contact = () => {
                     value={formData.message}
                     onChange={handleChange}
                     rows="5"
-                    className={`w-full px-4 py-3 bg-white/5 border ${
+                    className={`w-full px-3 sm:px-4 py-2.5 sm:py-3 bg-white/5 border ${
                       errors.message ? "border-red-500" : "border-white/10"
-                    } rounded-xl focus:outline-none focus:border-blue-400 text-white placeholder-slate-500 transition-all resize-none`}
+                    } rounded-lg sm:rounded-xl focus:outline-none focus:border-blue-400 text-white placeholder-slate-500 transition-all resize-none text-sm sm:text-base`}
                     placeholder="Tell me about your project..."
                   />
                   {errors.message && (
@@ -300,13 +300,13 @@ const Contact = () => {
                 <motion.button
                   type="submit"
                   disabled={isLoading}
-                  className="w-full bg-gradient-to-r from-blue-500 to-purple-500 hover:from-blue-600 hover:to-purple-600 text-white font-bold py-4 px-6 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 flex items-center justify-center disabled:opacity-50"
+                  className="w-full bg-gradient-to-r from-blue-500 to-purple-500 hover:from-blue-600 hover:to-purple-600 text-white font-bold py-3 sm:py-4 px-4 sm:px-6 rounded-lg sm:rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 flex items-center justify-center disabled:opacity-50 text-sm sm:text-base"
                   whileHover={{ scale: 1.02 }}
                   whileTap={{ scale: 0.98 }}
                 >
                   {isLoading ? (
                     <>
-                      <svg className="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                      <svg className="animate-spin -ml-1 mr-3 h-4 w-4 sm:h-5 sm:w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
                         <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
                         <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
                       </svg>
@@ -315,7 +315,7 @@ const Contact = () => {
                   ) : (
                     <>
                       <span>Send Message</span>
-                      <span className="ml-2 text-2xl">🚀</span>
+                      <span className="ml-2 text-xl sm:text-2xl">🚀</span>
                     </>
                   )}
                 </motion.button>
@@ -325,18 +325,18 @@ const Contact = () => {
 
           {/* Contact Info & Social */}
           <motion.div
-            className="space-y-6"
+            className="space-y-4 sm:space-y-6"
             initial={{ opacity: 0, x: 50 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
           >
             {/* Contact Cards */}
-            <div className="space-y-4">
+            <div className="space-y-3 sm:space-y-4">
               {contactInfo.map((item, index) => (
                 <motion.div
                   key={index}
-                  className="group relative bg-white/5 backdrop-blur-md border border-white/10 rounded-2xl p-6 overflow-hidden"
+                  className="group relative bg-white/5 backdrop-blur-md border border-white/10 rounded-xl sm:rounded-2xl p-4 sm:p-6 overflow-hidden"
                   initial={{ opacity: 0, y: 20 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
@@ -345,26 +345,26 @@ const Contact = () => {
                 >
                   <div className={`absolute inset-0 bg-gradient-to-br ${item.gradient} opacity-0 group-hover:opacity-10 transition-opacity`} />
                   
-                  <div className="relative flex items-center gap-4">
+                  <div className="relative flex items-center gap-3 sm:gap-4">
                     <motion.span 
-                      className="text-4xl"
+                      className="text-3xl sm:text-4xl flex-shrink-0"
                       animate={{ rotate: [0, 10, -10, 0] }}
                       transition={{ duration: 2, repeat: Infinity, delay: index * 0.2 }}
                     >
                       {item.emoji}
                     </motion.span>
-                    <div>
-                      <h4 className="text-sm text-slate-400 mb-1">{item.title}</h4>
+                    <div className="min-w-0">
+                      <h4 className="text-xs sm:text-sm text-slate-400 mb-1">{item.title}</h4>
                       {Array.isArray(item.content) ? (
                         <div className="flex flex-col gap-1">
                           {item.content.map((phone, i) => (
-                            <a key={i} href={`tel:${phone.replace(/\s/g, '')}`} className="text-white font-medium hover:text-blue-400 transition-colors">
+                            <a key={i} href={`tel:${phone.replace(/\s/g, '')}`} className="text-white font-medium hover:text-blue-400 transition-colors text-sm sm:text-base truncate">
                               {phone}
                             </a>
                           ))}
                         </div>
                       ) : (
-                        <p className="text-white font-medium">{item.content}</p>
+                        <p className="text-white font-medium text-sm sm:text-base break-all">{item.content}</p>
                       )}
                     </div>
                   </div>
@@ -374,30 +374,30 @@ const Contact = () => {
 
             {/* Social Links */}
             <motion.div
-              className="bg-white/5 backdrop-blur-md border border-white/10 rounded-2xl p-6"
+              className="bg-white/5 backdrop-blur-md border border-white/10 rounded-xl sm:rounded-2xl p-4 sm:p-6"
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.6, delay: 0.3 }}
             >
-              <div className="flex items-center gap-3 mb-6">
-                <span className="text-3xl">🌐</span>
-                <h3 className="text-xl font-bold text-white">Connect With Me</h3>
+              <div className="flex items-center gap-2 sm:gap-3 mb-4 sm:mb-6">
+                <span className="text-2xl sm:text-3xl">🌐</span>
+                <h3 className="text-lg sm:text-xl font-bold text-white">Connect With Me</h3>
               </div>
-              <div className="grid grid-cols-2 gap-3">
+              <div className="grid grid-cols-2 gap-2 sm:gap-3">
                 {socialLinks.map((link, index) => (
                   <motion.a
                     key={index}
                     href={link.href}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className={`group relative bg-gradient-to-br ${link.gradient} p-4 rounded-xl overflow-hidden`}
+                    className={`group relative bg-gradient-to-br ${link.gradient} p-3 sm:p-4 rounded-lg sm:rounded-xl overflow-hidden`}
                     whileHover={{ scale: 1.05, y: -2 }}
                     whileTap={{ scale: 0.95 }}
                   >
-                    <div className="relative flex items-center gap-2 text-white">
-                      {link.icon}
-                      <span className="text-white font-medium">{link.label}</span>
+                    <div className="relative flex items-center gap-1.5 sm:gap-2 text-white">
+                      <div className="w-4 h-4 sm:w-6 sm:h-6 flex-shrink-0">{link.icon}</div>
+                      <span className="text-white font-medium text-xs sm:text-sm md:text-base truncate">{link.label}</span>
                     </div>
                   </motion.a>
                 ))}
@@ -406,7 +406,7 @@ const Contact = () => {
 
             {/* Availability Badge */}
             <motion.div
-              className="bg-white/5 backdrop-blur-md border border-white/10 rounded-2xl p-6 relative overflow-hidden"
+              className="bg-white/5 backdrop-blur-md border border-white/10 rounded-xl sm:rounded-2xl p-4 sm:p-6 relative overflow-hidden"
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
@@ -414,15 +414,15 @@ const Contact = () => {
             >
               <div className="absolute inset-0 bg-gradient-to-br from-green-500/10 to-blue-500/10" />
               <div className="relative">
-                <div className="flex items-center gap-2 mb-4">
+                <div className="flex items-center gap-2 mb-3 sm:mb-4">
                   <motion.div
-                    className="w-3 h-3 rounded-full bg-green-500"
+                    className="w-2.5 h-2.5 sm:w-3 sm:h-3 rounded-full bg-green-500 flex-shrink-0"
                     animate={{ scale: [1, 1.2, 1] }}
                     transition={{ duration: 2, repeat: Infinity }}
                   />
-                  <h4 className="text-white font-bold text-lg">Currently Available</h4>
+                  <h4 className="text-white font-bold text-base sm:text-lg">Currently Available</h4>
                 </div>
-                <p className="text-slate-300">
+                <p className="text-slate-300 text-sm sm:text-base">
                   I'm currently taking on new projects and available for freelance work or full-time opportunities. 🎯
                 </p>
               </div>
@@ -432,17 +432,17 @@ const Contact = () => {
 
         {/* Bottom CTA */}
         <motion.div
-          className="text-center"
+          className="text-center px-4"
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6, delay: 0.5 }}
         >
-          <div className="inline-block bg-white/5 backdrop-blur-md border border-white/10 rounded-full px-8 py-4">
-            <p className="text-slate-300 flex items-center gap-2">
-              <span className="text-2xl">💡</span>
+          <div className="inline-block bg-white/5 backdrop-blur-md border border-white/10 rounded-full px-4 sm:px-6 md:px-8 py-3 sm:py-4">
+            <p className="text-slate-300 flex items-center gap-1.5 sm:gap-2 text-sm sm:text-base">
+              <span className="text-xl sm:text-2xl">💡</span>
               <span>Let's turn your ideas into reality!</span>
-              <span className="text-2xl">✨</span>
+              <span className="text-xl sm:text-2xl">✨</span>
             </p>
           </div>
         </motion.div>
