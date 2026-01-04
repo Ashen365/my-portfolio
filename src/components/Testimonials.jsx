@@ -1,103 +1,102 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-
+import AshanImage from '../assets/Ashan.jpg';
+import DilankaImage from '../assets/Dilanka.jpg';
+import DiniduImage from '../assets/Diniduliyanage.jpg';
+import DinithiImage from '../assets/Dinithi.png';
+import LahiruImage from '../assets/Lahiru.jpeg';
+import LakshithaImage from '../assets/Lakshitha.jpg';
+import OsandaImage from '../assets/Osanda.jpg';
+import ParamiImage from '../assets/Paramee.jpg';
+import SathiraImage from '../assets/sathira.jpg';
+import SiwminiImage from '../assets/Siwmini.jpeg';
+import ThilinaImage from '../assets/Thilina.jpg';
+import ManashaImage from '../assets/Manasha.jpeg';
 const Testimonials = () => {
   const allTestimonials = [
     {
-      name: 'John Doe',
-      role: 'CEO at TechCorp',
-      image: 'https://randomuser.me/api/portraits/men/1.jpg',
-      text: 'Ashen delivered an exceptional website that exceeded our expectations. His attention to detail and creative problem-solving made the entire process smooth and enjoyable.',
+      name: 'Osanda Lakshitha',
+      role: 'Full-Stack Developer',
+      image: OsandaImage,
+      text: 'Ashen\'s full-stack expertise is impressive. He built a robust application with clean architecture on both frontend and backend. His code quality and technical knowledge are top-notch!',
       rating: 5,
-      emoji: '⭐',
     },
     {
-      name: 'Sarah Johnson',
-      role: 'Product Manager',
-      image: 'https://randomuser.me/api/portraits/women/2.jpg',
-      text: 'Working with Ashen was a game-changer for our product. He brought our vision to life with stunning animations and intuitive design. Highly recommended!',
-      rating: 5,
-      emoji: '🎯',
+      name: 'Dinidu Liyanage',
+      role: 'Ceylyna Tea(pvt) Ltd',
+      image: DiniduImage,
+      text: 'Ashen created an exceptional e-commerce platform for our tea business. The website perfectly showcases our products and has significantly increased our online sales. Highly professional work!',
+      rating: 4,
     },
     {
-      name: 'Michael Chen',
-      role: 'Startup Founder',
-      image: 'https://randomuser.me/api/portraits/men/3.jpg',
-      text: 'From concept to launch, Ashen was professional, responsive, and incredibly talented. Our app looks amazing and performs flawlessly. Best developer we\'ve worked with!',
+      name: 'Ashan Dilakshana',
+      role: 'Full Stack Developer',
+      image: AshanImage,
+      text: 'As a fellow developer, I\'m impressed by Ashen\'s technical skills. His code is well-structured, scalable, and follows best practices. Great collaboration experience!',
       rating: 5,
-      emoji: '🚀',
     },
     {
-      name: 'Emma Williams',
-      role: 'Marketing Director',
-      image: 'https://randomuser.me/api/portraits/women/4.jpg',
-      text: 'Ashen\'s design skills are outstanding! He created a beautiful, conversion-focused website that has significantly improved our business metrics.',
-      rating: 5,
-      emoji: '💎',
+      name: 'Dinithi Perera',
+      role: 'Project Manager',
+      image: DinithiImage,
+      text: 'Ashen was a dream to work with from a PM perspective. He met all deadlines, communicated clearly, and delivered quality work. The project was completed smoothly and on time!',
+      rating: 4,
     },
     {
-      name: 'David Lee',
+      name: 'Thilina Ihalagedara',
       role: 'E-commerce Owner',
-      image: 'https://randomuser.me/api/portraits/men/5.jpg',
+      image: ThilinaImage,
       text: 'The e-commerce platform Ashen built for us is fast, secure, and user-friendly. Our sales have increased by 40% since launch!',
       rating: 5,
-      emoji: '📈',
     },
     {
-      name: 'Lisa Anderson',
+      name: 'Lahiru Madushanka',
       role: 'Creative Director',
-      image: 'https://randomuser.me/api/portraits/women/6.jpg',
+      image: LahiruImage,
       text: 'Ashen has an incredible eye for design and a deep understanding of user experience. He transformed our outdated site into a modern masterpiece.',
-      rating: 5,
-      emoji: '✨',
+      rating: 4,
     },
     {
-      name: 'Robert Kim',
+      name: 'Tharindu Dilanka ',
       role: 'Tech Lead',
-      image: 'https://randomuser.me/api/portraits/men/7.jpg',
+      image: DilankaImage,
       text: 'Outstanding work! Ashen\'s technical expertise and creative vision resulted in a product that our users absolutely love. Highly professional and reliable.',
       rating: 5,
-      emoji: '🔥',
     },
     {
-      name: 'Jennifer Martinez',
+      name: 'Siwmini Herath',
       role: 'UX Designer',
-      image: 'https://randomuser.me/api/portraits/women/8.jpg',
+      image: SiwminiImage,
       text: 'Ashen brings both technical skill and design sensibility to every project. His work is always pixel-perfect and user-friendly. A true professional!',
-      rating: 5,
-      emoji: '🎨',
+      rating: 4,
     },
     {
-      name: 'James Wilson',
+      name: 'Lakshitha Karunaweera',
       role: 'Business Owner',
-      image: 'https://randomuser.me/api/portraits/men/9.jpg',
+      image: LakshithaImage,
       text: 'Working with Ashen was effortless. He understood our vision immediately and delivered beyond expectations. Our website now converts 3x better!',
       rating: 5,
-      emoji: '💰',
     },
     {
-      name: 'Amanda Taylor',
-      role: 'Digital Marketing Manager',
-      image: 'https://randomuser.me/api/portraits/women/10.jpg',
-      text: 'The website Ashen built is not just beautiful, it\'s a marketing powerhouse. SEO-optimized, fast, and converts visitors into customers consistently.',
-      rating: 5,
-      emoji: '📊',
+      name: 'Parami Aponsu',
+      role: 'Project Manager',
+      image: ParamiImage,
+      text: 'Managing this project with Ashen was effortless. His professionalism, timely updates, and ability to adapt to changes made our collaboration seamless. Highly recommended!',
+      rating: 4,
     },
     {
-      name: 'Daniel Brown',
-      role: 'CTO',
-      image: 'https://randomuser.me/api/portraits/men/11.jpg',
-      text: 'Impressed by Ashen\'s clean code and scalable architecture. He built a robust system that\'s easy to maintain and extend. Top-tier developer!',
+      name: 'Sathira Pramudith',
+      role: 'Full Stack Developer',
+      image: SathiraImage, 
+      text: 'Working alongside Ashen was inspiring. His clean code, scalable architecture, and deep understanding of both frontend and backend make him a top-tier full-stack developer!',
       rating: 5,
-      emoji: '⚡',
     },
     {
-      name: 'Sophia Garcia',
-      role: 'Entrepreneur',
-      image: 'https://randomuser.me/api/portraits/women/12.jpg',
-      text: 'Ashen turned my startup idea into reality. His dedication, creativity, and technical skills are unmatched. Couldn\'t have asked for a better partner!',
+      name: 'Manasha Sewmini',
+      role: 'Full Stack Developer',
+      image: ManashaImage,
+      text: 'Collaborating with Ashen elevated my development skills. His technical expertise, problem-solving approach, and code quality set a high standard. Truly exceptional developer!',
       rating: 5,
-      emoji: '🌟',
     },
   ];
 
